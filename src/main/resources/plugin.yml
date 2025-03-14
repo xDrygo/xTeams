@@ -1,0 +1,54 @@
+name: xTeams
+version: 0.0.01
+main: org.eldrygo.xTeams
+api-version: "1.21"
+authors: [Drygo]
+commands:
+  xteams:
+    permission: xteams.command.base
+    description: Plugin main command
+    subcommands:
+      create:
+        description: Creates a new team
+        permission: xteams.command.create
+        parameters:
+          team:
+            description: The name of the team
+            type: string
+      delete:
+        description: Deletes a team
+        permission: xteams.command.delete
+        parameters:
+          team: # (Can be * for delete all teams)
+            description: The name of the team
+            type: string
+      list:
+        description: Lists all teams
+        permission: xteams.command.list
+      join:
+        description: Joins a team
+        permission: xteams.command.join
+        parameters:
+          team: # (Can be * for join all teams)
+            description: The name of the team
+            type: string
+          player:
+            description: The player to join the team
+            type: player
+      info:
+        description: Displays information about a team
+        permission: xteams.command.info
+        parameters:
+          team:
+            description: The name of the team
+            type: string
+      leave:
+        description: Leaves a team
+        permission: xteams.command.leave
+        parameters:
+          team: # (Can be * for leave all teams)
+            description: The name of the team
+            type: string
+          player:
+            description: The player to leave the team
+            type: player

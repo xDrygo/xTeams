@@ -1,0 +1,73 @@
+
+#     /$$      /$$
+#    | $$$    /$$$
+#    | $$$$  /$$$$  /$$$$$$   /$$$$$$$ /$$$$$$$  /$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$$
+#    | $$ $$/$$ $$ /$$__  $$ /$$_____//$$_____/ |____  $$ /$$__  $$ /$$__  $$ /$$_____/
+#    | $$  $$$| $$| $$$$$$$$|  $$$$$$|  $$$$$$   /$$$$$$$| $$  \ $$| $$$$$$$$|  $$$$$$
+#    | $$\  $ | $$| $$_____/ \____  $$\____  $$ /$$__  $$| $$  | $$| $$_____/ \____  $$
+#    | $$ \/  | $$|  $$$$$$$ /$$$$$$$//$$$$$$$/|  $$$$$$$|  $$$$$$$|  $$$$$$$ /$$$$$$$/
+#    |__/     |__/ \_______/|_______/|_______/  \_______/ \____  $$ \_______/|_______/  by Drygo
+#                                                         /$$  \ $$
+#                xTeams plugin's message config.         |  $$$$$$/
+#                                                         \______/
+
+# Welcome to the messages configuration file. Here you can change every in-game message of the plugin and prefix.
+
+# Changes the prefix of the plugin, you can call it typing %prefix% in the messages. (Default: "#ffbaff&lX&r&lTeams &8»&r")
+prefix: "#ffbaff&lX&r&lTeams &8»&r"
+
+teams:
+  private_chat:
+    team_not_found: "%prefix% #FF0000🚫 You are not in a team."
+    chat: "#FFF45A👥 &r&8» &r%sender% &7: #fff18d%message%"
+commands:
+  create:
+    success: "%prefix% #a0ff72✔ You created the %team% team."
+  delete:
+    success: "%prefix% #a0ff72✔ You have deleted team %team%."
+    successall: "%prefix% #a0ff72✔ You have deleted all the teams."
+  join:
+    other:
+      success: "%prefix% #a0ff72✔ Player %player% joined the %team% team."
+      successall: "%prefix% #a0ff72✔ Player %player% joined all teams."
+    self:
+      success: "%prefix% #a0ff72✔ You joined the %team% team."
+      successall: "%prefix% #a0ff72✔ You joined all the teams."
+  leave:
+    other:
+      success: "%prefix% #a0ff72✔ Player %player% left the %team% team."
+      successall: "%prefix% #a0ff72✔ Player %player% left all teams."
+    self:
+      success: "%prefix% #a0ff72✔ You left the %team% team."
+      successall: "%prefix% #a0ff72✔ You left all the teams."
+  list:
+    empty: "%prefix% #FF0000🚫 Can't find any team."
+    string:
+      header: "%prefix% #fff18d📰 List of teams:"
+      row: "&8  - #ffffff%team%"
+  info:
+    string:
+      header:
+        - "%prefix% #fff18dTeam information:"
+        - "&8▪ #444444Display Name: &r%displayName% &7(Codename: %teamName%)"
+        - ""
+      members_header: "&8▪ #444444Members:"
+      no_members: "&8▪ #444444Members: #FF4444None"
+      members_row: "&7  - &f%member%"
+      footer:
+        - " "
+        - "&8Plugin xTeams developed by Drygo"
+      divisor: " "
+error:
+  commands:
+    unknown_command: "%prefix% #FF0000🚫 Unknown command. &7Use &f/xteams help &7to see the list of commands."
+    team_not_specified:
+      create: "%prefix% #FF0000🚫 Need to specify a team. &7Use &f/xteams create <team>"
+      delete: "%prefix% #FF0000🚫 Need to specify a team. &7Use &f/xteams delete <team or *>"
+      leave: "%prefix% #FF0000🚫 Need to specify a team. &7Use &f/xteams leave <team or *> <player or leave blank for you>"
+      join: "%prefix% #FF0000🚫 Need to specify a team. &7Use &f/xteams join <team or *> <player or leave blank for you>"
+      info: "%prefix% #FF0000🚫 Need to specify a team. &7Use &f/xteams info <team>"
+    player_not_found: "%prefix% #FF0000🚫 Player %player% is not found."
+    only_player:
+      leave: "%prefix% #FF0000🚫 When executed by console, need to specify a player. &7Use &f/xteams leave <team or *> <player>"
+      join: "%prefix% #FF0000🚫 When executed by console, need to specify a player. &7Use &f/xteams join <team or *> <player>"
