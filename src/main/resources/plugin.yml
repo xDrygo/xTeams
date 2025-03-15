@@ -1,54 +1,43 @@
 name: xTeams
-version: 0.0.01
-main: org.eldrygo.xTeams
-api-version: "1.21"
+version: 0.0.33
+main: org.eldrygo.XTeams
+api-version: 1.21
 authors: [Drygo]
+softdepend: [PlaceholderAPI]
 commands:
   xteams:
-    permission: xteams.command.base
-    description: Plugin main command
+    description: "Plugin main command"
     subcommands:
       create:
-        description: Creates a new team
-        permission: xteams.command.create
-        parameters:
-          team:
-            description: The name of the team
-            type: string
+        description: "Creates a new team."
       delete:
-        description: Deletes a team
-        permission: xteams.command.delete
-        parameters:
-          team: # (Can be * for delete all teams)
-            description: The name of the team
-            type: string
-      list:
-        description: Lists all teams
-        permission: xteams.command.list
+        description: "Deletes a team."
       join:
-        description: Joins a team
-        permission: xteams.command.join
-        parameters:
-          team: # (Can be * for join all teams)
-            description: The name of the team
-            type: string
-          player:
-            description: The player to join the team
-            type: player
-      info:
-        description: Displays information about a team
-        permission: xteams.command.info
-        parameters:
-          team:
-            description: The name of the team
-            type: string
+        description: "Joins a team."
       leave:
-        description: Leaves a team
-        permission: xteams.command.leave
-        parameters:
-          team: # (Can be * for leave all teams)
-            description: The name of the team
-            type: string
-          player:
-            description: The player to leave the team
-            type: player
+        description: "Leaves a team."
+      list:
+        description: "Lists all teams."
+      info:
+        description: "Displays information about a team."
+      reload:
+        description: "Reloads the plugin configuration and message files."
+      save:
+        description: "Saves the plugin data to the configuration files."
+permissions:
+  xteams.command:
+    description: "Allows users to execute xTeams commands"
+    default: false
+    children:
+      xteams.command.base: true
+      xteams.command.create: true
+      xteams.command.delete: true
+      xteams.command.join: true
+      xteams.command.leave: true
+      xteams.command.info: true
+      xteams.command.list: true
+      xteams.command.reload: true
+      xteams.command.save: true
+  xteams.admin:
+    description: "Allows administrators to execute xTeams commands"
+    default: false

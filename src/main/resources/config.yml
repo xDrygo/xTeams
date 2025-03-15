@@ -1,10 +1,31 @@
+
+#             /$$$$$$$$$$$$|
+#            |____  $$____/
+#     /$$   /$$   | $$     /$$$$$$   /$$$$$$  /$$$$$$/$$$$   /$$$$$$$
+#    |  $$ /$$/   | $$    /$$__  $$ |____  $$| $$_  $$_  $$ /$$_____/
+#     \  $$$$/    | $$   | $$$$$$$$  /$$$$$$$| $$ \ $$ \ $$|  $$$$$$
+#      >$$  $$    | $$   | $$_____/ /$$__  $$| $$ | $$ | $$ \____  $$
+#     /$$/\  $$   | $$   |  $$$$$$$|  $$$$$$$| $$ | $$ | $$ /$$$$$$$/
+#    |__/  \__/   |__/    \_______/ \_______/|__/ |__/ |__/|_______/  by Drygo
+
+#   Github page: https://github.com/xDrygo/xTeams - X: https://x.com/eldrygo
+
+# Welcome to the configuration file of the plugin xTeams. Here you can modify some plugin settings.
+
+# List of teams and the list of players in the team.
 teams:
-  team_1:
-    - player1
-    - player2
-  team_2:
-    - player3
-    - player4
-  team_3:
-    - player5
-    - player6
+  red:
+    displayName: Red Team
+    members:
+      - player1
+      - player2
+  blue:
+    displayName: Blue Team
+    members:
+      - player3
+      - player4
+  yellow:
+    displayName: Yellow Team
+    members:
+      - player3
+      - player4

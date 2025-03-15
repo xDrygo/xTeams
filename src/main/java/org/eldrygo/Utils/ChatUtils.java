@@ -14,8 +14,9 @@ public class ChatUtils {
     private final XTeams plugin;
     private ConfigManager configManager;
 
-    public ChatUtils(XTeams plugin) {
+    public ChatUtils(XTeams plugin, ConfigManager configManager) {
         this.plugin = plugin;
+        this.configManager = configManager;
     }
 
     public static String formatColor(String message) {
@@ -40,9 +41,12 @@ public class ChatUtils {
         return buffer.toString();
     }
     public String getMessage(String path) {
-        String message = plugin.messagesConfig.getString(path);
-        if (plugin.messagesConfig.isList(path)) {
-            List<String> lines = plugin.messagesConfig.getStringList(path);
+        if (configManager == null) {
+            throw new IllegalStateException("ConfigManager no está inicializado.");
+        }
+        String message = getMessageConfig().getString(path);
+        if (getMessageConfig().isList(path)) {
+            List<String> lines = getMessageConfig().getStringList(path);
             return ChatUtils.formatColor(String.join("\n", lines));
         } else {
             if (message == null || message.isEmpty()) {
@@ -53,13 +57,15 @@ public class ChatUtils {
         }
     }
     public List<String> getMessageList(String path) {
-        List<String> messages = plugin.getConfig().getStringList(path);
+        // Accede a la instancia de messagesConfig directamente
+        List<String> messages = getMessageConfig().getStringList(path);
         if (messages == null) {
-            return new ArrayList<>();
+            return new ArrayList<>();  // Devuelve una lista vacía si no se encuentra el mensaje
         }
-        return messages;
+        return messages;  // Retorna la lista de mensajes
     }
     public FileConfiguration getMessageConfig() {
         return plugin.messagesConfig;
     }
+
 }

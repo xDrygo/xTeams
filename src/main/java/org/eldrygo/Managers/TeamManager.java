@@ -1,109 +1,204 @@
 package org.eldrygo.Managers;
 
-import org.bukkit.entity.Player;
 import org.eldrygo.Models.Team;
 import org.eldrygo.XTeams;
+import org.bukkit.OfflinePlayer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class TeamManager {
+
     private final XTeams plugin;
+    private Map<String, Team> teams; // Utilizamos un mapa para almacenar equipos por su nombre.
 
     public TeamManager(XTeams plugin) {
         this.plugin = plugin;
+        this.teams = new HashMap<>();
     }
 
-    // Verifica si dos jugadores están en el mismo equipo
-    public boolean isSameTeam(Player player1, Player player2) {
-        return plugin.team.teams.values().stream()
-                .anyMatch(team -> team.getMembers().contains(player1.getName())
-                        && team.getMembers().contains(player2.getName()));
+    public void addTeam(Team team) {
+        teams.put(team.getName(), team);
     }
 
-    // Obtiene el equipo correspondiente a un nombre
-    public Team getTeamMembers(String teamName) {
-        return plugin.team.teams.getOrDefault(teamName.toLowerCase(), null);
+    public Team getTeam(String teamName) {
+        return teams.get(teamName);
     }
 
-    // Obtiene el equipo de un jugador
-    public String getPlayerTeam(Player player) {
-        return plugin.team.teams.entrySet().stream()
-                .filter(entry -> entry.getValue().getMembers().contains(player.getName()))
-                .map(Map.Entry::getKey)
-                .findFirst().orElse(null);
+    public void deleteTeam(String teamName) {
+        teams.remove(teamName);
     }
 
-    // Obtiene todos los equipos
-    public Set<String> getAllTeams() {
-        return plugin.team.teams.keySet();
+    public Set<Team> getAllTeams() {
+        return new HashSet<>(teams.values());
     }
 
-    // Verifica si el jugador pertenece a algún equipo
-    public boolean isInTeam(Player player) {
-        return getPlayerTeam(player) != null;
+    public boolean teamExists(String teamName) {
+        return teams.containsKey(teamName);
     }
 
-    // Crea un nuevo equipo
-    public void createTeam(String name) {
-        plugin.team.teams.put(name.toLowerCase(), new Team(name, name)); // DisplayName = Nombre por defecto
+    public Team getPlayerTeam(OfflinePlayer player) {
+        // Verifica si el jugador pertenece a algún equipo
+        for (Team team : teams.values()) {
+            if (team.getMembers().contains(player.getName())) {
+                return team;
+            }
+        }
+        return null; // El jugador no pertenece a ningún equipo
     }
 
-    // Elimina un equipo específico
-    public void deleteTeam(String name) {
-        plugin.team.teams.remove(name.toLowerCase());
+    public Set<String> getTeamMembers(String teamName) {
+        Team team = teams.get(teamName);
+        if (team != null) {
+            return team.getMembers();
+        }
+        return new HashSet<>();
     }
 
-    // Elimina todos los equipos
+    public void createTeam(String teamName, String displayName, int priority, Set<String> members) {
+        if (!teamExists(teamName)) {
+            Team team = new Team(plugin, teamName, displayName, priority, members);
+            addTeam(team);
+        }
+    }
+
     public void deleteAllTeams() {
-        plugin.team.teams.clear();
+        teams.clear();
     }
 
-    // Lista todos los equipos existentes
-    public String listTeams() {
-        return String.join(", ", plugin.team.teams.keySet());
+    public List<String> listTeams() {
+        plugin.getLogger().info("Listing all teams:");
+        List<String> teamNames = new ArrayList<>();
+        for (Team team : teams.values()) {
+            plugin.getLogger().info("Team Name: " + team.getName() + " | Display Name: " + team.getDisplayName() + " | Members: " + team.getMembers().size());
+            teamNames.add(team.getName()); // Add team names to the list
+        }
+        return teamNames; // Returning the list of team names
     }
 
-    // Añade un jugador a un equipo específico
-    public void joinTeam(Player player, String teamName) {
-        Team team = plugin.team.teams.get(teamName.toLowerCase());
+    public Map<String, Object> getTeamInfo(String teamName) {
+        Team team = getTeam(teamName);
+        Map<String, Object> teamInfo = new HashMap<>();
+        if (team != null) {
+            teamInfo.put("name", team.getName());
+            teamInfo.put("displayName", team.getDisplayName());
+            teamInfo.put("members", team.getMembers());
+            teamInfo.put("priority", team.getPriority());
+            plugin.getLogger().info("Team Name: " + team.getName() + " | Display Name: " + team.getDisplayName() + " | Priority: " + team.getPriority() + " | Members: " + team.getMembers ());
+        } else {
+            plugin.getLogger().warning("Team " + teamName + " does not exist.");
+        }
+        return teamInfo; // Returning the info map
+    }
+
+    public void joinTeam(OfflinePlayer player, String teamName) {
+        Team team = getTeam(teamName);
         if (team != null) {
             team.addMember(player.getName());
+            plugin.getLogger().info(player.getName() + " has joined team " + teamName);
+        } else {
+            plugin.getLogger().warning("Team " + teamName + " does not exist.");
         }
     }
 
-    // Añade un jugador a todos los equipos
-    public void joinAllTeams(Player player) {
-        plugin.team.teams.values().forEach(team -> team.addMember(player.getName()));
+    public void joinAllTeams(OfflinePlayer player) {
+        for (Team team : teams.values()) {
+            team.addMember(player.getName());
+        }
+        plugin.getLogger().info(player.getName() + " has joined all teams.");
     }
 
-    // Elimina a un jugador de un equipo específico
-    public void leaveTeam(Player player, String teamName) {
-        Team team = plugin.team.teams.get(teamName.toLowerCase());
-        if (team != null) {
+    public void leaveTeam(OfflinePlayer player, String teamName) {
+        Team team = getTeam(teamName);
+        if (team != null && team.getMembers().contains(player.getName())) {
             team.removeMember(player.getName());
+            plugin.getLogger().info(player.getName() + " has left team " + teamName);
+        } else {
+            plugin.getLogger().warning(player.getName() + " is not a member of team " + teamName);
         }
     }
 
-    // Elimina a un jugador de todos los equipos
-    public void leaveAllTeams(Player player) {
-        plugin.team.teams.values().forEach(team -> team.removeMember(player.getName()));
+    public void leaveAllTeams(OfflinePlayer player) {
+        for (Team team : teams.values()) {
+            if (team.getMembers().contains(player.getName())) {
+                team.removeMember(player.getName());
+            }
+        }
+        plugin.getLogger().info(player.getName() + " has left all teams.");
     }
 
-    // Obtiene la información de un equipo
-    public Map<String, Object> getTeamInfo(String[] teamName) {
-        Team team = plugin.team.teams.get(teamName);
-        if (team == null) {
-            return null; // Equipo no encontrado
+    public boolean isInTeam(OfflinePlayer player, String teamName) {
+        Team team = getTeam(teamName);
+        return team != null && team.hasMember(player);
+    }
+
+    // Método para comprobar si un jugador está en algún equipo
+    public boolean isInAnyTeam(OfflinePlayer player) {
+        for (Team team : teams.values()) {
+            if (team.hasMember(player)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Team getTeamByName(String teamName) {
+        return teams.get(teamName); // Suponiendo que teams es un mapa que contiene los equipos
+    }
+
+    // Métodos para los placeholders
+
+    // Obtiene el nombre del equipo con mayor prioridad al que pertenece el jugador
+    public String getPlayerTeamName(OfflinePlayer player) {
+        Team highestPriorityTeam = getHighestPriorityTeam(player); // Obtener el equipo con mayor prioridad
+        return (highestPriorityTeam != null) ? highestPriorityTeam.getName() : "No Team";
+    }
+
+    // Obtiene el displayName del equipo con mayor prioridad al que pertenece el jugador
+    public String getPlayerTeamDisplayName(OfflinePlayer player) {
+        Team highestPriorityTeam = getHighestPriorityTeam(player); // Obtener el equipo con mayor prioridad
+        return (highestPriorityTeam != null) ? highestPriorityTeam.getDisplayName() : "No Team";
+    }
+
+    // Obtiene el equipo con mayor prioridad al que pertenece el jugador
+    private Team getHighestPriorityTeam(OfflinePlayer player) {
+        List<Team> playerTeams = getPlayerTeams(player); // Obtener todos los equipos del jugador
+        Team highestPriorityTeam = null;
+
+        // Buscar el equipo con mayor prioridad
+        for (Team team : playerTeams) {
+            if (highestPriorityTeam == null || team.getPriority() > highestPriorityTeam.getPriority()) {
+                highestPriorityTeam = team;
+            }
         }
 
-        Map<String, Object> info = new HashMap<>();
-        info.put("name", team.getName());
-        info.put("displayName", team.getDisplayName());
-        info.put("members", new ArrayList<>(team.getMembers()));
+        return highestPriorityTeam;
+    }
+    public List<Team> getPlayerTeams(OfflinePlayer player) {
+        List<Team> playerTeams = new ArrayList<>();
+        for (Team team : teams.values()) {
+            if (team.hasMember(player)) {
+                playerTeams.add(team);
+            }
+        }
+        return playerTeams;
+    }
+    private int getTeamPriority(Team team) {
+        return team.getPriority();
+    }
+    public boolean hasPlayerInTeam(OfflinePlayer player, String teamName) {
+        Team team = getTeam(teamName);
+        if (team != null) {
+            return team.hasMember(player);
+        }
+        return false; // Si el equipo no existe, retornamos false
+    }
 
-        return info;
+    public int getTeamNumberOfMembers(String teamName) {
+        Team team = getTeam(teamName);
+        return (team != null) ? team.getMembers().size() : 0;
+    }
+
+    public boolean isPlayerInAnyTeam(OfflinePlayer player) {
+        return getPlayerTeam(player) != null;
     }
 }
