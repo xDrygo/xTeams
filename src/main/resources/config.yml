@@ -16,16 +16,19 @@
 teams:
   red:
     displayName: Red Team
+    priority: 2
     members:
       - player1
       - player2
   blue:
     displayName: Blue Team
+    priority: 1
     members:
       - player3
       - player4
   yellow:
     displayName: Yellow Team
+    priority: 0
     members:
-      - player3
-      - player4
+      - player5
+      - player6

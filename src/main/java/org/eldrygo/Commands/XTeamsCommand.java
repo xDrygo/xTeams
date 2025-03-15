@@ -262,8 +262,6 @@ public class XTeamsCommand implements CommandExecutor {
 
         StringBuilder message = new StringBuilder();
 
-        // Add divisor
-        message.append(chatUtils.getMessage("commands.teaminfo.string.divisor")).append("\n");
 
         // Add the header from messages.yml
         List<String> headerLines = chatUtils.getMessageList("commands.teaminfo.string.header");
@@ -300,8 +298,6 @@ public class XTeamsCommand implements CommandExecutor {
             message.append(chatUtils.formatColor(line)).append("\n");  // Add newline after each footer line
         }
 
-        // Add the divisor again
-        message.append(chatUtils.getMessage("commands.teaminfo.string.divisor"));
 
         sender.sendMessage(message.toString());
         return true;
@@ -337,9 +333,10 @@ public class XTeamsCommand implements CommandExecutor {
 
         // Construir el mensaje informativo
         StringBuilder message = new StringBuilder();
-        message.append(chatUtils.getMessage("commands.playerinfo.string.divisor"));
         message.append(chatUtils.getMessage("commands.playerinfo.string.header")
-                .replace("%player%", targetName)).append("\n");
+                .replace("%player%", targetName)
+                .replace("%prefix%", plugin.prefix))
+                .append("\n");
         message.append(chatUtils.getMessage("commands.playerinfo.string.main_team")
                 .replace("%team_displayName%", mainTeam.getDisplayName())
                 .replace("%team%", mainTeam.getName())).append("\n");
@@ -360,9 +357,6 @@ public class XTeamsCommand implements CommandExecutor {
             message.append(chatUtils.formatColor(line)).append("\n");  // Add newline after each footer line
         }
 
-        // Add the divisor again
-        message.append(chatUtils.getMessage("commands.playerinfo.string.divisor"));
-
         sender.sendMessage(message.toString());
         return true;
     }
@@ -381,7 +375,8 @@ public class XTeamsCommand implements CommandExecutor {
                 // Aquí usamos %team% para el nombre interno del equipo y %team_displayName% para el nombre visible
                 String teamMessage = chatUtils.getMessage("commands.list.string.row")
                         .replace("%team%", team.getName())  // Reemplaza %team% con el nombre interno del equipo
-                        .replace("%team_displayName%", team.getDisplayName());  // Reemplaza %team_displayName% con el nombre visible del equipo
+                        .replace("%priority%", String.valueOf(team.getPriority()))  // Reemplaza %team% con el nombre interno del equipo
+                        .replace("%team_displayName%", team.getDisplayName());
                 message.append(teamMessage).append("\n");
             }
 

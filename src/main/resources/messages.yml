@@ -44,13 +44,15 @@ commands:
     empty: "%prefix% #FF0000🚫 Can't find any team."
     string:
       header: "%prefix% #fff18d📰 List of teams:"
-      row: "&8  - #ffffff%team_displayName% &7(%team%)"
+      row: "&7  - &r%team_displayName% &7(%team%) &8- #ccccccPriority: #fff18d%priority%"
   teaminfo:
     string:
       header:
+        - " "
         - "%prefix% #ffdcff'%teamName%' team information:"
         - " "
         - "&8▪ #fff18dDisplay Name: &r%displayName%"
+        - "&8▪ #fff18dPriority: &r%priority%"
         - " "
       members_header: "&8▪ #fff18dMembers:"
       no_members: "&8▪ #fff18dMembers: #FF4444None"
@@ -58,20 +60,21 @@ commands:
       footer:
         - " "
         - "#c490c4xTeams developed by @eldrygo"
-      divisor: " "
+        - " "
   playerinfo:
     string:
       header:
+        - " "
         - "%prefix% #ffdcff'%player%' player information:"
         - " "
       main_team: "&8▪ #fff18dMain Team: &r%team_displayName% &7(%team%)"
       team_list_header: "&8▪ #fff18dHis Teams:"
-      team_list_row: "&7  - &r%team_displayname% &7(%team%) &8- Priority: #fff18d%priority%"
+      team_list_row: "&7  - &r%team_displayName% &7(%team%) &8- #ccccccPriority: #fff18d%priority%"
       no_teams: "#ff4444Player %player% is not on a team."
       footer:
         - " "
         - "#c490c4xTeams developed by @eldrygo"
-      divisor: " "
+        - " "
   reload:
     success: "%prefix% #a0ff72✔ Reloaded config and plugin messages successfully."
   save:
