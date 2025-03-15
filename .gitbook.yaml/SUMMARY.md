@@ -3,7 +3,11 @@
 ## Getting Started
 
 * [✨ Welcome!](README.md)
-* [📁 Installing xTeams](getting-started/installing-xteams.md)
+* [📁 Setup xTeams](getting-started/setup-xteams.md)
+
+## Guide
+
+* [📖 Getting Started](guide/getting-started.md)
 
 ## Plugin
 
