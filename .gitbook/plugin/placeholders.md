@@ -30,7 +30,7 @@ If you have PlaceholderAPI installed, these placeholders will automatically be r
 * `%xteams_teamname_<player>%` will replace the placeholder with the name of the team the player belongs to.
 * `%xteams_teampriority_<team>%` will show the priority of the given team.
 
-### **⚙️ Example Configuration:**
+### **⚙️ Example Configuration**
 
 ```yaml
 team_join_message: "Welcome to team %xteams_teamname_%player%, Display Name: %xteams_teamdisplayname_%player%"

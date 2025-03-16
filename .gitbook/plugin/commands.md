@@ -4,7 +4,7 @@
 
 In this section, you’ll find the list of commands available in **xTeams**. These commands allow you to manage teams, players, and settings within the plugin. Below is a table with each command, an example of how to use it, and a brief description of its functionality.
 
-## **⌨️ Management and info. commands.**
+## **⌨️ Management and information commands**
 
 | 💬 Command                                                                    | 💡 Example                                             | 📄 Description                                                                                                                 |
 | ----------------------------------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------ |

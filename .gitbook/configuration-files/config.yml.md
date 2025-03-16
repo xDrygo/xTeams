@@ -4,7 +4,7 @@
 
 The <kbd>config.yml</kbd> file is the core of the **xTeams** plugin configuration. Here, you can define and manage teams, their members, and priorities. This file allows you to customize the team settings to fit your server’s needs, such as the team’s name, the members it includes, and the priority with which they should be treated within the plugin.
 
-## **💡 Breakdown of the&#x20;**<kbd>**config.yml**</kbd>**&#x20;file:**
+## **💡 Breakdown of the&#x20;**<kbd>**config.yml**</kbd>**&#x20;file**
 
 ```yaml
 teams:

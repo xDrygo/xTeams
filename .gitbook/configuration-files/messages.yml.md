@@ -4,7 +4,7 @@
 
 The <kbd>messages.yml</kbd> file allows you to customize all messages that the **xTeams** plugin sends to players, helping create a tailored experience for your server. This file includes messages for team creation, deletion, joining, leaving, and other related actions. You can also customize error messages and command outputs to improve the clarity and overall user experience.
 
-## **💡 Breakdown of the&#x20;**<kbd>**messages.yml**</kbd>**&#x20;file:**
+## **💡 Breakdown of the&#x20;**<kbd>**messages.yml**</kbd>**&#x20;file**
 
 ```yaml
 prefix: "#ffbaff&lx&r&lTeams &8»&r"
@@ -14,7 +14,7 @@ prefix: "#ffbaff&lx&r&lTeams &8»&r"
 
 ***
 
-### **💻 Commands return messages.**
+### **💻 Commands return messages**
 
 ```yaml
 commands:
