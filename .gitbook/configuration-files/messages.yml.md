@@ -153,7 +153,7 @@ error:
 
 ```yaml
 team_not_specified:
-  create: "%prefix% #FF0000🚫 Need to specify a team. &7Use &f/xteams create <team>"
+  create: "%prefix% #FF0000🚫 Need to specify a team. &7Use &f/xteams create <team> <priority>"
   delete: "%prefix% #FF0000🚫 Need to specify a team. &7Use &f/xteams delete <team or *>"
       setdisplay: "%prefix% #FF0000🚫 Need to specify a team. &7Use &f/xteams setdisplay <team> [New Display Name]"
   leave: "%prefix% #FF0000🚫 Need to specify a team. &7Use &f/xteams leave <team or *> <player or leave blank for you>"
@@ -177,14 +177,20 @@ team_not_specified:
 * <kbd>**only\_player/join**</kbd>: Message when the <kbd>join</kbd> command is executed by the console but a player is not specified. _(Placeholders: %prefix%)_
 
 ```yaml
-leave:
-  self:
+create:
+  priority_not_specified: "%prefix% #FF0000🚫 Need to specify the priority. &7Use &f/xteams create <team> <priority>"
+```
+
+* <kbd>**create/priority**</kbd>: Message when the sender don't specify the priority of the team to create. _(Placeholders: %prefix%)_
+
+<pre class="language-yaml"><code class="lang-yaml"><strong>leave:
+</strong>  self:
     not_in_team: "%prefix% #FF0000🚫 You are not in %team% team."
     not_in_anyteam: "%prefix% #FF0000🚫 You are not in any team"
   other:
     not_in_team: "%prefix% #FF0000🚫 You are not in %team% team."
     not_in_anyteam: "%prefix% #FF0000🚫 You are not in any team"
-```
+</code></pre>
 
 * <kbd>**self/not\_in\_team**</kbd>: Message when a player is not in the specified team. _(Placeholders: %prefix%, %team%)_
 * <kbd>**self/not\_in\_anyteam**</kbd>: Message when a player is not in any team. _(Placeholders: %prefix%)_
