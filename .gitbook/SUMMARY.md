@@ -1,9 +1,9 @@
 # Table of contents
 
-## Getting Started
+## xTeams
 
-* [✨ Welcome!](README.md)
-* [📁 Setup xTeams](getting-started/setup-xteams.md)
+* [✨ Welcome](README.md)
+* [📁 Setup xTeams](xteams/setup-xteams.md)
 
 ## Guide
 
@@ -22,4 +22,4 @@
 
 ## API
 
-* [🔗 xTeams API](api/xteams-api.md)
+* [📚 xTeams API](api/xteams-api.md)

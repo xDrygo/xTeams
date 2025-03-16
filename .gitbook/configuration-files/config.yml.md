@@ -1,19 +1,30 @@
 # 📝 config.yml
 
-Being a remote team means that team members are either working from home or from a co-working space.
+## 📄 **Introduction**
 
-{% hint style="info" %}
-Whether you decide to work from home or from a co-working space, we value the balance between private and professional life.
-{% endhint %}
+The <kbd>config.yml</kbd> file is the core of the **xTeams** plugin configuration. Here, you can define and manage teams, their members, and priorities. This file allows you to customize the team settings to fit your server’s needs, such as the team’s name, the members it includes, and the priority with which they should be treated within the plugin.
 
-### Working hours
+## **💡 Breakdown of the&#x20;**<kbd>**config.yml**</kbd>**&#x20;file:**
 
-We encourage any working hours that are applicable to you, you know how to structure your day.
+```yaml
+teams:
+  red:
+    displayName: "The Red Team"
+    members:
+      - player1
+      - player2
+    priority: 1
 
-### Etiquette Practices
+  blue:
+    displayName: "The Blue Team""
+    members:
+      - player3
+      - player4
+    priority: 2
+```
 
-We hire folks from many different cultures, from all across the world, making aspects of work uniquely challenging. These challenges include the obvious like collaborating across time zones, and arranging offsites; but also the less obvious like respecting pronouns, pronouncing names, and respecting gender identity.
-
-### Tips
-
-Creating rituals might help you in your remote working life. As usual with rituals small ones are the most effective ones such as not working (or only working!) in your pyjamas, wearing work shoes to start the day, taking your work-cup to drink coffee/tea, setting yourself in front of a proper desk or in a specific space at home.
+* <kbd>**teams**</kbd>: This section defines all the teams in your plugin. Each team is identified by a unique ID (e.g., `red`, `blue`), and you can customize the name, members, and priority for each one.
+  * <kbd>**red**</kbd>: This is the unique ID of the first team.
+    * <kbd>**displayName**</kbd>: Defines the team’s display name (e.g., "The Red Team").
+    * <kbd>**members**</kbd>: A list of players belonging to this team.
+    * <kbd>**priority**</kbd>: A numeric value that defines the team’s priority. A higher number indicates higher priority.

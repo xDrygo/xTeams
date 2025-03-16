@@ -1,6 +1,6 @@
 # 📖 Getting Started
 
-### 1️⃣ **Installation**
+## 1️⃣ **Installation**
 
 To get started with **xTeams**, you first need to install the plugin on your Minecraft server. Follow these steps for proper installation:
 
@@ -11,11 +11,11 @@ Once the plugin is downloaded, simply place it in your server's `plugins` folder
 
 ***
 
-### 2️⃣ **Create and Manage Teams**
+## 2️⃣ **Create and Manage Teams**
 
 Now that you have **xTeams** installed, let's learn how to create and manage teams on your server.
 
-#### **Create a Team**
+### ✨ **Create a Team**
 
 To create a team in **xTeams**, use the following command:
 
@@ -23,9 +23,9 @@ To create a team in **xTeams**, use the following command:
 /xteams create <team_name>
 ```
 
-Replace `<team_name>` with the codename you want for the team. Example: `/xteams create alpha` will create a team with the code name: alpha
+Replace <kbd>\<team\_name></kbd> with the codename you want for the team. Example: <kbd>/xteams create red</kbd> will create a team with the code name: red
 
-#### **Managing the Team**
+### 🛠️ **Managing the Team**
 
 *   **Join a Team**\
     To join a team, use the following command:
@@ -34,7 +34,7 @@ Replace `<team_name>` with the codename you want for the team. Example: `/xteams
     /xteams join <team_name> <player_name>
     ```
 
-    Example: `/xteams join alpha <your_name>` will add a player to the alpha team.
+    Example: <kbd>/xteams join red \<your\_name></kbd> will add a player to the red team.
 *   **Leave a Team**\
     To leave the team you are in, execute:
 
@@ -42,7 +42,7 @@ Replace `<team_name>` with the codename you want for the team. Example: `/xteams
     /xteams leave <team_name> <player_name>
     ```
 
-    Example: `/xteams leave alpha <your_name>` will make the player leave the "Alpha" team.
+    Example: <kbd>/xteams leave red \<your\_name></kbd> will make the player leave the "red" team.
 *   **View Team Information**\
     To get information about a team, use:
 
@@ -50,19 +50,19 @@ Replace `<team_name>` with the codename you want for the team. Example: `/xteams
     /xteams teaminfo <team_name>
     ```
 
-    Example: `/xteams teaminfo alpha` will give you details about the "Alpha" team, such as its members and status.
+    Example: <kbd>/xteams teaminfo red</kbd> will give you details about the "red" team, such as its members and status.
 
-#### **Customize the Team Display**
+### ✏️ **Customize the Display Name**
 
-Using the `/xteams setdisplay` command, you can change the text shown for a team in the team list.
+Using the <kbd>/xteams setdisplay</kbd> command, you can change the text shown for a team in the team list.
 
 ```
-/xteams setdisplay <team_name> "<display_text>"
+/xteams setdisplay <team_name> "<display_name>"
 ```
 
-Example: `/xteams setdisplay alpha "Welcome to the Alpha team!"` will change the display text for the "Alpha" team to "Welcome to the Alpha team!"
+Example: <kbd>/xteams setdisplay red "\&cThe Red Team"</kbd> will change the display text for the "red" team to "<kbd><mark style="color:red;">The Red Team<mark style="color:red;"></kbd>"
 
-#### **Delete a Team**
+### 🗑️ **Delete a Team**
 
 If you decide to delete a team, you can do so with:
 
@@ -70,21 +70,23 @@ If you decide to delete a team, you can do so with:
 /xteams delete <team_name>
 ```
 
-Example: `/xteams delete alpha` will delete the "Alpha" team and its data.
+Example: <kbd>/xteams delete red</kbd> will delete the "red" team and its data.
 
 ***
 
-### 3️⃣ **More Resources**
+## 3️⃣ **More Resources**
 
 For more information on other commands, permissions, and configurations, check out the following sections:
 
-* **Information**
-  * [Commands](../plugin/commands.md)
-  * [Permissions](../plugin/permissions.md)
-  * [Placeholders](../plugin/placeholders.md)
+* **Plugin**
+  * [⌨️ Commands](../plugin/commands.md)
+  * [🔒 Permissions](../plugin/permissions.md)
+  * [🧩 Placeholders](../plugin/placeholders.md)
 * **Configuration Files**
-  * [config.yml](../configuration-files/config.yml.md)
-  * [messages.yml](../configuration-files/messages.yml.md)
+  * [📝 config.yml](../configuration-files/config.yml.md)
+  * [📝 messages.yml](../configuration-files/messages.yml.md)
+* **API**
+  * [🔗 xTeams API](../api/xteams-api.md)
 
 If you have questions or need further assistance, you can also check the Troubleshooting section.
 

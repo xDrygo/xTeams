@@ -1,7 +1,5 @@
 # 📁 Setup xTeams
 
-
-
 {% hint style="warning" %}
 Before installing **xTeams** plugin, you should check that you meet the requirements.
 {% endhint %}
@@ -10,7 +8,13 @@ Before installing **xTeams** plugin, you should check that you meet the requirem
 
 <summary>📋 Requirements</summary>
 
-For the plugin to work, you need to use **Spigot** or **Paper**. Using **Craftbukkit** is **not supported** and the plugin will not work. For best performance, **Paper** is recommended.
+For the plugin to work, you need to use **Spigot** or **Paper** _(Also you can use Paper forks like: Purpur or Pufferfish)_.
+
+Using **Craftbukkit** is **not supported** and the plugin will not work. For best performance, **Paper** is recommended.
+
+{% hint style="info" %}
+You can download Spigot [**here**](https://getbukkit.org/download/spigot) and Paper [**here**](https://papermc.io/)
+{% endhint %}
 
 </details>
 
@@ -41,7 +45,7 @@ To download the **xTeams** plugin, follow these steps:
 1. **Visit the official download page:**
    * Modrinth _(Recommended)_
    * SpigotMC
-   * GitHub Releases _(For development builds)_
+   * [GitHub Releases](https://github.com/xDrygo/xTeams/releases) _(For development builds)_
 2. **Download the `.jar` file** compatible with your server version.
 3. **Place the downloaded file** inside your server's `/plugins/` folder.
 4. **Restart your server** to generate the configuration files and complete the installation.
