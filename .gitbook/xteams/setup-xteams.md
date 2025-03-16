@@ -53,3 +53,9 @@ To download the **xTeams** plugin, follow these steps:
 For further guidance on setup and configuration, visit the **Getting Started** section.
 
 </details>
+
+***
+
+## ✅ All ready?
+
+Once you have the plugin installed on your server and it's running smoothly, you're all set to get started!

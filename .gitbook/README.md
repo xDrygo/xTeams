@@ -30,4 +30,4 @@ Stay connected and keep your plugin up to date by visiting the following links:
 
 ## 🚀 Ready to Begin?
 
-Jump to the **Getting Started** section to set up XTeams and start managing your teams like never before!
+Jump to the **Setup** section to learn how to set up XTeams and start managing your teams like never before!
