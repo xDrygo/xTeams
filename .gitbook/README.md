@@ -22,8 +22,8 @@ Welcome to the official documentation for **XTeams**, the ultimate plugin for ma
 
 Stay connected and keep your plugin up to date by visiting the following links:
 
-* 🧩 **Modrinth** — Download and rate the plugin on Modrinth!
-* 🏗️ **SpigotMC** — Download and rate the plugin on Spigot!
+* [🧩 **Modrinth**](https://modrinth.com/project/xteams) — Download and rate the plugin on Modrinth!
+* 🏗️ [**SpigotMC**](https://www.spigotmc.org/resources/123320/) — Download and rate the plugin on Spigot!
 * [📂 **GitHub Repository**](https://github.com/xDrygo/xTeams) — Access the source code and dev releases.
 
 ***
