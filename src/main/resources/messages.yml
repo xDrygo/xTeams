@@ -119,14 +119,14 @@ error:
       priority_not_specified: "%prefix% #FF0000🚫 Need to specify the priority. &7Use &f/xteams create <team> <priority>"
     leave:
       self:
-        not_in_team: "%prefix% #FF0000🚫 You are not in %team% team."
+        not_in_team: "%prefix% #FF0000🚫 You are not in '%team%' team."
         not_in_anyteam: "%prefix% #FF0000🚫 You are not in any team"
       other:
-        not_in_team: "%prefix% #FF0000🚫 Player %player% is not on %team% team."
+        not_in_team: "%prefix% #FF0000🚫 Player %player% is not on '%team%' team."
         not_in_anyteam: "%prefix% #FF0000🚫 Player %player% is not on any team."
     join:
-      other_already_in_team: "%prefix% #FF0000🚫 Player %player% is already on %team% team."
-      already_in_team: "%prefix% #FF0000🚫 You are already on %team% team."
+      other_already_in_team: "%prefix% #FF0000🚫 Player %player% is already on '%team%' team."
+      already_in_team: "%prefix% #FF0000🚫 You are already on '%team%' team."
     setdisplay:
       displayname_not_specified: "%prefix% #FF0000🚫 Need to add the display name. &7Use &f/xteams setdisplay <team> [New Display Name]"
       invalid_format: "%prefix% #FF0000🚫 The Display Name format is invalid. &7Remember to use double quotes: \"Display Name\"."
