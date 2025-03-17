@@ -88,6 +88,7 @@ commands:
     - "                       #fff18d&lᴛᴇᴀᴍꜱ ᴄᴏᴍᴍᴀɴᴅꜱ"
     - "&f  /xᴛᴇᴀᴍꜱ ᴄʀᴇᴀᴛᴇ <ᴛᴇᴀᴍ> <ᴘʀɪᴏʀɪᴛʏ> #707070- #ccccccCreate a team."
     - "&f  /xᴛᴇᴀᴍꜱ ᴅᴇʟᴇᴛᴇ <ᴛᴇᴀᴍ> #707070- #ccccccDelete a team (type * on <team> for delete all the teams)."
+    - "&f  /xᴛᴇᴀᴍꜱ ꜱᴇᴛᴅɪꜱᴘʟᴀʏ \"<ᴅɪꜱᴘʟᴀʏ ɴᴀᴍᴇ>\" #707070- #ccccccSets the display name of a team."
     - "&f  /xᴛᴇᴀᴍꜱ ᴊᴏɪɴ <ᴛᴇᴀᴍ> <ᴘʟᴀʏᴇʀ> #707070- #ccccccJoin a team (leave the player empty to join yourself)."
     - "&f  /xᴛᴇᴀᴍꜱ ʟᴇᴀᴠᴇ <ᴛᴇᴀᴍ> <ᴘʟᴀʏᴇʀ> #707070- #ccccccLeave a team (leave the player empty to leave yourself)."
     - " "
@@ -97,12 +98,19 @@ commands:
     - "&f  /xᴛᴇᴀᴍꜱ ᴘʟᴀʏᴇʀɪɴꜰᴏ <ᴘʟᴀʏᴇʀ> #707070- #ccccccGet information about a player."
     - " "
     - " "
+tab_complete:
+  create:
+    team: "Team"
+    priority: "Priority"
+  setdisplay:
+    display_name: "Display Name"
 error:
   commands:
     unknown_command: "%prefix% #FF0000🚫 Unknown command. &7Use &f/xteams help &7to see the list of commands."
     no_permission: "%prefix% #FF0000🚫 You have no permission to use this command."
     player_not_found: "%prefix% #FF0000🚫 Can't find player '%player%'."
     team_not_found: "%prefix% #FF0000🚫 Can't find team '%team%'."
+    anyteam_not_found: "%prefix% #FF0000🚫 Can't find any team."
     team_already_exists: "%prefix% #FF0000🚫 Team '%team%' already exists."
     invalid_priority: "%prefix% #FF0000🚫 Priority must be a valid integer."
     team_not_specified:
@@ -115,8 +123,10 @@ error:
     only_player:
       leave: "%prefix% #FF0000🚫 When executed by console, need to specify a player. &7Use &f/xteams leave <team or *> <player>"
       join: "%prefix% #FF0000🚫 When executed by console, need to specify a player. &7Use &f/xteams join <team or *> <player>"
-    create:
-      priority_not_specified: "%prefix% #FF0000🚫 Need to specify the priority. &7Use &f/xteams create <team> <priority>"
+    priority_not_specified: "%prefix% #FF0000🚫 Need to specify the priority. &7Use &f/xteams create <team> <priority>"
+    all_not_permission:
+      delete: "%prefix% #FF0000🚫 Don't have permission to delete all teams."
+      leave: "%prefix% #FF0000🚫 Don't have permission to leave all teams."
     leave:
       self:
         not_in_team: "%prefix% #FF0000🚫 You are not in '%team%' team."
@@ -125,8 +135,10 @@ error:
         not_in_team: "%prefix% #FF0000🚫 Player '%player%' is not on '%team%' team."
         not_in_anyteam: "%prefix% #FF0000🚫 Player %player% is not on any team."
     join:
-      other_already_in_team: "%prefix% #FF0000🚫 Player '%player%' is already on '%team%' team."
-      already_in_team: "%prefix% #FF0000🚫 You are already on '%team%' team."
+      other:
+        already_in_team: "%prefix% #FF0000🚫 Player '%player%' is already on '%team%' team."
+      self:
+        already_in_team: "%prefix% #FF0000🚫 You are already on '%team%' team."
     setdisplay:
       displayname_not_specified: "%prefix% #FF0000🚫 Need to add the display name. &7Use &f/xteams setdisplay <team> [New Display Name]"
       invalid_format: "%prefix% #FF0000🚫 The Display Name format is invalid. &7Remember to use double quotes: \"Display Name\"."

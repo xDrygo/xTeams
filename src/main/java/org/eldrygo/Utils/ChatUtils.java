@@ -47,22 +47,26 @@ public class ChatUtils {
             throw new IllegalStateException("ConfigManager no está inicializado.");
         }
 
-        String message = getMessageConfig().getString(path);
-        if (getMessageConfig().isList(path)) {
-            List<String> lines = getMessageConfig().getStringList(path);
-            return ChatUtils.formatColor(String.join("\n", lines));
-        } else {
-            if (message == null || message.isEmpty()) {
-                plugin.getLogger().warning("[WARNING] Message not found: " + path);
-                return ChatUtils.formatColor("&r %prefix% #FF0000&l[ERROR] #FF3535Message not found: " + path)
-                        .replace("%prefix%", configManager.getPrefix());
-            }
+        String message = getMessageConfig().isList(path)
+                ? String.join("\n", getMessageConfig().getStringList(path))
+                : getMessageConfig().getString(path);
 
-            // Usamos PlaceholderAPI para reemplazar los placeholders de otras expansiones
-            message = PlaceholderAPI.setPlaceholders(player, message);
-
-            return ChatUtils.formatColor(message.replace("%prefix%", configManager.getPrefix()));
+        if (message == null || message.isEmpty()) {
+            plugin.getLogger().warning("[WARNING] Message not found: " + path);
+            return ChatUtils.formatColor("&r" + configManager.getPrefix() + " #FF0000&l[ERROR] #FF3535Message not found: " + path);
         }
+
+        // Reemplazar placeholders
+        if (player != null) {
+            message = message.replace("%player%", player.getName());
+        } else {
+            message = message.replace("%player%", "Unknown");
+        }
+
+        message = PlaceholderAPI.setPlaceholders(player, message)
+                .replace("%prefix%", configManager.getPrefix());
+
+        return ChatUtils.formatColor(message);
     }
     public List<String> getMessageList(String path) {
         // Accede a la instancia de messagesConfig directamente

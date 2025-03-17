@@ -1,5 +1,5 @@
 name: xTeams
-version: 1.1.02
+version: 1.2.0
 main: org.eldrygo.XTeams
 api-version: 1.21
 authors: [Drygo]
@@ -36,13 +36,13 @@ permissions:
     description: "Allows users to execute xTeams commands"
     default: false
     children:
-      xteams.command.base: true
       xteams.command.create: true
       xteams.command.delete: true
-      xteams.command.delete.*: true
+      xteams.command.delete.all: true
       xteams.command.setdisplay: true
       xteams.command.join: true
       xteams.command.leave: true
+      xteams.command.leave.all: true
       xteams.command.info: true
       xteams.command.teaminfo: true
       xteams.command.playerinfo: true

@@ -60,7 +60,7 @@ public class XTeams extends JavaPlugin {
             getLogger().severe("❌ Error: xTeams command is not registered in plugin.yml");
         } else {
             getCommand("xteams").setExecutor(new XTeamsCommand(this));
-            getCommand("xteams").setTabCompleter(new XTeamsTabCompleter());
+            getCommand("xteams").setTabCompleter(new XTeamsTabCompleter(this));
         }
     }
     private void loadPlaceholderAPI() {
