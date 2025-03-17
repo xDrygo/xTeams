@@ -1,5 +1,6 @@
 package org.eldrygo.Utils;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.eldrygo.Managers.ConfigManager;
@@ -44,6 +45,7 @@ public class ChatUtils {
         if (configManager == null) {
             throw new IllegalStateException("ConfigManager no está inicializado.");
         }
+
         String message = getMessageConfig().getString(path);
         if (getMessageConfig().isList(path)) {
             List<String> lines = getMessageConfig().getStringList(path);
@@ -51,8 +53,13 @@ public class ChatUtils {
         } else {
             if (message == null || message.isEmpty()) {
                 plugin.getLogger().warning("[WARNING] Message not found: " + path);
-                return ChatUtils.formatColor("&r %prefix% #FF0000&l[ERROR] #FF3535Message not found: " + path).replace("%prefix%", configManager.getPrefix());
+                return ChatUtils.formatColor("&r %prefix% #FF0000&l[ERROR] #FF3535Message not found: " + path)
+                        .replace("%prefix%", configManager.getPrefix());
             }
+
+            // Usamos PlaceholderAPI para reemplazar los placeholders de otras expansiones
+            message = PlaceholderAPI.setPlaceholders(null, message); // null se reemplaza con el jugador si es necesario
+
             return ChatUtils.formatColor(message.replace("%prefix%", configManager.getPrefix()));
         }
     }

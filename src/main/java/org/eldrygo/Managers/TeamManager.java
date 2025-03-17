@@ -10,6 +10,7 @@ public class TeamManager {
 
     private final XTeams plugin;
     private Map<String, Team> teams; // Utilizamos un mapa para almacenar equipos por su nombre.
+    private ConfigManager configManager;
 
     public TeamManager(XTeams plugin) {
         this.plugin = plugin;
@@ -200,5 +201,15 @@ public class TeamManager {
 
     public boolean isPlayerInAnyTeam(OfflinePlayer player) {
         return getPlayerTeam(player) != null;
+    }
+    
+    public boolean setTeamDisplayName(String teamName, String newDisplayName) {
+        Team team = getTeamByName(teamName);
+        if (team == null) {
+            return false;  // No se encontró el equipo
+        }
+        team.setDisplayName(newDisplayName);  // Cambiar el display name
+        configManager.saveTeamsToConfig();  // Guardar los cambios en la configuración
+        return true;
     }
 }

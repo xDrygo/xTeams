@@ -10,7 +10,7 @@ public class Team {
 
     private final XTeams plugin;
     private final String name;
-    private final String displayName;
+    private String displayName;
     private final int priority;
     private final Set<String> members;
 
@@ -29,6 +29,7 @@ public class Team {
     public String getDisplayName() {
         return displayName;
     }
+    public void setDisplayName(String displayName) { this.displayName = displayName; }
     public int getPriority() { return priority; }
     public Set<String> getMembers() {
         return members;

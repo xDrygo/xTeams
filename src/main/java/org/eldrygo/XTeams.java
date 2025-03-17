@@ -3,9 +3,10 @@ package org.eldrygo;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.eldrygo.API.XTeamsAPI;
 import org.eldrygo.Commands.XTeamsCommand;
+import org.eldrygo.Commands.XTeamsTabCompleter;
 import org.eldrygo.Extensions.XTeamsExpansion;
 import org.eldrygo.Managers.ConfigManager;
 import org.eldrygo.Managers.TeamManager;
@@ -22,6 +23,7 @@ public class XTeams extends JavaPlugin {
     public LogsUtils logsUtils;
     public TeamManager teamManager;
     public ConfigManager configManager;
+    private XTeamsAPI xTeamsAPI;
     private boolean workingPlaceholderAPI = false;
 
     @Override
@@ -32,11 +34,12 @@ public class XTeams extends JavaPlugin {
         this.chatUtils = new ChatUtils(this, configManager);
         this.logsUtils = new LogsUtils(this);
         this.teamManager = new TeamManager(this);
+        this.xTeamsAPI = new XTeamsAPI(this);
         configManager.loadConfig();
         loadPlaceholderAPI();
         configManager.loadMessages();
         configManager.loadTeamsFromConfig();
-        loadCommands();
+        loadXTeamsCmd();
         logsUtils.sendStartupMessage();
     }
 
@@ -52,11 +55,12 @@ public class XTeams extends JavaPlugin {
     public boolean isPlaceholderAPIEnabled() {
         return workingPlaceholderAPI;
     }
-    private void loadCommands() {
+    private void loadXTeamsCmd() {
         if (getCommand("xteams") == null) {
             getLogger().severe("❌ Error: xTeams command is not registered in plugin.yml");
         } else {
             getCommand("xteams").setExecutor(new XTeamsCommand(this));
+            getCommand("xteams").setTabCompleter(new XTeamsTabCompleter());
         }
     }
     private void loadPlaceholderAPI() {
@@ -67,5 +71,8 @@ public class XTeams extends JavaPlugin {
         } else {
             getLogger().warning("⚠ PlaceholderAPI not detected. Placeholders will not work.");
         }
+    }
+    public XTeamsAPI getXTeamsAPI() {
+        return xTeamsAPI;
     }
 }

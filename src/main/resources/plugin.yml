@@ -1,9 +1,10 @@
 name: xTeams
-version: 0.0.36
+version: 1.0
 main: org.eldrygo.XTeams
 api-version: 1.21
 authors: [Drygo]
 softdepend: [PlaceholderAPI]
+api: true
 commands:
   xteams:
     description: "Plugin main command"
@@ -12,18 +13,24 @@ commands:
         description: "Creates a new team."
       delete:
         description: "Deletes a team."
+      setdisplay:
+        description: "Sets the display name for a team."
       join:
         description: "Joins a team."
       leave:
         description: "Leaves a team."
       list:
         description: "Lists all teams."
-      info:
+      playerinfo:
+        description: "Displays the list of teams that a player belongs."
+      teaminfo:
         description: "Displays information about a team."
+      info:
+        description: "Displays information about the plugin"
       reload:
         description: "Reloads the plugin configuration and message files."
-      save:
-        description: "Saves the plugin data to the configuration files."
+      help:
+        description: "Shows the list of commands from the plugin."
 permissions:
   xteams.command:
     description: "Allows users to execute xTeams commands"
@@ -32,12 +39,16 @@ permissions:
       xteams.command.base: true
       xteams.command.create: true
       xteams.command.delete: true
+      xteams.command.delete.*: true
+      xteams.command.setdisplay: true
       xteams.command.join: true
       xteams.command.leave: true
       xteams.command.info: true
+      xteams.command.teaminfo: true
+      xteams.command.playerinfo: true
       xteams.command.list: true
       xteams.command.reload: true
-      xteams.command.save: true
+      xteams.command.help: true
   xteams.admin:
     description: "Allows administrators to execute xTeams commands"
     default: false
