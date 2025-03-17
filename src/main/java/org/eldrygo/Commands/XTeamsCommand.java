@@ -247,13 +247,13 @@ public class XTeamsCommand implements CommandExecutor {
 
             if (targetPlayer == null || !targetPlayer.isOnline()) {
                 sender.sendMessage(chatUtils.getMessage("error.commands.player_not_found")
-                        .replace("%player%", targetPlayerName));
+                        .replace("%player%", targetPlayer.getName()));
                 return false;
             }
 
             if (plugin.getTeamManager().isInTeam(targetPlayer, teamName)) {
                 sender.sendMessage(chatUtils.getMessage("error.commands.join.other_already_in_team")
-                        .replace("%player%", targetPlayerName)
+                        .replace("%player%", targetPlayer.getName())
                         .replace("%team%", teamName));
                 return false;
             }
@@ -266,7 +266,7 @@ public class XTeamsCommand implements CommandExecutor {
                 plugin.getTeamManager().joinTeam(targetPlayer, teamName);
                 sender.sendMessage(chatUtils.getMessage("commands.join.other.success")
                         .replace("%team%", teamName)
-                        .replace("%player%", targetPlayerName));
+                        .replace("%player%", targetPlayer.getName()));
                 configManager.saveTeamsToConfig();
             }
         } else {
@@ -353,7 +353,7 @@ public class XTeamsCommand implements CommandExecutor {
 
         if (!targetPlayer.hasPlayedBefore() && !targetPlayer.isOnline()) {
             sender.sendMessage(chatUtils.getMessage("error.commands.player_not_found")
-                    .replace("%player%", targetName));
+                    .replace("%player%", targetPlayer.getName()));
             return false;
         }
 
@@ -361,7 +361,7 @@ public class XTeamsCommand implements CommandExecutor {
 
         if (playerTeams.isEmpty()) {
             sender.sendMessage(chatUtils.getMessage("commands.playerinfo.string.no_teams")
-                    .replace("%player%", targetName));
+                    .replace("%player%", targetPlayer.getName()));
             return true;
         }
 
@@ -371,7 +371,7 @@ public class XTeamsCommand implements CommandExecutor {
 
         StringBuilder message = new StringBuilder();
         message.append(chatUtils.getMessage("commands.playerinfo.string.header")
-                        .replace("%player%", targetName)
+                        .replace("%player%", targetPlayer.getName())
                         .replace("%prefix%", plugin.prefix))
                 .append("\n");
         message.append(chatUtils.getMessage("commands.playerinfo.string.main_team")
@@ -439,19 +439,19 @@ public class XTeamsCommand implements CommandExecutor {
 
                 if (targetPlayer == null) {
                     sender.sendMessage(chatUtils.getMessage("error.commands.player_not_found")
-                            .replace("%player%", targetPlayerName));
+                            .replace("%player%", targetPlayer.getName()));
                     return false;
                 }
 
                 if (!plugin.getTeamManager().isInAnyTeam(targetPlayer)) {
                     sender.sendMessage(chatUtils.getMessage("error.commands.leave.other.not_in_anyteam")
-                            .replace("%player%", targetPlayerName));
+                            .replace("%player%", targetPlayer.getName()));
                     return false;
                 }
 
                 plugin.getTeamManager().leaveAllTeams(targetPlayer);
                 sender.sendMessage(chatUtils.getMessage("commands.leave.other.successall")
-                        .replace("%player%", targetPlayerName));
+                        .replace("%player%", targetPlayer.getName()));
                 configManager.saveTeamsToConfig();
             } else {
                 if (!plugin.getTeamManager().isInAnyTeam(player)) {
@@ -476,20 +476,20 @@ public class XTeamsCommand implements CommandExecutor {
 
                 if (targetPlayer == null) {
                     sender.sendMessage(chatUtils.getMessage("error.commands.player_not_found")
-                            .replace("%player%", targetPlayerName));
+                            .replace("%player%", targetPlayer.getName()));
                     return false;
                 }
 
                 if (!plugin.getTeamManager().isInTeam(targetPlayer, teamName)) {
                     sender.sendMessage(chatUtils.getMessage("error.commands.leave.other.not_in_team")
-                            .replace("%player%", targetPlayerName)
+                            .replace("%player%", targetPlayer.getName())
                             .replace("%team%", teamName));
                     return false;
                 }
 
                 plugin.getTeamManager().leaveTeam(targetPlayer, teamName);
                 sender.sendMessage(chatUtils.getMessage("commands.leave.other.success")
-                        .replace("%player%", targetPlayerName)
+                        .replace("%player%", targetPlayer.getName())
                         .replace("%team%", teamName));
                 configManager.saveTeamsToConfig();
             } else {
