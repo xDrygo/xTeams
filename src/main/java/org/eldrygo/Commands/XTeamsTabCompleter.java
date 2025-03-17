@@ -61,22 +61,21 @@ public class XTeamsTabCompleter implements TabCompleter {
 
         // Aquí manejamos los argumentos según el subcomando
         switch (subCommand.toLowerCase()) {
-            case "create":
+            case "create" -> {
                 if (args.length == 2 && sender.hasPermission("xteams.command.create")) {
                     // Espacio para que el jugador escriba el nombre del equipo
                     return Collections.emptyList();  // No se autocompleta el nombre, solo se deja escribir
                 }
-                break;
-
-            case "delete":
+            }
+            case "delete" -> {
                 if (args.length == 2 && sender.hasPermission("xteams.command.delete")) {
                     // Sugerir la lista de equipos disponibles y añadir '*' para eliminar todos los equipos
                     List<String> teams = getTeamsList();
                     teams.add("*");
                     return getMatches(args[1], teams);
                 }
-                break;
-            case "setdisplay":
+            }
+            case "setdisplay" -> {
                 if (args.length == 2 && sender.hasPermission("xteams.command.setdisplay")) {
                     // Sugerir la lista de equipos disponibles
                     List<String> teams = getTeamsList();
@@ -85,9 +84,8 @@ public class XTeamsTabCompleter implements TabCompleter {
                     // Al llegar al tercer argumento, sugerir que se escriba entre comillas
                     return Collections.singletonList("\"\"");
                 }
-                break;
-
-            case "join":
+            }
+            case "join" -> {
                 if (args.length == 2 && sender.hasPermission("xteams.command.join")) {
                     // Sugerir equipos para unirse
                     return getMatches(args[1], getTeamsList());
@@ -96,9 +94,8 @@ public class XTeamsTabCompleter implements TabCompleter {
                     // Sugerir jugadores para unirse a un equipo
                     return getMatches(args[2], getPlayersList());
                 }
-                break;
-
-            case "leave":
+            }
+            case "leave" -> {
                 if (args.length == 2 && sender.hasPermission("xteams.command.leave")) {
                     // Sugerir equipos a los cuales el jugador puede dejar
                     return getMatches(args[1], getTeamsList());
@@ -107,37 +104,32 @@ public class XTeamsTabCompleter implements TabCompleter {
                     // Sugerir jugadores para dejar un equipo
                     return getMatches(args[2], getPlayersList());
                 }
-                break;
-
-            case "info":
+            }
+            case "info" -> {
                 if (args.length == 2 && sender.hasPermission("xteams.command.info")) {
                     // Mostrar información de todos los equipos disponibles
                     return getMatches(args[1], getTeamsList());
                 }
-                break;
-
-            case "teaminfo":
+            }
+            case "teaminfo" -> {
                 if (args.length == 2 && sender.hasPermission("xteams.command.teaminfo")) {
                     // Mostrar información sobre un equipo
                     return getMatches(args[1], getTeamsList());
                 }
-                break;
-
-            case "playerinfo":
+            }
+            case "playerinfo" -> {
                 if (args.length == 2 && sender.hasPermission("xteams.command.playerinfo")) {
                     // Mostrar información sobre un jugador
                     return getMatches(args[1], getPlayersList());
                 }
-                break;
-
-            case "list":
+            }
+            case "list" -> {
                 if (args.length == 1 && sender.hasPermission("xteams.command.list")) {
                     return subCommands;
                 }
-                break;
-
-            default:
-                break;
+            }
+            default -> {
+            }
         }
 
         return Collections.emptyList();  // Retornar vacío si no hay más sugerencias

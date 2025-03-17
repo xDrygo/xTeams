@@ -15,19 +15,19 @@
 # List of teams and the list of players in the team.
 teams:
   red:
-    displayName: Red Team
+    displayName: "&e&lRed Team"
     priority: 2
     members:
       - player1
       - player2
   blue:
-    displayName: Blue Team
+    displayName: "&e&lBlue Team"
     priority: 1
     members:
       - player3
       - player4
   yellow:
-    displayName: Yellow Team
+    displayName: "&e&lYellow Team"
     priority: 0
     members:
       - player5

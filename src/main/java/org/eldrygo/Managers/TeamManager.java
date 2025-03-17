@@ -9,11 +9,12 @@ import java.util.*;
 public class TeamManager {
 
     private final XTeams plugin;
-    private Map<String, Team> teams; // Utilizamos un mapa para almacenar equipos por su nombre.
-    private ConfigManager configManager;
+    private final Map<String, Team> teams; // Utilizamos un mapa para almacenar equipos por su nombre.
+    private final ConfigManager configManager;
 
-    public TeamManager(XTeams plugin) {
+    public TeamManager(XTeams plugin, ConfigManager configManager) {
         this.plugin = plugin;
+        this.configManager = configManager;
         this.teams = new HashMap<>();
     }
 
@@ -57,7 +58,7 @@ public class TeamManager {
 
     public void createTeam(String teamName, String displayName, int priority, Set<String> members) {
         if (!teamExists(teamName)) {
-            Team team = new Team(plugin, teamName, displayName, priority, members);
+            Team team = new Team(teamName, displayName, priority, members);
             addTeam(team);
         }
     }

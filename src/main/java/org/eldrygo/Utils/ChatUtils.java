@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class ChatUtils {
     private final XTeams plugin;
-    private ConfigManager configManager;
+    private final ConfigManager configManager;
 
     public ChatUtils(XTeams plugin, ConfigManager configManager) {
         this.plugin = plugin;
@@ -28,7 +28,7 @@ public class ChatUtils {
     private static String replaceHexColors(String message) {
         Pattern hexPattern = Pattern.compile("#([A-Fa-f0-9]{6})");
         Matcher matcher = hexPattern.matcher(message);
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
 
         while (matcher.find()) {
             String hexColor = matcher.group(1);

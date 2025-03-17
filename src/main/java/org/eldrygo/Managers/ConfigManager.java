@@ -7,10 +7,7 @@ import org.eldrygo.XTeams;
 import org.eldrygo.Utils.ChatUtils;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ConfigManager {
 
@@ -31,7 +28,6 @@ public class ConfigManager {
     public void loadConfig() {
         plugin.saveDefaultConfig();
         plugin.reloadConfig();
-        FileConfiguration config = plugin.getConfig();
     }
 
     public void loadMessages() {
@@ -55,14 +51,14 @@ public class ConfigManager {
         FileConfiguration config = plugin.getConfig();
 
         if (config.contains("teams")) {
-            for (String teamName : config.getConfigurationSection("teams").getKeys(false)) {
+            for (String teamName : Objects.requireNonNull(config.getConfigurationSection("teams")).getKeys(false)) {
                 List<String> players = config.getStringList("teams." + teamName + ".members");
                 String displayName = config.getString("teams." + teamName + ".displayName", teamName);
                 int priority = config.getInt("teams." + teamName + ".priority", 0);  // Si no hay displayName, usar el teamName
 
                 // Crear el equipo con los jugadores y el displayName directamente desde la configuración
                 Set<String> playerSet = new HashSet<>(players); // Convertir la lista de jugadores en un Set
-                Team team = new Team(plugin, teamName, displayName, priority, playerSet);  // Usar el constructor adecuado
+                Team team = new Team(teamName, displayName, priority, playerSet);  // Usar el constructor adecuado
                 plugin.getTeamManager().addTeam(team);  // CORRECCIÓN: Añadir el equipo con el nombre
 
                 plugin.getLogger().info("Team loaded: " + teamName);

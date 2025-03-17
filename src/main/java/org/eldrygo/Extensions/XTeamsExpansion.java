@@ -16,17 +16,17 @@ public class XTeamsExpansion extends PlaceholderExpansion {
     }
 
     @Override
-    public String getIdentifier() {
+    public @NotNull String getIdentifier() {
         return "xteams";
     }
 
     @Override
-    public String getAuthor() {
+    public @NotNull String getAuthor() {
         return "Drygo";
     }
 
     @Override
-    public String getVersion() {
+    public @NotNull String getVersion() {
         return plugin.getDescription().getVersion();
     }
 
