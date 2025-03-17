@@ -3,6 +3,7 @@ package org.eldrygo.Utils;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.eldrygo.Managers.ConfigManager;
 import org.eldrygo.XTeams;
 
@@ -41,7 +42,7 @@ public class ChatUtils {
         matcher.appendTail(buffer);
         return buffer.toString();
     }
-    public String getMessage(String path) {
+    public String getMessage(String path, Player player) {
         if (configManager == null) {
             throw new IllegalStateException("ConfigManager no está inicializado.");
         }
@@ -58,7 +59,7 @@ public class ChatUtils {
             }
 
             // Usamos PlaceholderAPI para reemplazar los placeholders de otras expansiones
-            message = PlaceholderAPI.setPlaceholders(null, message); // null se reemplaza con el jugador si es necesario
+            message = PlaceholderAPI.setPlaceholders(player, message);
 
             return ChatUtils.formatColor(message.replace("%prefix%", configManager.getPrefix()));
         }
