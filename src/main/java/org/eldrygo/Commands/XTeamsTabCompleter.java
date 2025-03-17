@@ -26,9 +26,9 @@ public class XTeamsTabCompleter implements TabCompleter {
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        String teamNameMessage = chatUtils.getMessage("tabcomplete.create.team", (Player) sender);
-        String priorityMessage = chatUtils.getMessage("tabcomplete.create.priority", (Player) sender);
-        String displayNameMessage = chatUtils.getMessage("tabcomplete.setdisplay.display_name", (Player) sender);
+        String teamNameMessage = chatUtils.getMessage("tab_complete.create.team", (Player) sender);
+        String priorityMessage = chatUtils.getMessage("tab_complete.create.priority", (Player) sender);
+        String displayNameMessage = chatUtils.getMessage("tab_complete.setdisplay.display_name", (Player) sender);
         // Primero comprobamos si el jugador tiene el permiso para el subcomando
         if (args.length == 0) {
             return Collections.emptyList();  // No hay nada que autocompletar si no hay argumentos
