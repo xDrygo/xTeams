@@ -8,7 +8,7 @@ Before installing **xTeams** plugin, you should check that you meet the requirem
 
 <summary>📋 Requirements</summary>
 
-For the plugin to work, you need to use **Spigot** or **Paper** _(Also you can use Paper forks like: Purpur or Pufferfish)_.
+For the plugin to work, you need to use **Spigot** or **Paper** for **Minecraft 1.20.x to 1.21.x** _(Also you can use Paper forks like: Purpur or Pufferfish)_.
 
 Using **Craftbukkit** is **not supported** and the plugin will not work. For best performance, **Paper** is recommended.
 
