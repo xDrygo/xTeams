@@ -43,8 +43,8 @@ You can download PlaceholderAPI [**here**](https://www.spigotmc.org/resources/pl
 To download the **xTeams** plugin, follow these steps:
 
 1. **Visit the official download page:**
-   * Modrinth _(Recommended)_
-   * SpigotMC
+   * [Modrinth](https://modrinth.com/plugin/xteams) _(Recommended)_
+   * [SpigotMC](https://www.spigotmc.org/resources/123320/)
    * [GitHub Releases](https://github.com/xDrygo/xTeams/releases) _(For development builds)_
 2. **Download the `.jar` file** compatible with your server version.
 3. **Place the downloaded file** inside your server's `/plugins/` folder.
