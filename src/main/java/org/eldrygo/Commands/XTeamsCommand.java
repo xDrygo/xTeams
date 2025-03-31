@@ -382,6 +382,8 @@ public class XTeamsCommand implements CommandExecutor {
                 .append("\n");
 
         // Información de otros equipos
+        message.append(chatUtils.getMessage("commands.playerinfo.string.team_list_header", targetPlayer))
+                .append("\n");
         for (Team team : playerTeams) {
             message.append(chatUtils.getMessage("commands.playerinfo.string.team_list_row", targetPlayer)
                             .replace("%display_name%", team.getDisplayName())
@@ -568,19 +570,14 @@ public class XTeamsCommand implements CommandExecutor {
         sender.sendMessage(ChatUtils.formatColor("&f                           ᴘʟᴀᴄᴇʜᴏʟᴅᴇʀᴀᴘɪ #707070» #FFFAAB" + placeholderStatus));
         sender.sendMessage(ChatUtils.formatColor("&7"));
         sender.sendMessage(ChatUtils.formatColor("#fff18d&l                      ᴠᴇʀꜱɪᴏɴ ᴄʜᴀɴɢᴇꜱ"));
-        sender.sendMessage(ChatUtils.formatColor("&f      #7070701. #FFFAABFixed Tab completation."));
-        sender.sendMessage(ChatUtils.formatColor("&f      #7070701. #FFFAABFixed Command messages."));
-        sender.sendMessage(ChatUtils.formatColor("&f      #7070701. #FFFAABFixed Placeholders."));
-        sender.sendMessage(ChatUtils.formatColor("&f      #7070701. #FFFAABAdded * on team leave command."));
-        sender.sendMessage(ChatUtils.formatColor("&f      #7070701. #FFFAABAdded the permission to use * on delete/leave commands."));
-        sender.sendMessage(ChatUtils.formatColor("&f      #7070701. #FFFAABAdded a new wiki por the plugin."));
-        sender.sendMessage(ChatUtils.formatColor("&f      #7070701. #FFFAABPublished xTeams on Modrinth and Spigot."));
-        sender.sendMessage(ChatUtils.formatColor("&f      #7070701. #FFFAABAdded PAPI placeholders in every message."));
+        sender.sendMessage(ChatUtils.formatColor("&f      #7070701. #FFFAABAdded support to older versions."));
+        sender.sendMessage(ChatUtils.formatColor("&f      #7070702. #FFFAABNow you can use the plugin from 1.20 to 1.21.4"));
+        sender.sendMessage(ChatUtils.formatColor("&f      #7070703. #FFFAABFixed message exception when PAPI is not installed."));
         sender.sendMessage(ChatUtils.formatColor("&7"));
         sender.sendMessage(ChatUtils.formatColor("#fff18d&l               ᴅʀʏɢᴏ'ꜱ ɴᴏᴛᴇ ᴏꜰ ᴛʜᴇ ᴠᴇʀꜱɪᴏɴ"));
-        sender.sendMessage(ChatUtils.formatColor("&f  #FFFAAB       Hi, I published this plugin and the day after"));
-        sender.sendMessage(ChatUtils.formatColor("&f  #FFFAAB       I found around 7 bugs on the plugin that I fixed"));
-        sender.sendMessage(ChatUtils.formatColor("&f  #FFFAAB        in this version, don't use 1.0, it's broken :/"));
+        sender.sendMessage(ChatUtils.formatColor("&f  #FFFAAB       Hi, this version has not a new important feature"));
+        sender.sendMessage(ChatUtils.formatColor("&f  #FFFAAB       but I found a bug when PAPI is not installed, and"));
+        sender.sendMessage(ChatUtils.formatColor("&f  #FFFAAB         now you can use the plugin from 1.20 :) Enjoy!"));
         sender.sendMessage(ChatUtils.formatColor("&7"));
         sender.sendMessage(ChatUtils.formatColor("#666666+==================================================+"));
         return false;

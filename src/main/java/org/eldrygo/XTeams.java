@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bstats.bukkit.Metrics;
 import org.eldrygo.API.XTeamsAPI;
 import org.eldrygo.Commands.XTeamsCommand;
 import org.eldrygo.Commands.XTeamsTabCompleter;
@@ -34,12 +35,13 @@ public class XTeams extends JavaPlugin {
         this.chatUtils = new ChatUtils(this, configManager);
         this.logsUtils = new LogsUtils(this);
         this.teamManager = new TeamManager(this, configManager);
-        this.xTeamsAPI = new XTeamsAPI(this);
         configManager.loadConfig();
         loadPlaceholderAPI();
         configManager.loadMessages();
         configManager.loadTeamsFromConfig();
         loadXTeamsCmd();
+        int pluginId = 25168;
+        Metrics metrics = new Metrics(this, pluginId);
         logsUtils.sendStartupMessage();
     }
 

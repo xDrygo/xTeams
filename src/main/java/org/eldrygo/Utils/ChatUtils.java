@@ -1,6 +1,7 @@
 package org.eldrygo.Utils;
 
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -63,8 +64,11 @@ public class ChatUtils {
             message = message.replace("%player%", "Unknown");
         }
 
-        message = PlaceholderAPI.setPlaceholders(player, message)
-                .replace("%prefix%", configManager.getPrefix());
+        if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            message = PlaceholderAPI.setPlaceholders(player, message);
+        }
+
+        message = message.replace("%prefix%", configManager.getPrefix());
 
         return ChatUtils.formatColor(message);
     }
