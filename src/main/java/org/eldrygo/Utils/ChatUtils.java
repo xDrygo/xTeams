@@ -3,8 +3,8 @@ package org.eldrygo.Utils;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.eldrygo.Managers.ConfigManager;
 import org.eldrygo.XTeams;
 
@@ -43,7 +43,7 @@ public class ChatUtils {
         matcher.appendTail(buffer);
         return buffer.toString();
     }
-    public String getMessage(String path, Player player) {
+    public String getMessage(String path, OfflinePlayer player) {
         if (configManager == null) {
             throw new IllegalStateException("ConfigManager no está inicializado.");
         }

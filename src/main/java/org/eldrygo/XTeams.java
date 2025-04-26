@@ -52,7 +52,7 @@ public class XTeams extends JavaPlugin {
     }
 
     public ConfigManager getConfigManager() { return configManager; }
-    public TeamManager getTeamManager() { return this.teamManager; }
+    public TeamManager getTeamManager() { return teamManager; }
     public ChatUtils getChatUtils() { return chatUtils; }
     public boolean isPlaceholderAPIEnabled() {
         return workingPlaceholderAPI;

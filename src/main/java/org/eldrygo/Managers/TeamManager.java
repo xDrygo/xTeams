@@ -1,5 +1,10 @@
 package org.eldrygo.Managers;
 
+import org.bukkit.Bukkit;
+import org.eldrygo.API.Events.TeamCreateEvent;
+import org.eldrygo.API.Events.TeamDeleteEvent;
+import org.eldrygo.API.Events.TeamJoinEvent;
+import org.eldrygo.API.Events.TeamLeaveEvent;
 import org.eldrygo.Models.Team;
 import org.eldrygo.XTeams;
 import org.bukkit.OfflinePlayer;
@@ -27,7 +32,11 @@ public class TeamManager {
     }
 
     public void deleteTeam(String teamName) {
-        teams.remove(teamName);
+        Team team = getTeam(teamName);
+        if (team != null) {
+            teams.remove(teamName);
+            Bukkit.getPluginManager().callEvent(new TeamDeleteEvent(team.getName()));
+        }
     }
 
     public Set<Team> getAllTeams() {
@@ -60,6 +69,7 @@ public class TeamManager {
         if (!teamExists(teamName)) {
             Team team = new Team(teamName, displayName, priority, members);
             addTeam(team);
+            Bukkit.getPluginManager().callEvent(new TeamCreateEvent(team));
         }
     }
 
@@ -95,8 +105,13 @@ public class TeamManager {
     public void joinTeam(OfflinePlayer player, String teamName) {
         Team team = getTeam(teamName);
         if (team != null) {
-            team.addMember(player.getName());
-            plugin.getLogger().info(player.getName() + " has joined team " + teamName);
+            if (!team.getMembers().contains(player.getName())) {
+                team.addMember(player.getName());
+                plugin.getLogger().info(player.getName() + " has joined team " + teamName);
+                Bukkit.getPluginManager().callEvent(new TeamJoinEvent(player, team.getName()));
+            } else {
+                plugin.getLogger().info(player.getName() + " is already a member of team " + teamName);
+            }
         } else {
             plugin.getLogger().warning("Team " + teamName + " does not exist.");
         }
@@ -104,18 +119,26 @@ public class TeamManager {
 
     public void joinAllTeams(OfflinePlayer player) {
         for (Team team : teams.values()) {
-            team.addMember(player.getName());
+            if (!team.getMembers().contains(player.getName())) {
+                team.addMember(player.getName());
+                Bukkit.getPluginManager().callEvent(new TeamJoinEvent(player, team.getName()));
+            }
         }
         plugin.getLogger().info(player.getName() + " has joined all teams.");
     }
 
     public void leaveTeam(OfflinePlayer player, String teamName) {
         Team team = getTeam(teamName);
-        if (team != null && team.getMembers().contains(player.getName())) {
-            team.removeMember(player.getName());
-            plugin.getLogger().info(player.getName() + " has left team " + teamName);
+        if (team != null) {
+            if (team.getMembers().contains(player.getName())) {
+                team.removeMember(player.getName());
+                plugin.getLogger().info(player.getName() + " has left team " + teamName);
+                Bukkit.getPluginManager().callEvent(new TeamLeaveEvent(player, team.getName()));
+            } else {
+                plugin.getLogger().warning(player.getName() + " is not a member of team " + teamName);
+            }
         } else {
-            plugin.getLogger().warning(player.getName() + " is not a member of team " + teamName);
+            plugin.getLogger().warning("Team " + teamName + " does not exist.");
         }
     }
 
@@ -123,6 +146,7 @@ public class TeamManager {
         for (Team team : teams.values()) {
             if (team.getMembers().contains(player.getName())) {
                 team.removeMember(player.getName());
+                Bukkit.getPluginManager().callEvent(new TeamLeaveEvent(player, team.getName()));
             }
         }
         plugin.getLogger().info(player.getName() + " has left all teams.");
@@ -212,5 +236,10 @@ public class TeamManager {
         team.setDisplayName(newDisplayName);  // Cambiar el display name
         configManager.saveTeamsToConfig();  // Guardar los cambios en la configuración
         return true;
+    }
+
+    public String getTeamDisplayName(String teamName) {
+        Team team = getTeam(teamName);
+        return team.getDisplayName();
     }
 }
