@@ -24,7 +24,6 @@ public class XTeams extends JavaPlugin {
     public LogsUtils logsUtils;
     public TeamManager teamManager;
     public ConfigManager configManager;
-    private XTeamsAPI xTeamsAPI;
     private boolean workingPlaceholderAPI = false;
 
     @Override
@@ -40,8 +39,6 @@ public class XTeams extends JavaPlugin {
         configManager.loadMessages();
         configManager.loadTeamsFromConfig();
         loadXTeamsCmd();
-        int pluginId = 25168;
-        Metrics metrics = new Metrics(this, pluginId);
         logsUtils.sendStartupMessage();
     }
 
@@ -73,8 +70,5 @@ public class XTeams extends JavaPlugin {
         } else {
             getLogger().warning("⚠ PlaceholderAPI not detected. Placeholders will not work.");
         }
-    }
-    public XTeamsAPI getXTeamsAPI() {
-        return xTeamsAPI;
     }
 }
