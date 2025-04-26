@@ -4,7 +4,6 @@ main: org.eldrygo.XTeams
 api-version: 1.13
 authors: [Drygo]
 softdepend: [PlaceholderAPI]
-api: true
 commands:
   xteams:
     description: "Plugin main command"
