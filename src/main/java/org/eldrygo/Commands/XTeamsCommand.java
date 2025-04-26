@@ -38,7 +38,7 @@ public class XTeamsCommand implements CommandExecutor {
         // Call the commands
         switch (subcommand) {
             case "create" -> {
-                if (!sender.hasPermission("xteams.command.create") && !sender.hasPermission("xteams.admin")) {
+                if (!sender.hasPermission("xteams.command.create") && !sender.hasPermission("xteams.admin") && !sender.isOp()) {
                     sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", (Player) sender));
                     return true;
                 } else {
@@ -46,7 +46,7 @@ public class XTeamsCommand implements CommandExecutor {
                 }
             }
             case "delete" -> {
-                if (!sender.hasPermission("xteams.command.delete") && !sender.hasPermission("xteams.admin")) {
+                if (!sender.hasPermission("xteams.command.delete") && !sender.hasPermission("xteams.admin") && !sender.isOp()) {
                     sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", (Player) sender));
                     return true;
                 } else {
@@ -54,7 +54,7 @@ public class XTeamsCommand implements CommandExecutor {
                 }
             }
             case "setdisplay" -> {
-                if (!sender.hasPermission("xteams.command.setdisplay") && !sender.hasPermission("xteams.admin")) {
+                if (!sender.hasPermission("xteams.command.setdisplay") && !sender.hasPermission("xteams.admin") && !sender.isOp()) {
                     sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", (Player) sender));
                     return true;
                 } else {
@@ -62,7 +62,7 @@ public class XTeamsCommand implements CommandExecutor {
                 }
             }
             case "list" -> {
-                if (!sender.hasPermission("xteams.command.list") && !sender.hasPermission("xteams.admin")) {
+                if (!sender.hasPermission("xteams.command.list") && !sender.hasPermission("xteams.admin") && !sender.isOp()) {
                     sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", (Player) sender));
                     return true;
                 } else {
@@ -70,7 +70,7 @@ public class XTeamsCommand implements CommandExecutor {
                 }
             }
             case "join" -> {
-                if (!sender.hasPermission("xteams.command.join") && !sender.hasPermission("xteams.admin")) {
+                if (!sender.hasPermission("xteams.command.join") && !sender.hasPermission("xteams.admin") && !sender.isOp()) {
                     sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", (Player) sender));
                     return true;
                 } else {
@@ -78,7 +78,7 @@ public class XTeamsCommand implements CommandExecutor {
                 }
             }
             case "teaminfo" -> {
-                if (!sender.hasPermission("xteams.command.teaminfo") && !sender.hasPermission("xteams.admin")) {
+                if (!sender.hasPermission("xteams.command.teaminfo") && !sender.hasPermission("xteams.admin") && !sender.isOp()) {
                     sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", (Player) sender));
                     return true;
                 } else {
@@ -86,7 +86,7 @@ public class XTeamsCommand implements CommandExecutor {
                 }
             }
             case "playerinfo" -> {
-                if (!sender.hasPermission("xteams.command.playerinfo") && !sender.hasPermission("xteams.admin")) {
+                if (!sender.hasPermission("xteams.command.playerinfo") && !sender.hasPermission("xteams.admin") && !sender.isOp()) {
                     sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", (Player) sender));
                     return true;
                 } else {
@@ -94,7 +94,7 @@ public class XTeamsCommand implements CommandExecutor {
                 }
             }
             case "leave" -> {
-                if (!sender.hasPermission("xteams.command.leave") && !sender.hasPermission("xteams.admin")) {
+                if (!sender.hasPermission("xteams.command.leave") && !sender.hasPermission("xteams.admin") && !sender.isOp()) {
                     sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", (Player) sender));
                     return true;
                 } else {
@@ -102,7 +102,7 @@ public class XTeamsCommand implements CommandExecutor {
                 }
             }
             case "reload" -> {
-                if (!sender.hasPermission("xteams.command.reload") && !sender.hasPermission("xteams.admin")) {
+                if (!sender.hasPermission("xteams.command.reload") && !sender.hasPermission("xteams.admin") && !sender.isOp()) {
                     sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", (Player) sender));
                     return true;
                 } else {
@@ -110,7 +110,7 @@ public class XTeamsCommand implements CommandExecutor {
                 }
             }
             case "info" -> {
-                if (!sender.hasPermission("xteams.command.info") && !sender.hasPermission("xteams.admin")) {
+                if (!sender.hasPermission("xteams.command.info") && !sender.hasPermission("xteams.admin") && !sender.isOp()) {
                     sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", (Player) sender));
                     return true;
                 } else {
@@ -118,7 +118,7 @@ public class XTeamsCommand implements CommandExecutor {
                 }
             }
             case "help" -> {
-                if (!sender.hasPermission("xteams.command.help") && !sender.hasPermission("xteams.admin")) {
+                if (!sender.hasPermission("xteams.command.help") && !sender.hasPermission("xteams.admin") && !sender.isOp()) {
                     sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", (Player) sender));
                     return true;
                 } else {
