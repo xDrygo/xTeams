@@ -399,11 +399,6 @@ public class XTeamsCommand implements CommandExecutor {
             String targetPlayerName = args[2];
             OfflinePlayer targetPlayer = Bukkit.getOfflinePlayer(targetPlayerName);
 
-            if (!targetPlayer.hasPlayedBefore() && !targetPlayer.isOnline()) {
-                sender.sendMessage(chatUtils.getMessage("error.commands.player_not_found", sender instanceof Player p ? p : null).replace("%player%", targetPlayerName));
-                return false;
-            }
-
             if (plugin.getTeamManager().isInTeam(targetPlayer, teamName)) {
                 sender.sendMessage(chatUtils.getMessage("error.commands.join.other.already_in_team", targetPlayer).replace("%team%", teamName));
                 return false;
@@ -458,11 +453,6 @@ public class XTeamsCommand implements CommandExecutor {
         if (args.length > 2) {
             String targetPlayerName = args[2];
             OfflinePlayer targetPlayer = Bukkit.getOfflinePlayer(targetPlayerName);
-
-            if (!targetPlayer.hasPlayedBefore() && !targetPlayer.isOnline()) {
-                sender.sendMessage(chatUtils.getMessage("error.commands.player_not_found", sender instanceof Player p ? p : null).replace("%player%", targetPlayerName));
-                return false;
-            }
 
             boolean inTeam = isAll
                     ? plugin.getTeamManager().isInAnyTeam(targetPlayer)
