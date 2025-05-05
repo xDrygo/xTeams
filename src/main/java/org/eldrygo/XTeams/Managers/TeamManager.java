@@ -1,12 +1,12 @@
-package org.eldrygo.Managers;
+package org.eldrygo.XTeams.Managers;
 
 import org.bukkit.Bukkit;
-import org.eldrygo.API.Events.TeamCreateEvent;
-import org.eldrygo.API.Events.TeamDeleteEvent;
-import org.eldrygo.API.Events.TeamJoinEvent;
-import org.eldrygo.API.Events.TeamLeaveEvent;
-import org.eldrygo.Models.Team;
-import org.eldrygo.XTeams;
+import org.eldrygo.XTeams.API.Events.TeamCreateEvent;
+import org.eldrygo.XTeams.API.Events.TeamDeleteEvent;
+import org.eldrygo.XTeams.API.Events.TeamJoinEvent;
+import org.eldrygo.XTeams.API.Events.TeamLeaveEvent;
+import org.eldrygo.XTeams.Models.Team;
+import org.eldrygo.XTeams.XTeams;
 import org.bukkit.OfflinePlayer;
 
 import java.util.*;

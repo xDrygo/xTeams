@@ -1,13 +1,13 @@
-package org.eldrygo.Commands;
+package org.eldrygo.XTeams.Commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.eldrygo.Models.Team;
-import org.eldrygo.Utils.ChatUtils;
-import org.eldrygo.XTeams;
+import org.eldrygo.XTeams.Models.Team;
+import org.eldrygo.XTeams.Utils.ChatUtils;
+import org.eldrygo.XTeams.XTeams;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

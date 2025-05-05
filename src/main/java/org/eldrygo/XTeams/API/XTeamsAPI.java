@@ -1,7 +1,7 @@
-package org.eldrygo.API;
+package org.eldrygo.XTeams.API;
 
-import org.eldrygo.Models.Team;
-import org.eldrygo.XTeams;
+import org.eldrygo.XTeams.Models.Team;
+import org.eldrygo.XTeams.XTeams;
 import org.bukkit.OfflinePlayer;
 
 import java.util.List;
@@ -9,10 +9,14 @@ import java.util.Set;
 
 public class XTeamsAPI {
 
+    public static void setPlugin(XTeams plugin) {
+        XTeamsAPI.plugin = plugin;
+    }
+
     private static XTeams plugin;
 
     public XTeamsAPI(XTeams plugin) {
-        this.plugin = plugin;
+        XTeamsAPI.plugin = plugin;
     }
 
     // Delegar al TeamManager para obtener el equipo de un jugador

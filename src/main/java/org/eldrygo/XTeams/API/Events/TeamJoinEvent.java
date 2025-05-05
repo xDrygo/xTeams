@@ -1,15 +1,15 @@
-package org.eldrygo.API.Events;
+package org.eldrygo.XTeams.API.Events;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class TeamLeaveEvent extends Event {
+public class TeamJoinEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private final OfflinePlayer player;
     private final String teamName;
 
-    public TeamLeaveEvent(OfflinePlayer player, String teamName) {
+    public TeamJoinEvent(OfflinePlayer player, String teamName) {
         this.player = player;
         this.teamName = teamName;
     }

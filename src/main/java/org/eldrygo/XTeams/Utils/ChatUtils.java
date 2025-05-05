@@ -1,12 +1,12 @@
-package org.eldrygo.Utils;
+package org.eldrygo.XTeams.Utils;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.eldrygo.Managers.ConfigManager;
-import org.eldrygo.XTeams;
+import org.eldrygo.XTeams.Managers.ConfigManager;
+import org.eldrygo.XTeams.XTeams;
 
 import java.util.ArrayList;
 import java.util.List;

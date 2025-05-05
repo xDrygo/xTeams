@@ -1,4 +1,4 @@
-package org.eldrygo.Models;
+package org.eldrygo.XTeams.Models;
 
 import org.bukkit.OfflinePlayer;
 

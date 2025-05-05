@@ -1,10 +1,10 @@
-package org.eldrygo.Managers;
+package org.eldrygo.XTeams.Managers;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.eldrygo.Models.Team;
-import org.eldrygo.XTeams;
-import org.eldrygo.Utils.ChatUtils;
+import org.eldrygo.XTeams.Models.Team;
+import org.eldrygo.XTeams.XTeams;
+import org.eldrygo.XTeams.Utils.ChatUtils;
 
 import java.io.File;
 import java.util.*;

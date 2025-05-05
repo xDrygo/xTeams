@@ -1,18 +1,17 @@
-package org.eldrygo;
+package org.eldrygo.XTeams;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bstats.bukkit.Metrics;
-import org.eldrygo.API.XTeamsAPI;
-import org.eldrygo.Commands.XTeamsCommand;
-import org.eldrygo.Commands.XTeamsTabCompleter;
-import org.eldrygo.Extensions.XTeamsExpansion;
-import org.eldrygo.Managers.ConfigManager;
-import org.eldrygo.Managers.TeamManager;
-import org.eldrygo.Utils.ChatUtils;
-import org.eldrygo.Utils.LogsUtils;
+import org.eldrygo.XTeams.API.XTeamsAPI;
+import org.eldrygo.XTeams.Commands.XTeamsCommand;
+import org.eldrygo.XTeams.Commands.XTeamsTabCompleter;
+import org.eldrygo.XTeams.Extensions.XTeamsExpansion;
+import org.eldrygo.XTeams.Managers.ConfigManager;
+import org.eldrygo.XTeams.Managers.TeamManager;
+import org.eldrygo.XTeams.Utils.ChatUtils;
+import org.eldrygo.XTeams.Utils.LogsUtils;
 
 import java.io.File;
 
@@ -34,6 +33,7 @@ public class XTeams extends JavaPlugin {
         this.chatUtils = new ChatUtils(this, configManager);
         this.logsUtils = new LogsUtils(this);
         this.teamManager = new TeamManager(this, configManager);
+        XTeamsAPI.setPlugin(this);
         configManager.loadConfig();
         loadPlaceholderAPI();
         configManager.loadMessages();
