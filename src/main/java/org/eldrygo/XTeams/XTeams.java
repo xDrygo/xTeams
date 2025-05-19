@@ -33,7 +33,7 @@ public class XTeams extends JavaPlugin {
         this.chatUtils = new ChatUtils(this, configManager);
         this.logsUtils = new LogsUtils(this);
         this.teamManager = new TeamManager(this, configManager);
-        XTeamsAPI.setPlugin(this);
+        XTeamsAPI.init(getTeamManager());
         configManager.loadConfig();
         loadPlaceholderAPI();
         configManager.loadMessages();

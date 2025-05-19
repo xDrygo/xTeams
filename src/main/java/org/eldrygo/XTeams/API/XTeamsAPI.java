@@ -1,87 +1,99 @@
 package org.eldrygo.XTeams.API;
 
+import org.eldrygo.XTeams.Managers.TeamManager;
 import org.eldrygo.XTeams.Models.Team;
-import org.eldrygo.XTeams.XTeams;
-import org.bukkit.OfflinePlayer;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class XTeamsAPI {
 
-    public static void setPlugin(XTeams plugin) {
-        XTeamsAPI.plugin = plugin;
+    private static TeamManager manager;
+
+    public static void init(TeamManager teamManager) {
+        manager = teamManager;
     }
 
-    private static XTeams plugin;
-
-    public XTeamsAPI(XTeams plugin) {
-        XTeamsAPI.plugin = plugin;
+    public static Team getTeam(String name) {
+        return manager.getTeamByName(name);
     }
 
-    // Delegar al TeamManager para obtener el equipo de un jugador
-    public static String getPlayerTeamName(OfflinePlayer player) {
-        return plugin.getTeamManager().getPlayerTeamName(player);
-    }
-    public static boolean setDisplayName(String teamName, String newDisplayName) {
-        return plugin.getTeamManager().setTeamDisplayName(teamName, newDisplayName);
+    public static boolean teamExists(String name) {
+        return manager.teamExists(name);
     }
 
-    // Delegar al TeamManager para obtener el displayName de un jugador
-    public static String getPlayerTeamDisplayName(OfflinePlayer player) {
-        return plugin.getTeamManager().getPlayerTeamDisplayName(player);
-    }
-    public static String getTeamDisplayName(String teamName) {
-        return plugin.getTeamManager().getTeamDisplayName(teamName);
+    public static Set<Team> getAllTeams() {
+        return manager.getAllTeams();
     }
 
-    // Delegar al TeamManager para obtener todos los equipos de un jugador
-    public static List<Team> getPlayerTeams(OfflinePlayer player) {
-        return plugin.getTeamManager().getPlayerTeams(player);
+    public static void createTeam(String name, String displayName, int priority, Set<String> members) {
+        manager.createTeam(name, displayName, priority, members);
     }
 
-    // Delegar al TeamManager para verificar si un jugador está en un equipo
-    public static boolean isPlayerInTeam(OfflinePlayer player, String teamName) {
-        return plugin.getTeamManager().hasPlayerInTeam(player, teamName);
+    public static void deleteTeam(Team team) {
+        manager.deleteTeam(team);
     }
 
-    // Delegar al TeamManager para obtener todos los miembros de un equipo
-    public static Set<String> getTeamMembers(String teamName) {
-        return plugin.getTeamManager().getTeamMembers(teamName);
+    public static Map<String, Object> getTeamInfo(Team team) {
+        return manager.getTeamInfo(team);
     }
 
-    // Delegar al TeamManager para listar los nombres de todos los equipos
-    public static List<String> listTeams() {
-        return plugin.getTeamManager().listTeams();
+    public static void joinTeam(String player, Team team) {
+        manager.joinTeam(player, team);
     }
 
-    // Delegar al TeamManager para obtener la información de un equipo
-    public static Team getTeamByName(String teamName) {
-        return plugin.getTeamManager().getTeam(teamName);
+    public static void leaveTeam(String player, Team team) {
+        manager.leaveTeam(player, team);
     }
 
-    // Delegar al TeamManager para crear un equipo
-    public static void createTeam(String teamName, String displayName, int priority, Set<String> members) {
-        plugin.getTeamManager().createTeam(teamName, displayName, priority, members);
+    public static void joinAllTeams(String player) {
+        manager.joinAllTeams(player);
     }
 
-    // Delegar al TeamManager para eliminar un equipo
-    public static void deleteTeam(String teamName) {
-        plugin.getTeamManager().deleteTeam(teamName);
+    public static void leaveAllTeams(String player) {
+        manager.leaveAllTeams(player);
     }
 
-    // Delegar al TeamManager para unirse a un equipo
-    public static void joinTeam(OfflinePlayer player, String teamName) {
-        plugin.getTeamManager().joinTeam(player, teamName);
+    public static boolean isInTeam(String player, Team team) {
+        return manager.isInTeam(player, team);
     }
 
-    // Delegar al TeamManager para abandonar un equipo
-    public static void leaveTeam(OfflinePlayer player, String teamName) {
-        plugin.getTeamManager().leaveTeam(player, teamName);
+    public static boolean isInAnyTeam(String player) {
+        return manager.isInAnyTeam(player);
     }
 
-    // Delegar al TeamManager para eliminar todos los equipos
-    public static void deleteAllTeams() {
-        plugin.getTeamManager().deleteAllTeams();
+    public static List<Team> getPlayerTeams(String player) {
+        return manager.getPlayerTeams(player);
+    }
+
+    public static Team getPlayerTeam(String player) {
+        return manager.getPlayerTeam(player);
+    }
+
+    public static String getPlayerTeamName(String player) {
+        return manager.getPlayerTeamName(player);
+    }
+
+    public static String getPlayerTeamDisplayName(String player) {
+        return manager.getPlayerTeamDisplayName(player);
+    }
+
+    public static boolean setTeamDisplayName(Team team, String displayName) {
+        return manager.setTeamDisplayName(team, displayName);
+    }
+
+    public static String getTeamDisplayName(Team team) {
+        return manager.getTeamDisplayName(team);
+    }
+
+    public static int getTeamMemberCount(Team team) {
+        return manager.getTeamNumberOfMembers(team);
+    }
+
+    public static Set<String> getTeamMembers(Team team) {
+        return manager.getTeamMembers(team);
+    }
+
+    public static List<String> listTeamNames() {
+        return manager.listTeams();
     }
 }

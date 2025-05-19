@@ -39,8 +39,7 @@ public class XTeamsExpansion extends PlaceholderExpansion {
                 String teamName = parts[0];
                 String targetPlayerName = parts[1];
                 Team team = plugin.getTeamManager().getTeam(teamName);
-                OfflinePlayer targetPlayer = Bukkit.getOfflinePlayer(targetPlayerName);
-                return (team != null && team.hasMember(targetPlayer)) ? "true" : "false";
+                return (team != null && team.hasMember(targetPlayerName)) ? "true" : "false";
             }
         }
 
@@ -100,7 +99,7 @@ public class XTeamsExpansion extends PlaceholderExpansion {
         for (String teamName : plugin.getTeamManager().listTeams()) {
             Team team = plugin.getTeamManager().getTeam(teamName);
 
-            if (team != null && team.hasMember(player)) {
+            if (team != null && team.hasMember(player.getName())) {
                 if (team.getPriority() > highestPriority) {
                     highestPriority = team.getPriority();
                     highestPriorityTeam = team;

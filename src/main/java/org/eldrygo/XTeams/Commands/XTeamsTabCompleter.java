@@ -38,17 +38,17 @@ public class XTeamsTabCompleter implements TabCompleter {
         List<String> subCommands = new ArrayList<>();
 
         // Comprobamos si el jugador tiene permiso para los subcomandos
-        if (sender.hasPermission("xteams.command.create") && !sender.hasPermission("xteams.admin") && !sender.isOp()) subCommands.add("create");
-        if (sender.hasPermission("xteams.command.delete") && !sender.hasPermission("xteams.admin") && !sender.isOp()) subCommands.add("delete");
-        if (sender.hasPermission("xteams.command.join") && !sender.hasPermission("xteams.admin") && !sender.isOp()) subCommands.add("join");
-        if (sender.hasPermission("xteams.command.leave") && !sender.hasPermission("xteams.admin") && !sender.isOp()) subCommands.add("leave");
-        if (sender.hasPermission("xteams.command.setdisplay") && !sender.hasPermission("xteams.admin") && !sender.isOp()) subCommands.add("setdisplay");
-        if (sender.hasPermission("xteams.command.info") && !sender.hasPermission("xteams.admin") && !sender.isOp()) subCommands.add("info");
-        if (sender.hasPermission("xteams.command.teaminfo") && !sender.hasPermission("xteams.admin") && !sender.isOp()) subCommands.add("teaminfo");
-        if (sender.hasPermission("xteams.command.playerinfo") && !sender.hasPermission("xteams.admin") && !sender.isOp()) subCommands.add("playerinfo");
-        if (sender.hasPermission("xteams.command.reload") && !sender.hasPermission("xteams.admin") && !sender.isOp()) subCommands.add("reload");
-        if (sender.hasPermission("xteams.command.list") && !sender.hasPermission("xteams.admin") && !sender.isOp()) subCommands.add("list");
-        if (sender.hasPermission("xteams.command.help") && !sender.hasPermission("xteams.admin") && !sender.isOp()) subCommands.add("help");
+        if (sender.hasPermission("xteams.command.create") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("create");
+        if (sender.hasPermission("xteams.command.delete") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("delete");
+        if (sender.hasPermission("xteams.command.join") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("join");
+        if (sender.hasPermission("xteams.command.leave") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("leave");
+        if (sender.hasPermission("xteams.command.setdisplay") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("setdisplay");
+        if (sender.hasPermission("xteams.command.info") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("info");
+        if (sender.hasPermission("xteams.command.teaminfo") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("teaminfo");
+        if (sender.hasPermission("xteams.command.playerinfo") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("playerinfo");
+        if (sender.hasPermission("xteams.command.reload") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("reload");
+        if (sender.hasPermission("xteams.command.list") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("list");
+        if (sender.hasPermission("xteams.command.help") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("help");
 
         // Si hay subcomandos disponibles y solo tenemos un argumento, completamos el subcomando
         if (args.length == 1) {

@@ -39,7 +39,7 @@ public class Team {
         members.remove(playerName);
     }
 
-    public boolean hasMember(OfflinePlayer player) {
-        return members.contains(player.getName());
+    public boolean hasMember(String playerName) {
+        return members.contains(playerName);
     }
 }

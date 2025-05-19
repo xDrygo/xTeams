@@ -26,15 +26,15 @@ commands:
     success: "%prefix% #a0ff72✔ Successfully changed the displayname of '%team%' to \"%display_name%\"."
   join:
     other:
-      success: "%prefix% #a0ff72✔ Player '%player%' joined the %team% team."
-      successall: "%prefix% #a0ff72✔ Player '%player%' joined all teams."
+      success: "%prefix% #a0ff72✔ Player '%target%' joined the %team% team."
+      successall: "%prefix% #a0ff72✔ Player '%target%' joined all teams."
     self:
       success: "%prefix% #a0ff72✔ You joined the '%team%' team."
       successall: "%prefix% #a0ff72✔ You joined all the teams."
   leave:
     other:
-      success: "%prefix% #a0ff72✔ Player '%player%' left the %team% team."
-      successall: "%prefix% #a0ff72✔ Player %player% left all teams."
+      success: "%prefix% #a0ff72✔ Player '%target%' left the %team% team."
+      successall: "%prefix% #a0ff72✔ Player %target% left all teams."
     self:
       success: "%prefix% #a0ff72✔ You left the '%team%' team."
       successall: "%prefix% #a0ff72✔ You left all the teams."
@@ -63,12 +63,12 @@ commands:
     string:
       header:
         - " "
-        - "%prefix% #ffdcff'%player%' player information:"
+        - "%prefix% #ffdcff'%target%' player information:"
         - " "
       main_team: "&8▪ #fff18dMain Team: &r%display_name% &7(%team%)"
       team_list_header: "&8▪ #fff18dHis Teams:"
       team_list_row: "&7  - &r%display_name% &7(%team%) &8- #ccccccPriority: #fff18d%priority%"
-      no_teams: "#ff4444Player '%player%' is not on a team."
+      no_teams: "#ff4444Player '%target%' is not on a team."
       footer:
         - " "
         - "#c490c4xTeams developed by @eldrygo"
@@ -108,7 +108,7 @@ error:
   commands:
     unknown_command: "%prefix% #FF0000🚫 Unknown command. &7Use &f/xteams help &7to see the list of commands."
     no_permission: "%prefix% #FF0000🚫 You have no permission to use this command."
-    player_not_found: "%prefix% #FF0000🚫 Can't find player '%player%'."
+    player_not_found: "%prefix% #FF0000🚫 Can't find player '%target%'."
     team_not_found: "%prefix% #FF0000🚫 Can't find team '%team%'."
     anyteam_not_found: "%prefix% #FF0000🚫 Can't find any team."
     team_already_exists: "%prefix% #FF0000🚫 Team '%team%' already exists."
@@ -132,11 +132,11 @@ error:
         not_in_team: "%prefix% #FF0000🚫 You are not in '%team%' team."
         not_in_anyteam: "%prefix% #FF0000🚫 You are not in any team"
       other:
-        not_in_team: "%prefix% #FF0000🚫 Player '%player%' is not on '%team%' team."
-        not_in_anyteam: "%prefix% #FF0000🚫 Player %player% is not on any team."
+        not_in_team: "%prefix% #FF0000🚫 Player '%target%' is not on '%team%' team."
+        not_in_anyteam: "%prefix% #FF0000🚫 Player %target% is not on any team."
     join:
       other:
-        already_in_team: "%prefix% #FF0000🚫 Player '%player%' is already on '%team%' team."
+        already_in_team: "%prefix% #FF0000🚫 Player '%target%' is already on '%team%' team."
       self:
         already_in_team: "%prefix% #FF0000🚫 You are already on '%team%' team."
     setdisplay:
