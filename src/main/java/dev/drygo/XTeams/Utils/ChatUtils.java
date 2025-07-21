@@ -1,15 +1,16 @@
-package org.eldrygo.XTeams.Utils;
+package dev.drygo.XTeams.Utils;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.eldrygo.XTeams.Managers.ConfigManager;
-import org.eldrygo.XTeams.XTeams;
+import dev.drygo.XTeams.Managers.ConfigManager;
+import dev.drygo.XTeams.XTeams;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,7 +60,7 @@ public class ChatUtils {
 
         // Reemplazar placeholders
         if (player != null) {
-            message = message.replace("%player%", player.getName());
+            message = message.replace("%player%", Objects.requireNonNull(player.getName()));
         } else {
             message = message.replace("%player%", "Unknown");
         }
@@ -73,12 +74,7 @@ public class ChatUtils {
         return ChatUtils.formatColor(message);
     }
     public List<String> getMessageList(String path) {
-        // Accede a la instancia de messagesConfig directamente
-        List<String> messages = getMessageConfig().getStringList(path);
-        if (messages == null) {
-            return new ArrayList<>();  // Devuelve una lista vacía si no se encuentra el mensaje
-        }
-        return messages;  // Retorna la lista de mensajes
+        return getMessageConfig().getStringList(path);
     }
     public FileConfiguration getMessageConfig() {
         return plugin.messagesConfig;
