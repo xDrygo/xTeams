@@ -1,19 +1,17 @@
-package org.eldrygo.XTeams.Commands;
+package dev.drygo.XTeams.Commands;
 
+import dev.drygo.XTeams.Managers.TeamManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.eldrygo.XTeams.Models.Team;
-import org.eldrygo.XTeams.Utils.ChatUtils;
-import org.eldrygo.XTeams.XTeams;
+import dev.drygo.XTeams.Models.Team;
+import dev.drygo.XTeams.Utils.ChatUtils;
+import dev.drygo.XTeams.XTeams;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class XTeamsTabCompleter implements TabCompleter {
     private final ChatUtils chatUtils;
@@ -37,7 +35,6 @@ public class XTeamsTabCompleter implements TabCompleter {
         // Lista de subcomandos disponibles
         List<String> subCommands = new ArrayList<>();
 
-        // Comprobamos si el jugador tiene permiso para los subcomandos
         if (sender.hasPermission("xteams.command.create") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("create");
         if (sender.hasPermission("xteams.command.delete") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("delete");
         if (sender.hasPermission("xteams.command.join") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("join");
@@ -46,16 +43,15 @@ public class XTeamsTabCompleter implements TabCompleter {
         if (sender.hasPermission("xteams.command.info") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("info");
         if (sender.hasPermission("xteams.command.teaminfo") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("teaminfo");
         if (sender.hasPermission("xteams.command.playerinfo") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("playerinfo");
+        if (sender.hasPermission("xteams.command.sync") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("sync");
         if (sender.hasPermission("xteams.command.reload") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("reload");
         if (sender.hasPermission("xteams.command.list") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("list");
         if (sender.hasPermission("xteams.command.help") || sender.hasPermission("xteams.admin") || sender.isOp()) subCommands.add("help");
 
-        // Si hay subcomandos disponibles y solo tenemos un argumento, completamos el subcomando
         if (args.length == 1) {
-            return getMatches(args[0], subCommands);  // Autocompleta el subcomando
+            return getMatches(args[0], subCommands);
         }
 
-        // Ahora manejamos los subcomandos específicos
         switch (args[0].toLowerCase()) {
             case "create" -> {
                 if (args.length == 2) {
@@ -67,47 +63,39 @@ public class XTeamsTabCompleter implements TabCompleter {
             }
             case "delete" -> {
                 if (args.length == 2) {
-                    // Sugerir la lista de equipos
                     List<String> teams = getTeamsList();
-                    teams.add("*");  // Agregar '*' para eliminar todos los equipos
                     return getMatches(args[1], teams);
                 }
             }
             case "setdisplay" -> {
                 if (args.length == 2) {
-                    // Sugerir equipos
                     List<String> teams = getTeamsList();
                     return getMatches(args[1], teams);
                 } else if (args.length == 3) {
-                    return Collections.singletonList("\"" + displayNameMessage + "\"");  // Al llegar al tercer argumento
+                    return Collections.singletonList("\"" + displayNameMessage + "\"");
                 }
             }
             case "join" -> {
                 if (args.length == 2) {
-                    // Sugerir equipos para unirse
-                    return getMatches(args[1], getTeamsList());
+                    return getMatches(args[1], getTeamsListWithStar());
                 }
                 if (args.length == 3) {
-                    // Sugerir jugadores para unirse
-                    return getMatches(args[2], getPlayersList());
+                    return getMatches(args[2], getPlayersListWithStar());
                 }
             }
             case "leave" -> {
                 if (args.length == 2) {
-                    // Sugerir equipos a los cuales el jugador puede dejar
-                    return getMatches(args[1], getTeamsList());
+                    return getMatches(args[1], getTeamsListWithStar());
                 }
                 if (args.length == 3) {
-                    // Sugerir jugadores para dejar un equipo
-                    return getMatches(args[2], getPlayersList());
+                    return getMatches(args[2], getPlayersListWithStar());
                 }
             }
-            case "info", "list", "help" -> {
+            case "info", "list", "help", "sync" -> {
                 return Collections.emptyList();
             }
             case "teaminfo" -> {
                 if (args.length == 2) {
-                    // Mostrar información sobre equipos o jugadores
                     return getMatches(args[1], getTeamsList());
                 }
             }
@@ -120,7 +108,7 @@ public class XTeamsTabCompleter implements TabCompleter {
             }
         }
 
-        return Collections.emptyList();  // Si no hay coincidencias, retornamos vacío
+        return Collections.emptyList();
     }
 
     private List<String> getMatches(String arg, List<String> options) {
@@ -133,29 +121,36 @@ public class XTeamsTabCompleter implements TabCompleter {
         return matches;
     }
 
+    private List<String> getTeamsListWithStar() {
+        List<String> teams = getTeamsList();
+        teams.add("*");
+        return teams;
+    }
+
+    private List<String> getPlayersListWithStar() {
+        List<String> players = getPlayersList();
+        players.add("*");
+        return players;
+    }
+
     private List<String> getTeamsList() {
         List<String> teams = new ArrayList<>();
-
-        // Acceder al gestor de equipos del plugin y obtener todos los equipos
         Set<Team> allTeams = plugin.getTeamManager().getAllTeams();
-
-        // Verificar si hay equipos disponibles
         if (allTeams != null && !allTeams.isEmpty()) {
-            // Iterar sobre todos los equipos y agregar sus nombres a la lista
             for (Team team : allTeams) {
-                teams.add(team.getName());  // Añadir el nombre del equipo a la lista
+                teams.add(team.getName());
             }
         }
-
         return teams;
     }
 
     private List<String> getPlayersList() {
-        List<String> players = new ArrayList<>();
-        // Obtener jugadores conectados en el servidor
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            players.add(player.getName());
+        Set<String> players = new HashSet<>(plugin.getTeamManager().getAllPlayersInTeams());
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            players.add(onlinePlayer.getName());
         }
-        return players;
+        List<String> playerList = new ArrayList<>(players);
+        playerList.sort(String::compareToIgnoreCase);
+        return playerList;
     }
 }
