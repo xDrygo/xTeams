@@ -1,7 +1,7 @@
-package org.eldrygo.XTeams.Utils;
+package dev.drygo.XTeams.Utils;
 
 import org.bukkit.Bukkit;
-import org.eldrygo.XTeams.XTeams;
+import dev.drygo.XTeams.XTeams;
 
 public class LogsUtils {
     private final XTeams plugin;

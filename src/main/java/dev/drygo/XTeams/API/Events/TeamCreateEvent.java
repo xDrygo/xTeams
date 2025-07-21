@@ -1,8 +1,8 @@
-package org.eldrygo.XTeams.API.Events;
+package dev.drygo.XTeams.API.Events;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.eldrygo.XTeams.Models.Team;
+import dev.drygo.XTeams.Models.Team;
 
 public class TeamCreateEvent extends Event {
     private static final HandlerList handlers = new HandlerList();

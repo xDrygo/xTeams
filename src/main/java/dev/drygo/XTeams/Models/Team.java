@@ -1,6 +1,4 @@
-package org.eldrygo.XTeams.Models;
-
-import org.bukkit.OfflinePlayer;
+package dev.drygo.XTeams.Models;
 
 import java.util.HashSet;
 import java.util.Set;

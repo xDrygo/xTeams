@@ -1,10 +1,10 @@
-package org.eldrygo.XTeams.Extensions;
+package dev.drygo.XTeams.Hooks.PlaceholderAPI;
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.eldrygo.XTeams.XTeams;
-import org.eldrygo.XTeams.Models.Team;
+import dev.drygo.XTeams.XTeams;
+import dev.drygo.XTeams.Models.Team;
 import org.jetbrains.annotations.NotNull;
 
 public class XTeamsExpansion extends PlaceholderExpansion {
