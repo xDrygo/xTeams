@@ -1,15 +1,17 @@
 name: xTeams
-version: 1.2.2
-main: org.eldrygo.XTeams.XTeams
+version: 1.3.0
+main: dev.drygo.XTeams.XTeams
 api-version: 1.20
 authors: [Drygo]
-softdepend: [PlaceholderAPI]
+softdepend:
+  - PlaceholderAPI
+  - LuckPerms
 commands:
   xteams:
     description: "Plugin main command"
 permissions:
-  xteams.command:
-    description: "Allows users to execute xTeams commands"
+  xteams.admin:
+    description: "Allows administrators to execute xTeams commands"
     default: false
     children:
       xteams.command.create:
@@ -28,6 +30,8 @@ permissions:
         default: false
       xteams.command.info:
         default: false
+      xteams.command.sync:
+        default: false
       xteams.command.teaminfo:
         default: false
       xteams.command.playerinfo:
@@ -38,6 +42,3 @@ permissions:
         default: false
       xteams.command.help:
         default: false
-  xteams.admin:
-    description: "Allows administrators to execute xTeams commands"
-    default: false
