@@ -1,7 +1,7 @@
-package org.eldrygo.XTeams.API;
+package dev.drygo.XTeams.API;
 
-import org.eldrygo.XTeams.Managers.TeamManager;
-import org.eldrygo.XTeams.Models.Team;
+import dev.drygo.XTeams.Managers.TeamManager;
+import dev.drygo.XTeams.Models.Team;
 
 import java.util.*;
 
@@ -15,10 +15,6 @@ public class XTeamsAPI {
 
     public static Team getTeam(String name) {
         return manager.getTeamByName(name);
-    }
-
-    public static boolean teamExists(String name) {
-        return manager.teamExists(name);
     }
 
     public static Set<Team> getAllTeams() {
@@ -67,30 +63,6 @@ public class XTeamsAPI {
 
     public static Team getPlayerTeam(String player) {
         return manager.getPlayerTeam(player);
-    }
-
-    public static String getPlayerTeamName(String player) {
-        return manager.getPlayerTeamName(player);
-    }
-
-    public static String getPlayerTeamDisplayName(String player) {
-        return manager.getPlayerTeamDisplayName(player);
-    }
-
-    public static boolean setTeamDisplayName(Team team, String displayName) {
-        return manager.setTeamDisplayName(team, displayName);
-    }
-
-    public static String getTeamDisplayName(Team team) {
-        return manager.getTeamDisplayName(team);
-    }
-
-    public static int getTeamMemberCount(Team team) {
-        return manager.getTeamNumberOfMembers(team);
-    }
-
-    public static Set<String> getTeamMembers(Team team) {
-        return manager.getTeamMembers(team);
     }
 
     public static List<String> listTeamNames() {
