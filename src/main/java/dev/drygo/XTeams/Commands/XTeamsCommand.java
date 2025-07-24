@@ -296,7 +296,8 @@ public class XTeamsCommand implements CommandExecutor {
 
         StringBuilder message = new StringBuilder();
         for (String line : chatUtils.getMessageList("commands.playerinfo.string.header")) {
-            line = line.replace("%target%", targetName);
+            line = line.replace("%target%", targetName)
+                    .replace("%prefix%", configManager.getPrefix());
             line = ChatUtils.formatColor(line);
             message.append(line).append("\n");
         }
@@ -320,7 +321,8 @@ public class XTeamsCommand implements CommandExecutor {
         }
 
         for (String line : chatUtils.getMessageList("commands.playerinfo.string.footer")) {
-            line = line.replace("%target%", targetName);
+            line = line.replace("%target%", targetName)
+                    .replace("%prefix%", configManager.getPrefix());
             line = ChatUtils.formatColor(line);
             message.append(line).append("\n");
         }
@@ -521,7 +523,8 @@ public class XTeamsCommand implements CommandExecutor {
                 return false;
             }
 
-            for (String playerName : affectedPlayers) {
+            Set<String> playersCopy = new HashSet<>(affectedPlayers);
+            for (String playerName : playersCopy) {
                 if (allTeams) {
                     plugin.getTeamManager().leaveAllTeams(playerName);
                 } else {
@@ -610,6 +613,7 @@ public class XTeamsCommand implements CommandExecutor {
         plugin.reloadConfig();
         configManager.loadMessages();
         configManager.loadTeamsFromConfig();
+        plugin.getAutoTeamManager().load();
         sender.sendMessage(chatUtils.getMessage("commands.reload.success", null));
         return false;
     }
@@ -653,6 +657,7 @@ public class XTeamsCommand implements CommandExecutor {
         String placeholderStatus = plugin.isWorkingPlaceholderAPI() ? "#a0ff72✔" : "#ff7272✖";
         String luckPermsHookStatus = plugin.isEnabledLuckPermsHook() ? "#a0ff72✔" : "#ff7272✖";
         String minecraftTeamHookStatus = plugin.isEnabledMinecraftTeamHook() ? "#a0ff72✔" : "#ff7272✖";
+        String autoTeamStatus = plugin.isEnabledAutoTeam() ? "#a0ff72✔" : "#ff7272✖";
         sender.sendMessage(ChatUtils.formatColor("&7"));
         sender.sendMessage(ChatUtils.formatColor("&7"));
         sender.sendMessage(ChatUtils.formatColor("&8                            #ffbaff&lx&r&lTeams &8» &r&fInfo"));
@@ -664,19 +669,19 @@ public class XTeamsCommand implements CommandExecutor {
         sender.sendMessage(ChatUtils.formatColor("&f                                    " + plugin.version));
         sender.sendMessage(ChatUtils.formatColor("&7"));
         sender.sendMessage(ChatUtils.formatColor("#fff18d&l                      ꜰᴇᴀᴛᴜʀᴇꜱ ᴇɴᴀʙʟᴇᴅ"));
-        sender.sendMessage(ChatUtils.formatColor("&f                           ᴘʟᴀᴄᴇʜᴏʟᴅᴇʀᴀᴘɪ #707070» #FFFAAB" + placeholderStatus));
+        sender.sendMessage(ChatUtils.formatColor("&f                            ᴘʟᴀᴄᴇʜᴏʟᴅᴇʀᴀᴘɪ #707070» #FFFAAB" + placeholderStatus));
         sender.sendMessage(ChatUtils.formatColor("&f                                ʟᴜᴄᴋᴘᴇʀᴍꜱ #707070» #FFFAAB" + luckPermsHookStatus));
-        sender.sendMessage(ChatUtils.formatColor("&f                             ᴍɪɴᴇᴄʀᴀꜰᴛ ᴛᴇᴀᴍꜱ #707070» #FFFAAB" + minecraftTeamHookStatus));
+        sender.sendMessage(ChatUtils.formatColor("&f                            ᴍɪɴᴇᴄʀᴀꜰᴛ ᴛᴇᴀᴍꜱ #707070» #FFFAAB" + minecraftTeamHookStatus));
+        sender.sendMessage(ChatUtils.formatColor("&f                                ᴀᴜᴛᴏ-ᴛᴇᴀᴍ #707070» #FFFAAB" + autoTeamStatus));
         sender.sendMessage(ChatUtils.formatColor("&7"));
         sender.sendMessage(ChatUtils.formatColor("#fff18d&l                      ᴠᴇʀꜱɪᴏɴ ᴄʜᴀɴɢᴇꜱ"));
-        sender.sendMessage(ChatUtils.formatColor("&f      #7070701. #FFFAABRe-worked join and leave commands."));
-        sender.sendMessage(ChatUtils.formatColor("&f      #7070702. #FFFAABAPI optimizations."));
-        sender.sendMessage(ChatUtils.formatColor("&f      #7070703. #FFFAABAdded MTeams and LTeams sync."));
+        sender.sendMessage(ChatUtils.formatColor("&f            #7070701. #FFFAABFixed %prefix% on playerinfo command."));
+        sender.sendMessage(ChatUtils.formatColor("&f            #7070702. #FFFAABFixed interation on leave <team> *."));
+        sender.sendMessage(ChatUtils.formatColor("&f            #7070703. #FFFAABAdded auto-team hook."));
         sender.sendMessage(ChatUtils.formatColor("&7"));
         sender.sendMessage(ChatUtils.formatColor("#fff18d&l               ᴅʀʏɢᴏ'ꜱ ɴᴏᴛᴇ ᴏꜰ ᴛʜᴇ ᴠᴇʀꜱɪᴏɴ"));
-        sender.sendMessage(ChatUtils.formatColor("&f  #FFFAAB            Hi, this version adds some features"));
-        sender.sendMessage(ChatUtils.formatColor("&f  #FFFAAB       I decided to add in addons, but it need to be in"));
-        sender.sendMessage(ChatUtils.formatColor("&f  #FFFAAB                 the main plugin, lol. :clap:"));
+        sender.sendMessage(ChatUtils.formatColor("&f  #FFFAAB             I made this version in 2 hours because"));
+        sender.sendMessage(ChatUtils.formatColor("&f  #FFFAAB             I found some bugs that I had to fix haha"));
         sender.sendMessage(ChatUtils.formatColor("&7"));
         sender.sendMessage(ChatUtils.formatColor("&7"));
         return false;
