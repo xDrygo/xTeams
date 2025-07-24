@@ -26,6 +26,10 @@ hooks:
       blue: blue
       red: red
       yellow: yellow
+  auto_team:
+    enabled: false
+    op_bypass: false
+    team: red
 teams:
   red:
     displayName: "&e&lRed Team"
