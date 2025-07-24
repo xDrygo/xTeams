@@ -1,5 +1,6 @@
 package dev.drygo.XTeams;
 
+import dev.drygo.XTeams.Hooks.AutoTeam.Managers.AutoTeamManager;
 import dev.drygo.XTeams.Hooks.LuckPerms.Managers.LuckPermsGroupManager;
 import dev.drygo.XTeams.Hooks.Minecraft.Managers.MinecraftTeamManager;
 import dev.drygo.XTeams.Utils.LoadUtils;
@@ -24,10 +25,13 @@ public class XTeams extends JavaPlugin {
     public TeamManager teamManager;
     public LuckPermsGroupManager luckPermsGroupManager;
     public MinecraftTeamManager minecraftTeamManager;
+    public AutoTeamManager autoTeamManager;
     public ConfigManager configManager;
+
     private boolean workingPlaceholderAPI = false;
     private boolean enabledLuckPermsHook = false;
     private boolean enabledMinecraftTeamHook = false;
+    private boolean enabledAutoTeam = false;
 
     @Override
     public void onEnable() {
@@ -40,6 +44,8 @@ public class XTeams extends JavaPlugin {
         this.teamManager = new TeamManager();
         this.luckPermsGroupManager = new LuckPermsGroupManager(this);
         this.minecraftTeamManager = new MinecraftTeamManager(this);
+        this.autoTeamManager = new AutoTeamManager(this);
+        autoTeamManager.load();
         loadUtils.loadFeatures();
         logsUtils.sendStartupMessage();
     }
@@ -65,6 +71,9 @@ public class XTeams extends JavaPlugin {
     public MinecraftTeamManager getMinecraftTeamManager() {
         return minecraftTeamManager;
     }
+    public AutoTeamManager getAutoTeamManager() {
+        return autoTeamManager;
+    }
 
     public boolean isWorkingPlaceholderAPI() {
         return workingPlaceholderAPI;
@@ -83,5 +92,11 @@ public class XTeams extends JavaPlugin {
     }
     public void setEnabledMinecraftTeamHook(boolean enabledMinecraftTeamHook) {
         this.enabledMinecraftTeamHook = enabledMinecraftTeamHook;
+    }
+    public boolean isEnabledAutoTeam() {
+        return enabledAutoTeam;
+    }
+    public void setEnabledAutoTeam(boolean enabledAutoTeam) {
+        this.enabledAutoTeam = enabledAutoTeam;
     }
 }
