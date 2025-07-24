@@ -69,5 +69,9 @@ public class LoadUtils {
             plugin.getLogger().info("✅ Minecraft Team sync hook successfully enabled.");
             plugin.setEnabledMinecraftTeamHook(true);
         }
+        if (plugin.getConfig().getBoolean("hooks.auto_team.enabled", false)) {
+            plugin.getLogger().info("✅ Auto Team hook successfully enabled.");
+            plugin.setEnabledAutoTeam(true);
+        }
     }
 }
