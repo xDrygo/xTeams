@@ -7,12 +7,26 @@ import dev.drygo.XTeams.XTeams;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+
+import java.util.List;
 
 public class TeamListener implements Listener {
     private final XTeams plugin;
 
     public TeamListener(XTeams plugin) {
         this.plugin = plugin;
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        Player player = event.getPlayer();
+        if (!plugin.isEnabledAutoTeam()) return;
+        if (plugin.getAutoTeamManager().enabledOpByPass() && player.isOp()) return;
+        if (!plugin.getTeamManager().getPlayerTeams(player.getName()).isEmpty()) return;
+        Team autoTeamTeam = plugin.getTeamManager().getTeamByName(plugin.getAutoTeamManager().getAutoTeamTeam());
+        if (autoTeamTeam == null) return;
+        plugin.getTeamManager().joinTeam(player.getName(), autoTeamTeam);
     }
 
     @EventHandler
