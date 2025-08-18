@@ -22,4 +22,4 @@
 
 ## API
 
-* [📚 xTeams API](api/xteams-api.md)
+* [🛡️ xTeams API](api/xteams-api.md)
