@@ -1,30 +1,62 @@
 # 📝 config.yml
 
-## 📄 **Introduction**
+## 📄 Introduction
 
-The <kbd>config.yml</kbd> file is the core of the **xTeams** plugin configuration. Here, you can define and manage teams, their members, and priorities. This file allows you to customize the team settings to fit your server’s needs, such as the team’s name, the members it includes, and the priority with which they should be treated within the plugin.
+The config.yml file is the main configuration file of the xTeams plugin. It allows you to define teams, manage their members, set team priorities, and configure integrations such as LuckPerms and Minecraft native teams. This file is essential for customizing how teams function and interact with other systems on your server.
 
-## **💡 Breakdown of the&#x20;**<kbd>**config.yml**</kbd>**&#x20;file**
+## 💡 Breakdown of the config.yml file
 
 ```yaml
+hooks:
+  luckperms:
+    enabled: false
+    team_groups: # [xTeams team]: <LuckPerms group>
+      blue: blue
+      red: red
+      yellow: yellow
+  minecraft_team:
+    enabled: false
+    team_groups: # [xTeams team]: <Minecraft team>
+      blue: blue
+      red: red
+      yellow: yellow
+  auto_team:
+    enabled: false
+    op_bypass: false
+    team: red
+
 teams:
   red:
-    displayName: "The Red Team"
+    displayName: "&e&lRed Team"
+    priority: 2
     members:
       - player1
       - player2
-    priority: 1
-
   blue:
-    displayName: "The Blue Team""
+    displayName: "&e&lBlue Team"
+    priority: 1
     members:
       - player3
       - player4
-    priority: 2
+  yellow:
+    displayName: "&e&lYellow Team"
+    priority: 0
+    members:
+      - player5
+      - player6
 ```
 
-* <kbd>**teams**</kbd>: This section defines all the teams in your plugin. Each team is identified by a unique ID (e.g., `red`, `blue`), and you can customize the name, members, and priority for each one.
-  * <kbd>**red**</kbd>: This is the unique ID of the first team.
-    * <kbd>**displayName**</kbd>: Defines the team’s display name (e.g., "The Red Team").
-    * <kbd>**members**</kbd>: A list of players belonging to this team.
-    * <kbd>**priority**</kbd>: A numeric value that defines the team’s priority. A higher number indicates higher priority.
+## 🔎 Explanation
+
+* **hooks**: Defines integrations with external systems.
+  * **luckperms**: Allows linking xTeams teams with LuckPerms groups. Example: `blue` team in xTeams can be linked to `blue` LuckPerms group.
+  * **minecraft\_team**: Integrates with vanilla Minecraft scoreboard teams. Useful if you want xTeams teams to sync with in-game teams.
+  * **auto\_team**: Automatically assigns players to a default team when they join.
+    * **enabled**: Activates or deactivates the system.
+    * **op\_bypass**: If true, server operators are not auto-assigned.
+    * **team**: Defines the default team (in this case `red`).
+* **teams**: Main section where you define all the teams.
+  * **red, blue, yellow**: Unique IDs of each team.
+  * **displayName**: The formatted name shown for the team.
+  * **priority**: Defines the team’s importance. Higher values mean higher priority.
+  * **members**: A list of players that belong to this team.
