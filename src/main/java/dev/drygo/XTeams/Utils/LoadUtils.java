@@ -3,7 +3,10 @@ package dev.drygo.XTeams.Utils;
 import dev.drygo.XTeams.API.XTeamsAPI;
 import dev.drygo.XTeams.Commands.XTeamsCommand;
 import dev.drygo.XTeams.Commands.XTeamsTabCompleter;
+import dev.drygo.XTeams.Hooks.AutoTeam.Managers.AutoTeamManager;
 import dev.drygo.XTeams.Hooks.Listeners.TeamListener;
+import dev.drygo.XTeams.Hooks.LuckPerms.Managers.LuckPermsGroupManager;
+import dev.drygo.XTeams.Hooks.Minecraft.Managers.MinecraftTeamManager;
 import dev.drygo.XTeams.Hooks.PlaceholderAPI.XTeamsExpansion;
 import dev.drygo.XTeams.Managers.ConfigManager;
 import dev.drygo.XTeams.XTeams;
@@ -60,6 +63,7 @@ public class LoadUtils {
         if (plugin.getConfig().getBoolean("hooks.luckperms.enabled", false)) {
             if (Bukkit.getPluginManager().getPlugin("LuckPerms") != null) {
                 plugin.getLogger().info("✅ LuckPerms detected. LuckPerms sync hook successfully enabled.");
+                plugin.luckPermsGroupManager = new LuckPermsGroupManager(plugin);
                 plugin.setEnabledLuckPermsHook(true);
             } else {
                 plugin.getLogger().warning("⚠ LuckPerms not detected. Can't load LuckPerms sync hook.");
@@ -67,10 +71,13 @@ public class LoadUtils {
         }
         if (plugin.getConfig().getBoolean("hooks.minecraft_team.enabled", false)) {
             plugin.getLogger().info("✅ Minecraft Team sync hook successfully enabled.");
+            plugin.minecraftTeamManager = new MinecraftTeamManager(plugin);
             plugin.setEnabledMinecraftTeamHook(true);
         }
         if (plugin.getConfig().getBoolean("hooks.auto_team.enabled", false)) {
             plugin.getLogger().info("✅ Auto Team hook successfully enabled.");
+            plugin.autoTeamManager = new AutoTeamManager(plugin);
+            plugin.autoTeamManager.load();
             plugin.setEnabledAutoTeam(true);
         }
     }

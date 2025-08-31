@@ -42,10 +42,6 @@ public class XTeams extends JavaPlugin {
         this.logsUtils = new LogsUtils(this);
         this.loadUtils = new LoadUtils(this, configManager);
         this.teamManager = new TeamManager();
-        this.luckPermsGroupManager = new LuckPermsGroupManager(this);
-        this.minecraftTeamManager = new MinecraftTeamManager(this);
-        this.autoTeamManager = new AutoTeamManager(this);
-        autoTeamManager.load();
         loadUtils.loadFeatures();
         logsUtils.sendStartupMessage();
     }

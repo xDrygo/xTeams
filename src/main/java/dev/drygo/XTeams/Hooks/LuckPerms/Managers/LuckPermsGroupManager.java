@@ -13,11 +13,15 @@ import java.util.Map;
 
 public class LuckPermsGroupManager {
     private final XTeams plugin;
-    private final LuckPerms luckPerms;
+    private LuckPerms luckPerms;
     private final Map<String, String> teamGroupMap = new HashMap<>();
 
     public LuckPermsGroupManager(XTeams plugin) {
         this.plugin = plugin;
+        if (!isLuckPermsAvailable()) {
+            plugin.getLogger().warning("LuckPerms no está presente. La integración será desactivada.");
+            return;
+        }
         this.luckPerms = LuckPermsProvider.get();
         loadFromConfig();
     }
@@ -32,6 +36,10 @@ public class LuckPermsGroupManager {
                 }
             }
         }
+    }
+
+    private boolean isLuckPermsAvailable() {
+        return plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null;
     }
 
     public void applyGroup(Player player, String teamName) {

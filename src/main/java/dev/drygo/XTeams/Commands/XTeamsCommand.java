@@ -675,13 +675,10 @@ public class XTeamsCommand implements CommandExecutor {
         sender.sendMessage(ChatUtils.formatColor("&f                                ᴀᴜᴛᴏ-ᴛᴇᴀᴍ #707070» #FFFAAB" + autoTeamStatus));
         sender.sendMessage(ChatUtils.formatColor("&7"));
         sender.sendMessage(ChatUtils.formatColor("#fff18d&l                      ᴠᴇʀꜱɪᴏɴ ᴄʜᴀɴɢᴇꜱ"));
-        sender.sendMessage(ChatUtils.formatColor("&f            #7070701. #FFFAABFixed %prefix% on playerinfo command."));
-        sender.sendMessage(ChatUtils.formatColor("&f            #7070702. #FFFAABFixed interation on leave <team> *."));
-        sender.sendMessage(ChatUtils.formatColor("&f            #7070703. #FFFAABAdded auto-team hook."));
+        sender.sendMessage(ChatUtils.formatColor("&f            #7070701. #FFFAABFixed plugin loading without LuckPerms installed."));
         sender.sendMessage(ChatUtils.formatColor("&7"));
         sender.sendMessage(ChatUtils.formatColor("#fff18d&l               ᴅʀʏɢᴏ'ꜱ ɴᴏᴛᴇ ᴏꜰ ᴛʜᴇ ᴠᴇʀꜱɪᴏɴ"));
-        sender.sendMessage(ChatUtils.formatColor("&f  #FFFAAB             I made this version in 2 hours because"));
-        sender.sendMessage(ChatUtils.formatColor("&f  #FFFAAB             I found some bugs that I had to fix haha"));
+        sender.sendMessage(ChatUtils.formatColor("&f  #FFFAAB        Little fix about plugin loading without LuckPerms."));
         sender.sendMessage(ChatUtils.formatColor("&7"));
         sender.sendMessage(ChatUtils.formatColor("&7"));
         return false;
