@@ -156,7 +156,6 @@ public class XTeamsCommand implements CommandExecutor {
 
         plugin.getTeamManager().createTeam(teamName, teamName, priority, new HashSet<>());
         sender.sendMessage(chatUtils.getMessage("commands.create.success", null).replace("%team%", teamName));
-        configManager.saveTeamsToConfig();
 
         return true;
     }
@@ -192,7 +191,6 @@ public class XTeamsCommand implements CommandExecutor {
 
         plugin.getTeamManager().deleteTeam(team);
         sender.sendMessage(chatUtils.getMessage("commands.delete.success", null).replace("%team%", teamName));
-        configManager.saveTeamsToConfig();
         return true;
     }
 
@@ -219,7 +217,6 @@ public class XTeamsCommand implements CommandExecutor {
         }
 
         team.setDisplayName(displayName);
-        configManager.saveTeamsToConfig();
 
         sender.sendMessage(chatUtils.getMessage("commands.setdisplay.success", null).replace("%team%", teamName).replace("%display_name%", displayName));
         return true;
@@ -466,7 +463,6 @@ public class XTeamsCommand implements CommandExecutor {
                 .replace("%team%", teamName)
                 .replace("%target%", player.getName()));
 
-        configManager.saveTeamsToConfig();
         return true;
     }
     private boolean handleLeave(CommandSender sender, String[] args) {
@@ -583,7 +579,6 @@ public class XTeamsCommand implements CommandExecutor {
                     .replace("%target%", player.getName()));
         }
 
-        configManager.saveTeamsToConfig();
         return true;
     }
 

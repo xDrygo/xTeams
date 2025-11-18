@@ -10,11 +10,16 @@ import dev.drygo.XTeams.Models.Team;
 import java.util.*;
 
 public class TeamManager {
-
+    private final ConfigManager configManager;
     private final Map<String, Team> teams = new HashMap<>();
+
+    public TeamManager(ConfigManager configManager) {
+        this.configManager = configManager;
+    }
 
     public void addTeam(Team team) {
         teams.put(team.getName(), team);
+        configManager.saveTeamsToConfig();
     }
 
     public Team getTeam(String teamName) {
@@ -25,6 +30,7 @@ public class TeamManager {
         if (team != null) {
             teams.remove(team.getName());
             Bukkit.getPluginManager().callEvent(new TeamDeleteEvent(team.getName()));
+            configManager.saveTeamsToConfig();
         }
     }
 
@@ -93,6 +99,7 @@ public class TeamManager {
     public void joinTeam(String nickname, Team team) {
         if (team != null && !team.getMembers().contains(nickname)) {
             team.addMember(nickname);
+            configManager.saveTeamsToConfig();
             Bukkit.getPluginManager().callEvent(new TeamJoinEvent(Bukkit.getOfflinePlayer(nickname), team.getName()));
         }
     }
@@ -101,6 +108,7 @@ public class TeamManager {
         for (Team team : teams.values()) {
             if (!team.getMembers().contains(nickname)) {
                 team.addMember(nickname);
+                configManager.saveTeamsToConfig();
                 Bukkit.getPluginManager().callEvent(new TeamJoinEvent(Bukkit.getOfflinePlayer(nickname), team.getName()));
             }
         }
@@ -109,6 +117,7 @@ public class TeamManager {
     public void leaveTeam(String nickname, Team team) {
         if (team != null && team.getMembers().contains(nickname)) {
             team.removeMember(nickname);
+            configManager.saveTeamsToConfig();
             Bukkit.getPluginManager().callEvent(new TeamLeaveEvent(Bukkit.getOfflinePlayer(nickname), team.getName()));
         }
     }
@@ -117,6 +126,7 @@ public class TeamManager {
         for (Team team : teams.values()) {
             if (team.getMembers().contains(nickname)) {
                 team.removeMember(nickname);
+                configManager.saveTeamsToConfig();
                 Bukkit.getPluginManager().callEvent(new TeamLeaveEvent(Bukkit.getOfflinePlayer(nickname), team.getName()));
             }
         }

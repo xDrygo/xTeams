@@ -41,14 +41,13 @@ public class XTeams extends JavaPlugin {
         this.chatUtils = new ChatUtils(this, configManager);
         this.logsUtils = new LogsUtils(this);
         this.loadUtils = new LoadUtils(this, configManager);
-        this.teamManager = new TeamManager();
+        this.teamManager = new TeamManager(configManager);
         loadUtils.loadFeatures();
         logsUtils.sendStartupMessage();
     }
 
     @Override
     public void onDisable() {
-        configManager.saveTeamsToConfig();
         logsUtils.sendShutdownMessage();
     }
 
