@@ -12,21 +12,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LuckPermsGroupManager {
-    private final XTeams plugin;
-    private LuckPerms luckPerms;
-    private final Map<String, String> teamGroupMap = new HashMap<>();
+    private static XTeams plugin;
+    private static LuckPerms luckPerms;
+    private static final Map<String, String> teamGroupMap = new HashMap<>();
 
-    public LuckPermsGroupManager(XTeams plugin) {
-        this.plugin = plugin;
+    public static void init(XTeams plugin) {
+        LuckPermsGroupManager.plugin = plugin;
         if (!isLuckPermsAvailable()) {
             plugin.getLogger().warning("LuckPerms no está presente. La integración será desactivada.");
             return;
         }
-        this.luckPerms = LuckPermsProvider.get();
+        luckPerms = LuckPermsProvider.get();
         loadFromConfig();
     }
 
-    private void loadFromConfig() {
+    private static void loadFromConfig() {
         ConfigurationSection section = plugin.getConfig().getConfigurationSection("hooks.luckperms.team_groups");
         if (section != null) {
             for (String team : section.getKeys(false)) {
@@ -38,19 +38,19 @@ public class LuckPermsGroupManager {
         }
     }
 
-    private boolean isLuckPermsAvailable() {
+    private static boolean isLuckPermsAvailable() {
         return plugin.getServer().getPluginManager().getPlugin("LuckPerms") != null;
     }
 
-    public void applyGroup(Player player, String teamName) {
+    public static void applyGroup(Player player, String teamName) {
         handleGroupChange(player, teamName, true);
     }
 
-    public void removeGroup(Player player, String teamName) {
+    public static void removeGroup(Player player, String teamName) {
         handleGroupChange(player, teamName, false);
     }
 
-    private void handleGroupChange(Player player, String teamName, boolean add) {
+    private static void handleGroupChange(Player player, String teamName, boolean add) {
         String teamKey = teamName.toLowerCase();
         String group = teamGroupMap.get(teamKey);
 

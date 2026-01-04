@@ -3,6 +3,7 @@ package dev.drygo.XTeams.API.Events;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 public class TeamJoinEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
@@ -23,7 +24,7 @@ public class TeamJoinEvent extends Event {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

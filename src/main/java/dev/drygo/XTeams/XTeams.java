@@ -1,97 +1,68 @@
 package dev.drygo.XTeams;
 
-import dev.drygo.XTeams.Hooks.AutoTeam.Managers.AutoTeamManager;
-import dev.drygo.XTeams.Hooks.LuckPerms.Managers.LuckPermsGroupManager;
-import dev.drygo.XTeams.Hooks.Minecraft.Managers.MinecraftTeamManager;
 import dev.drygo.XTeams.Utils.LoadUtils;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import dev.drygo.XTeams.Managers.ConfigManager;
-import dev.drygo.XTeams.Managers.TeamManager;
 import dev.drygo.XTeams.Utils.ChatUtils;
 import dev.drygo.XTeams.Utils.LogsUtils;
-
-import java.io.File;
 
 public class XTeams extends JavaPlugin {
     public String version;
     public String prefix;
-    public FileConfiguration messagesConfig;
-    private ChatUtils chatUtils;
-    public LogsUtils logsUtils;
-    public LoadUtils loadUtils;
 
-    public TeamManager teamManager;
-    public LuckPermsGroupManager luckPermsGroupManager;
-    public MinecraftTeamManager minecraftTeamManager;
-    public AutoTeamManager autoTeamManager;
-    public ConfigManager configManager;
+    private static boolean workingPlaceholderAPI = false;
+    private static boolean enabledLuckPermsHook = false;
+    private static boolean enabledMinecraftTeamHook = false;
+    private static boolean enabledAutoTeam = false;
 
-    private boolean workingPlaceholderAPI = false;
-    private boolean enabledLuckPermsHook = false;
-    private boolean enabledMinecraftTeamHook = false;
-    private boolean enabledAutoTeam = false;
+    private static boolean teamsLoaded = false;
 
     @Override
     public void onEnable() {
-        this.version = getDescription().getVersion(); // Establecer versión dentro de onEnable
-        this.configManager = new ConfigManager(this);
-        this.messagesConfig = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "messages.yml"));
-        this.chatUtils = new ChatUtils(this, configManager);
-        this.logsUtils = new LogsUtils(this);
-        this.loadUtils = new LoadUtils(this, configManager);
-        this.teamManager = new TeamManager(configManager);
-        loadUtils.loadFeatures();
-        logsUtils.sendStartupMessage();
+        version = getDescription().getVersion();
+        ConfigManager.init(this);
+        ChatUtils.init(this);
+        LogsUtils.init(this);
+        LoadUtils.init(this);
+        LoadUtils.loadFeatures();
+        LogsUtils.sendStartupMessage();
     }
 
     @Override
     public void onDisable() {
-        logsUtils.sendShutdownMessage();
+        LogsUtils.sendShutdownMessage();
     }
 
-    public ConfigManager getConfigManager() {
-        return configManager;
-    }
-    public TeamManager getTeamManager() {
-        return teamManager;
-    }
-    public ChatUtils getChatUtils() {
-        return chatUtils;
-    }
-    public LuckPermsGroupManager getLuckPermsGroupManager() {
-        return luckPermsGroupManager;
-    }
-    public MinecraftTeamManager getMinecraftTeamManager() {
-        return minecraftTeamManager;
-    }
-    public AutoTeamManager getAutoTeamManager() {
-        return autoTeamManager;
-    }
 
-    public boolean isWorkingPlaceholderAPI() {
+    public static boolean isWorkingPlaceholderAPI() {
         return workingPlaceholderAPI;
     }
-    public void setWorkingPlaceholderAPI(boolean workingPlaceholderAPI) {
-        this.workingPlaceholderAPI = workingPlaceholderAPI;
+    public static void setWorkingPlaceholderAPI(boolean workingPlaceholderAPI) {
+        XTeams.workingPlaceholderAPI = workingPlaceholderAPI;
     }
-    public boolean isEnabledLuckPermsHook() {
+    public static boolean isEnabledLuckPermsHook() {
         return enabledLuckPermsHook;
     }
-    public void setEnabledLuckPermsHook(boolean enabledLuckPermsHook) {
-        this.enabledLuckPermsHook = enabledLuckPermsHook;
+    public static void setEnabledLuckPermsHook(boolean enabledLuckPermsHook) {
+        XTeams.enabledLuckPermsHook = enabledLuckPermsHook;
     }
-    public boolean isEnabledMinecraftTeamHook() {
+    public static boolean isEnabledMinecraftTeamHook() {
         return enabledMinecraftTeamHook;
     }
-    public void setEnabledMinecraftTeamHook(boolean enabledMinecraftTeamHook) {
-        this.enabledMinecraftTeamHook = enabledMinecraftTeamHook;
+    public static void setEnabledMinecraftTeamHook(boolean enabledMinecraftTeamHook) {
+        XTeams.enabledMinecraftTeamHook = enabledMinecraftTeamHook;
     }
-    public boolean isEnabledAutoTeam() {
+    public static boolean isEnabledAutoTeam() {
         return enabledAutoTeam;
     }
-    public void setEnabledAutoTeam(boolean enabledAutoTeam) {
-        this.enabledAutoTeam = enabledAutoTeam;
+    public static void setEnabledAutoTeam(boolean enabledAutoTeam) {
+        XTeams.enabledAutoTeam = enabledAutoTeam;
+    }
+
+    public static boolean isTeamsLoaded() {
+        return teamsLoaded;
+    }
+    public static void setTeamsLoaded(boolean state) {
+        teamsLoaded = state;
     }
 }

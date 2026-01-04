@@ -1,5 +1,9 @@
 package dev.drygo.XTeams.Commands;
 
+import dev.drygo.XTeams.Hooks.AutoTeam.Managers.AutoTeamManager;
+import dev.drygo.XTeams.Hooks.LuckPerms.Managers.LuckPermsGroupManager;
+import dev.drygo.XTeams.Hooks.Minecraft.Managers.MinecraftTeamManager;
+import dev.drygo.XTeams.Managers.TeamManager;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -17,19 +21,15 @@ import java.util.*;
 
 public class XTeamsCommand implements CommandExecutor {
     private final XTeams plugin;
-    private final ChatUtils chatUtils;
-    private final ConfigManager configManager;
 
     public XTeamsCommand(XTeams plugin) {
         this.plugin = plugin;
-        this.chatUtils = plugin.getChatUtils();
-        this.configManager = plugin.getConfigManager();
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (args.length == 0) {
-            sender.sendMessage(chatUtils.getMessage("error.commands.unknown_command", null));
+            sender.sendMessage(ChatUtils.getMessage("error.commands.unknown_command", null));
             return false;
         }
 
@@ -38,77 +38,77 @@ public class XTeamsCommand implements CommandExecutor {
         switch (subcommand) {
             case "create" -> {
                 if (dontHavePermission(sender, "xteams.command.create")) {
-                    sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", null));
+                    sender.sendMessage(ChatUtils.getMessage("error.commands.no_permission", null));
                     return true;
                 }
                 return handleCreate(sender, args);
             }
             case "delete" -> {
                 if (dontHavePermission(sender, "xteams.command.delete")) {
-                    sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", null));
+                    sender.sendMessage(ChatUtils.getMessage("error.commands.no_permission", null));
                     return true;
                 }
                 return handleDelete(sender, args);
             }
             case "setdisplay" -> {
                 if (dontHavePermission(sender, "xteams.command.setdisplay")) {
-                    sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", null));
+                    sender.sendMessage(ChatUtils.getMessage("error.commands.no_permission", null));
                     return true;
                 }
                 return handleSetDisplay(sender, args);
             }
             case "list" -> {
                 if (dontHavePermission(sender, "xteams.command.list")) {
-                    sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", null));
+                    sender.sendMessage(ChatUtils.getMessage("error.commands.no_permission", null));
                     return true;
                 }
                 return handleList(sender);
             }
             case "join" -> {
                 if (dontHavePermission(sender, "xteams.command.join")) {
-                    sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", null));
+                    sender.sendMessage(ChatUtils.getMessage("error.commands.no_permission", null));
                     return true;
                 }
                 return handleJoin(sender, args);
             }
             case "teaminfo" -> {
                 if (dontHavePermission(sender, "xteams.command.teaminfo")) {
-                    sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", null));
+                    sender.sendMessage(ChatUtils.getMessage("error.commands.no_permission", null));
                     return true;
                 }
                 return handleInfoTeam(sender, args);
             }
             case "playerinfo" -> {
                 if (dontHavePermission(sender, "xteams.command.playerinfo")) {
-                    sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", null));
+                    sender.sendMessage(ChatUtils.getMessage("error.commands.no_permission", null));
                     return true;
                 }
                 return handleInfoPlayer(sender, args);
             }
             case "leave" -> {
                 if (dontHavePermission(sender, "xteams.command.leave")) {
-                    sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", null));
+                    sender.sendMessage(ChatUtils.getMessage("error.commands.no_permission", null));
                     return true;
                 }
                 return handleLeave(sender, args);
             }
             case "reload" -> {
                 if (dontHavePermission(sender, "xteams.command.reload")) {
-                    sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", null));
+                    sender.sendMessage(ChatUtils.getMessage("error.commands.no_permission", null));
                     return true;
                 }
                 return handleReload(sender);
             }
             case "info" -> {
                 if (dontHavePermission(sender, "xteams.command.info")) {
-                    sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", null));
+                    sender.sendMessage(ChatUtils.getMessage("error.commands.no_permission", null));
                     return true;
                 }
                 return handleInfo(sender);
             }
             case "sync" -> {
                 if (dontHavePermission(sender, "xteams.command.sync")) {
-                    sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", null));
+                    sender.sendMessage(ChatUtils.getMessage("error.commands.no_permission", null));
                     return true;
                 }
                 handleSync(sender);
@@ -116,13 +116,13 @@ public class XTeamsCommand implements CommandExecutor {
             }
             case "help" -> {
                 if (dontHavePermission(sender, "xteams.command.help")) {
-                    sender.sendMessage(chatUtils.getMessage("error.commands.no_permission", null));
+                    sender.sendMessage(ChatUtils.getMessage("error.commands.no_permission", null));
                     return true;
                 }
                 return handleHelp(sender);
             }
             default -> {
-                sender.sendMessage(chatUtils.getMessage("error.commands.unknown_command", null));
+                sender.sendMessage(ChatUtils.getMessage("error.commands.unknown_command", null));
                 return false;
             }
         }
@@ -130,11 +130,11 @@ public class XTeamsCommand implements CommandExecutor {
 
     private boolean handleCreate(CommandSender sender, String[] args) {
         if (args.length < 2) {
-            sender.sendMessage(chatUtils.getMessage("error.commands.team_not_specified.create", null));
+            sender.sendMessage(ChatUtils.getMessage("error.commands.team_not_specified.create", null));
             return false;
         }
         if (args.length < 3) {
-            sender.sendMessage(chatUtils.getMessage("error.commands.priority_not_specified", null));
+            sender.sendMessage(ChatUtils.getMessage("error.commands.priority_not_specified", null));
             return false;
         }
 
@@ -144,25 +144,25 @@ public class XTeamsCommand implements CommandExecutor {
         try {
             priority = Integer.parseInt(args[2]);
         } catch (NumberFormatException e) {
-            sender.sendMessage(chatUtils.getMessage("error.commands.invalid_priority", null));
+            sender.sendMessage(ChatUtils.getMessage("error.commands.invalid_priority", null));
             return false;
         }
 
-        Team team = plugin.getTeamManager().getTeamByName(teamName);
+        Team team = TeamManager.getTeamByName(teamName);
         if (team != null) {
-            sender.sendMessage(chatUtils.getMessage("error.commands.team_already_exists", null).replace("%team%", teamName));
+            sender.sendMessage(ChatUtils.getMessage("error.commands.team_already_exists", null).replace("%team%", teamName));
             return false;
         }
 
-        plugin.getTeamManager().createTeam(teamName, teamName, priority, new HashSet<>());
-        sender.sendMessage(chatUtils.getMessage("commands.create.success", null).replace("%team%", teamName));
+        TeamManager.createTeam(teamName, teamName, priority, new HashSet<>());
+        sender.sendMessage(ChatUtils.getMessage("commands.create.success", null).replace("%team%", teamName));
 
         return true;
     }
 
     private boolean handleDelete(CommandSender sender, String[] args) {
         if (args.length < 2) {
-            sender.sendMessage(chatUtils.getMessage("error.commands.team_not_specified.delete", null));
+            sender.sendMessage(ChatUtils.getMessage("error.commands.team_not_specified.delete", null));
             return false;
         }
 
@@ -170,33 +170,33 @@ public class XTeamsCommand implements CommandExecutor {
 
         if (teamName.equals("*")) {
             if (dontHavePermission(sender, "xteams.command.delete.all")) {
-                sender.sendMessage(chatUtils.getMessage("error.commands.all_not_permission.delete", null));
+                sender.sendMessage(ChatUtils.getMessage("error.commands.all_not_permission.delete", null));
                 return false;
             }
-            if (plugin.getTeamManager().getAllTeams().isEmpty()) {
-                sender.sendMessage(chatUtils.getMessage("error.commands.anyteam_not_found", null));
+            if (TeamManager.getAllTeams().isEmpty()) {
+                sender.sendMessage(ChatUtils.getMessage("error.commands.anyteam_not_found", null));
                 return false;
             }
-            plugin.getTeamManager().deleteAllTeams();
-            sender.sendMessage(chatUtils.getMessage("commands.delete.successall", null));
-            configManager.saveTeamsToConfig();
+            TeamManager.deleteAllTeams();
+            sender.sendMessage(ChatUtils.getMessage("commands.delete.successall", null));
+            ConfigManager.saveTeamsToConfig();
             return true;
         }
 
-        Team team = plugin.getTeamManager().getTeamByName(teamName);
+        Team team = TeamManager.getTeamByName(teamName);
         if (team == null) {
-            sender.sendMessage(chatUtils.getMessage("error.commands.team_not_found", null).replace("%team%", teamName));
+            sender.sendMessage(ChatUtils.getMessage("error.commands.team_not_found", null).replace("%team%", teamName));
             return false;
         }
 
-        plugin.getTeamManager().deleteTeam(team);
-        sender.sendMessage(chatUtils.getMessage("commands.delete.success", null).replace("%team%", teamName));
+        TeamManager.deleteTeam(team);
+        sender.sendMessage(ChatUtils.getMessage("commands.delete.success", null).replace("%team%", teamName));
         return true;
     }
 
     private boolean handleSetDisplay(CommandSender sender, String[] args) {
         if (args.length < 3) {
-            sender.sendMessage(chatUtils.getMessage("error.commands.setdisplay.displayname_not_specified", null));
+            sender.sendMessage(ChatUtils.getMessage("error.commands.setdisplay.displayname_not_specified", null));
             return false;
         }
 
@@ -204,38 +204,38 @@ public class XTeamsCommand implements CommandExecutor {
         String displayName = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
 
         if (!displayName.startsWith("\"") || !displayName.endsWith("\"")) {
-            sender.sendMessage(chatUtils.getMessage("error.commands.setdisplay.invalid_format", null));
+            sender.sendMessage(ChatUtils.getMessage("error.commands.setdisplay.invalid_format", null));
             return false;
         }
 
         displayName = displayName.substring(1, displayName.length() - 1);
 
-        Team team = plugin.getTeamManager().getTeamByName(teamName);
+        Team team = TeamManager.getTeamByName(teamName);
         if (team == null) {
-            sender.sendMessage(chatUtils.getMessage("error.commands.team_not_found", null).replace("%team%", teamName));
+            sender.sendMessage(ChatUtils.getMessage("error.commands.team_not_found", null).replace("%team%", teamName));
             return false;
         }
 
         team.setDisplayName(displayName);
 
-        sender.sendMessage(chatUtils.getMessage("commands.setdisplay.success", null).replace("%team%", teamName).replace("%display_name%", displayName));
+        sender.sendMessage(ChatUtils.getMessage("commands.setdisplay.success", null).replace("%team%", teamName).replace("%display_name%", displayName));
         return true;
     }
 
     private boolean handleInfoTeam(CommandSender sender, String[] args) {
         if (args.length < 2) {
-            sender.sendMessage(chatUtils.getMessage("error.commands.team_not_specified.teaminfo", null));
+            sender.sendMessage(ChatUtils.getMessage("error.commands.team_not_specified.teaminfo", null));
             return false;
         }
 
         String teamName = args[1];
-        Team team = plugin.getTeamManager().getTeamByName(teamName);
+        Team team = TeamManager.getTeamByName(teamName);
         if (team == null) {
-            sender.sendMessage(chatUtils.getMessage("error.commands.team_not_found", null).replace("%team%", teamName));
+            sender.sendMessage(ChatUtils.getMessage("error.commands.team_not_found", null).replace("%team%", teamName));
             return false;
         }
 
-        Map<String, Object> teamInfo = plugin.getTeamManager().getTeamInfo(team);
+        Map<String, Object> teamInfo = TeamManager.getTeamInfo(team);
         String displayName = (String) teamInfo.get("displayName");
         String name = (String) teamInfo.get("name");
         int priority = (int) teamInfo.get("priority");
@@ -244,8 +244,8 @@ public class XTeamsCommand implements CommandExecutor {
         List<String> members = new ArrayList<>(membersSet);
 
         StringBuilder message = new StringBuilder();
-        for (String line : chatUtils.getMessageList("commands.teaminfo.string.header")) {
-            line = line.replace("%prefix%", configManager.getPrefix())
+        for (String line : ChatUtils.getMessageList("commands.teaminfo.string.header")) {
+            line = line.replace("%prefix%", ConfigManager.getPrefix())
                     .replace("%team%", name)
                     .replace("%display_name%", displayName)
                     .replace("%priority%", String.valueOf(priority));
@@ -255,15 +255,15 @@ public class XTeamsCommand implements CommandExecutor {
         }
 
         if (members.isEmpty()) {
-            message.append(chatUtils.getMessage("commands.teaminfo.string.no_members", null)).append("\n");
+            message.append(ChatUtils.getMessage("commands.teaminfo.string.no_members", null)).append("\n");
         } else {
-            message.append(chatUtils.getMessage("commands.teaminfo.string.members_header", null)).append("\n");
+            message.append(ChatUtils.getMessage("commands.teaminfo.string.members_header", null)).append("\n");
             for (String member : members) {
-                message.append(chatUtils.getMessage("commands.teaminfo.string.members_row", null).replace("%member%", member)).append("\n");
+                message.append(ChatUtils.getMessage("commands.teaminfo.string.members_row", null).replace("%member%", member)).append("\n");
             }
         }
 
-        for (String line : chatUtils.getMessageList("commands.teaminfo.string.footer")) {
+        for (String line : ChatUtils.getMessageList("commands.teaminfo.string.footer")) {
             line = ChatUtils.formatColor(line);
             line = PlaceholderAPI.setPlaceholders(null, line);
             message.append(line).append("\n");
@@ -275,16 +275,16 @@ public class XTeamsCommand implements CommandExecutor {
 
     private boolean handleInfoPlayer(CommandSender sender, String[] args) {
         if (args.length < 2) {
-            sender.sendMessage(chatUtils.getMessage("error.commands.player_not_found", null).replace("%target%", sender.getName()));
+            sender.sendMessage(ChatUtils.getMessage("error.commands.player_not_found", null).replace("%target%", sender.getName()));
             return false;
         }
 
         String targetName = args[1];
 
-        List<Team> playerTeams = plugin.getTeamManager().getPlayerTeams(targetName);
+        List<Team> playerTeams = TeamManager.getPlayerTeams(targetName);
 
-        if (playerTeams == null || playerTeams.isEmpty()) {
-            sender.sendMessage(chatUtils.getMessage("commands.playerinfo.string.no_teams", null).replace("%target%", targetName));
+        if (playerTeams.isEmpty()) {
+            sender.sendMessage(ChatUtils.getMessage("commands.playerinfo.string.no_teams", null).replace("%target%", targetName));
             return true;
         }
 
@@ -292,24 +292,24 @@ public class XTeamsCommand implements CommandExecutor {
         Team mainTeam = playerTeams.getFirst();
 
         StringBuilder message = new StringBuilder();
-        for (String line : chatUtils.getMessageList("commands.playerinfo.string.header")) {
+        for (String line : ChatUtils.getMessageList("commands.playerinfo.string.header")) {
             line = line.replace("%target%", targetName)
-                    .replace("%prefix%", configManager.getPrefix());
+                    .replace("%prefix%", ConfigManager.getPrefix());
             line = ChatUtils.formatColor(line);
             message.append(line).append("\n");
         }
 
-        message.append(chatUtils.getMessage("commands.playerinfo.string.main_team", null)
+        message.append(ChatUtils.getMessage("commands.playerinfo.string.main_team", null)
                         .replace("%target%", targetName)
                         .replace("%display_name%", mainTeam.getDisplayName())
                         .replace("%team%", mainTeam.getName())
                         .replace("%priority%", String.valueOf(mainTeam.getPriority())))
                 .append("\n");
 
-        message.append(chatUtils.getMessage("commands.playerinfo.string.team_list_header", null).replace("%target%", targetName)).append("\n");
+        message.append(ChatUtils.getMessage("commands.playerinfo.string.team_list_header", null).replace("%target%", targetName)).append("\n");
 
         for (Team team : playerTeams) {
-            message.append(chatUtils.getMessage("commands.playerinfo.string.team_list_row", null)
+            message.append(ChatUtils.getMessage("commands.playerinfo.string.team_list_row", null)
                             .replace("%target%", targetName)
                             .replace("%display_name%", team.getDisplayName())
                             .replace("%team%", team.getName())
@@ -317,9 +317,9 @@ public class XTeamsCommand implements CommandExecutor {
                     .append("\n");
         }
 
-        for (String line : chatUtils.getMessageList("commands.playerinfo.string.footer")) {
+        for (String line : ChatUtils.getMessageList("commands.playerinfo.string.footer")) {
             line = line.replace("%target%", targetName)
-                    .replace("%prefix%", configManager.getPrefix());
+                    .replace("%prefix%", ConfigManager.getPrefix());
             line = ChatUtils.formatColor(line);
             message.append(line).append("\n");
         }
@@ -329,16 +329,16 @@ public class XTeamsCommand implements CommandExecutor {
     }
 
     private boolean handleList(CommandSender sender) {
-        Set<Team> teams = plugin.getTeamManager().getAllTeams();
-        if (teams == null || teams.isEmpty()) {
-            sender.sendMessage(chatUtils.getMessage("commands.list.empty", null));
+        Set<Team> teams = TeamManager.getAllTeams();
+        if (teams.isEmpty()) {
+            sender.sendMessage(ChatUtils.getMessage("commands.list.empty", null));
             return false;
         }
 
         StringBuilder message = new StringBuilder();
-        message.append(chatUtils.getMessage("commands.list.string.header", null)).append("\n");
+        message.append(ChatUtils.getMessage("commands.list.string.header", null)).append("\n");
         for (Team team : teams) {
-            message.append(chatUtils.getMessage("commands.list.string.row", null)
+            message.append(ChatUtils.getMessage("commands.list.string.row", null)
                             .replace("%team%", team.getName())
                             .replace("%priority%", String.valueOf(team.getPriority()))
                             .replace("%display_name%", team.getDisplayName()))
@@ -350,7 +350,7 @@ public class XTeamsCommand implements CommandExecutor {
     private boolean handleJoin(CommandSender sender, String[] args) {
         if (args.length < 2) {
             if (sender instanceof Player player) {
-                sender.sendMessage(chatUtils.getMessage("error.commands.team_not_specified.join", null)
+                sender.sendMessage(ChatUtils.getMessage("error.commands.team_not_specified.join", null)
                         .replace("%target%", player.getName()));
             } else {
                 sender.sendMessage("You must specify a team.");
@@ -363,15 +363,15 @@ public class XTeamsCommand implements CommandExecutor {
 
         Set<Team> teamsSet;
         if (allTeams) {
-            teamsSet = plugin.getTeamManager().getAllTeams();
+            teamsSet = TeamManager.getAllTeams();
             if (teamsSet.isEmpty()) {
-                sender.sendMessage(chatUtils.getMessage("error.commands.anyteam_not_found", null));
+                sender.sendMessage(ChatUtils.getMessage("error.commands.anyteam_not_found", null));
                 return false;
             }
         } else {
-            Team team = plugin.getTeamManager().getTeam(teamName);
+            Team team = TeamManager.getTeam(teamName);
             if (team == null) {
-                sender.sendMessage(chatUtils.getMessage("error.commands.team_not_found", null)
+                sender.sendMessage(ChatUtils.getMessage("error.commands.team_not_found", null)
                         .replace("%team%", teamName));
                 return false;
             }
@@ -386,11 +386,11 @@ public class XTeamsCommand implements CommandExecutor {
             Set<String> affectedPlayers;
             if (allTargets) {
                 if (allTeams) {
-                    affectedPlayers = plugin.getTeamManager().getAllPlayersInTeams();
+                    affectedPlayers = TeamManager.getAllPlayersInTeams();
                 } else {
                     // Solo jugadores en ese equipo
                     Team singleTeam = teamsSet.iterator().next();
-                    affectedPlayers = plugin.getTeamManager().getTeamMembers(singleTeam);
+                    affectedPlayers = TeamManager.getTeamMembers(singleTeam);
                 }
             } else {
                 affectedPlayers = new HashSet<>();
@@ -402,7 +402,7 @@ public class XTeamsCommand implements CommandExecutor {
                         ? "error.commands.join.other.none_team_or_target"
                         : "error.commands.join.other.none_target";
 
-                sender.sendMessage(chatUtils.getMessage(msgKey, null)
+                sender.sendMessage(ChatUtils.getMessage(msgKey, null)
                         .replace("%team%", teamName)
                         .replace("%target%", targetName));
                 return false;
@@ -410,8 +410,8 @@ public class XTeamsCommand implements CommandExecutor {
 
             for (String playerName : affectedPlayers) {
                 for (Team team : teamsSet) {
-                    if (!plugin.getTeamManager().isInTeam(playerName, team)) {
-                        plugin.getTeamManager().joinTeam(playerName, team);
+                    if (!TeamManager.isInTeam(playerName, team)) {
+                        TeamManager.joinTeam(playerName, team);
                     }
                 }
             }
@@ -427,11 +427,11 @@ public class XTeamsCommand implements CommandExecutor {
                 msgKey = "commands.join.other.success";
             }
 
-            sender.sendMessage(chatUtils.getMessage(msgKey, null)
+            sender.sendMessage(ChatUtils.getMessage(msgKey, null)
                     .replace("%team%", teamName)
                     .replace("%target%", targetName));
 
-            configManager.saveTeamsToConfig();
+            ConfigManager.saveTeamsToConfig();
             return true;
         }
 
@@ -442,24 +442,24 @@ public class XTeamsCommand implements CommandExecutor {
         }
 
         if (allTeams) {
-            plugin.getTeamManager().joinAllTeams(player.getName());
+            TeamManager.joinAllTeams(player.getName());
 
-            player.sendMessage(chatUtils.getMessage("commands.join.self.success_all", null)
+            player.sendMessage(ChatUtils.getMessage("commands.join.self.success_all", null)
                     .replace("%target%", player.getName()));
-            configManager.saveTeamsToConfig();
+            ConfigManager.saveTeamsToConfig();
             return true;
         }
 
         Team team = teamsSet.iterator().next();
-        if (plugin.getTeamManager().isInTeam(player.getName(), team)) {
-            player.sendMessage(chatUtils.getMessage("error.commands.join.self.already_in_team", null)
+        if (TeamManager.isInTeam(player.getName(), team)) {
+            player.sendMessage(ChatUtils.getMessage("error.commands.join.self.already_in_team", null)
                     .replace("%team%", teamName)
                     .replace("%target%", player.getName()));
             return false;
         }
 
-        plugin.getTeamManager().joinTeam(player.getName(), team);
-        player.sendMessage(chatUtils.getMessage("commands.join.self.success", null)
+        TeamManager.joinTeam(player.getName(), team);
+        player.sendMessage(ChatUtils.getMessage("commands.join.self.success", null)
                 .replace("%team%", teamName)
                 .replace("%target%", player.getName()));
 
@@ -468,7 +468,7 @@ public class XTeamsCommand implements CommandExecutor {
     private boolean handleLeave(CommandSender sender, String[] args) {
         if (args.length < 2) {
             if (sender instanceof Player player) {
-                player.sendMessage(chatUtils.getMessage("error.commands.team_not_specified.leave", null));
+                player.sendMessage(ChatUtils.getMessage("error.commands.team_not_specified.leave", null));
             } else {
                 sender.sendMessage("You must specify a team.");
             }
@@ -480,16 +480,16 @@ public class XTeamsCommand implements CommandExecutor {
 
         Team team = null;
         if (!allTeams) {
-            team = plugin.getTeamManager().getTeam(teamName);
+            team = TeamManager.getTeam(teamName);
             if (team == null) {
-                sender.sendMessage(chatUtils.getMessage("error.commands.team_not_found", null)
+                sender.sendMessage(ChatUtils.getMessage("error.commands.team_not_found", null)
                         .replace("%team%", teamName));
                 return false;
             }
         }
 
         if (allTeams && dontHavePermission(sender, "xteams.command.leave.all")) {
-            sender.sendMessage(chatUtils.getMessage("error.commands.all_not_permission.leave", null));
+            sender.sendMessage(ChatUtils.getMessage("error.commands.all_not_permission.leave", null));
             return false;
         }
 
@@ -501,8 +501,8 @@ public class XTeamsCommand implements CommandExecutor {
 
             if (allTargets) {
                 affectedPlayers = allTeams
-                        ? plugin.getTeamManager().getAllPlayersInTeams()
-                        : plugin.getTeamManager().getTeamMembers(team);
+                        ? TeamManager.getAllPlayersInTeams()
+                        : TeamManager.getTeamMembers(team);
             } else {
                 affectedPlayers = new HashSet<>();
                 affectedPlayers.add(targetName);
@@ -513,7 +513,7 @@ public class XTeamsCommand implements CommandExecutor {
                         ? "error.commands.leave.other.none_in_anyteam"
                         : "error.commands.leave.other.none_in_team";
 
-                sender.sendMessage(chatUtils.getMessage(msgKey, null)
+                sender.sendMessage(ChatUtils.getMessage(msgKey, null)
                         .replace("%team%", teamName)
                         .replace("%target%", targetName));
                 return false;
@@ -522,9 +522,9 @@ public class XTeamsCommand implements CommandExecutor {
             Set<String> playersCopy = new HashSet<>(affectedPlayers);
             for (String playerName : playersCopy) {
                 if (allTeams) {
-                    plugin.getTeamManager().leaveAllTeams(playerName);
+                    TeamManager.leaveAllTeams(playerName);
                 } else {
-                    plugin.getTeamManager().leaveTeam(playerName, team);
+                    TeamManager.leaveTeam(playerName, team);
                 }
             }
 
@@ -539,11 +539,11 @@ public class XTeamsCommand implements CommandExecutor {
                 msgKey = "commands.leave.other.target.success";
             }
 
-            sender.sendMessage(chatUtils.getMessage(msgKey, null)
+            sender.sendMessage(ChatUtils.getMessage(msgKey, null)
                     .replace("%team%", teamName)
                     .replace("%target%", targetName));
 
-            configManager.saveTeamsToConfig();
+            ConfigManager.saveTeamsToConfig();
             return true;
         }
 
@@ -554,27 +554,27 @@ public class XTeamsCommand implements CommandExecutor {
         }
 
         boolean inTeam = allTeams
-                ? plugin.getTeamManager().isInAnyTeam(player.getName())
-                : plugin.getTeamManager().isInTeam(player.getName(), team);
+                ? TeamManager.isInAnyTeam(player.getName())
+                : TeamManager.isInTeam(player.getName(), team);
 
         if (!inTeam) {
             String msgKey = allTeams
                     ? "error.commands.leave.self.not_in_anyteam"
                     : "error.commands.leave.self.not_in_team";
 
-            player.sendMessage(chatUtils.getMessage(msgKey, null)
+            player.sendMessage(ChatUtils.getMessage(msgKey, null)
                     .replace("%team%", teamName)
                     .replace("%target%", player.getName()));
             return false;
         }
 
         if (allTeams) {
-            plugin.getTeamManager().leaveAllTeams(player.getName());
-            player.sendMessage(chatUtils.getMessage("commands.leave.self.success_all", null)
+            TeamManager.leaveAllTeams(player.getName());
+            player.sendMessage(ChatUtils.getMessage("commands.leave.self.success_all", null)
                     .replace("%target%", player.getName()));
         } else {
-            plugin.getTeamManager().leaveTeam(player.getName(), team);
-            player.sendMessage(chatUtils.getMessage("commands.leave.self.success", null)
+            TeamManager.leaveTeam(player.getName(), team);
+            player.sendMessage(ChatUtils.getMessage("commands.leave.self.success", null)
                     .replace("%team%", teamName)
                     .replace("%target%", player.getName()));
         }
@@ -584,38 +584,38 @@ public class XTeamsCommand implements CommandExecutor {
 
     private void handleSync(CommandSender sender) {
         int count = 0;
-        for (String teamName : plugin.getTeamManager().listTeams()) {
-            Team team = plugin.getTeamManager().getTeam(teamName);
+        for (String teamName : TeamManager.listTeams()) {
+            Team team = TeamManager.getTeam(teamName);
             for (String memberName : team.getMembers()) {
                 Player player = Bukkit.getPlayerExact(memberName);
                 if (player != null && player.isOnline()) {
-                    if (plugin.isEnabledLuckPermsHook()) {
-                        plugin.getLuckPermsGroupManager().applyGroup(player, team.getName());
+                    if (XTeams.isEnabledLuckPermsHook()) {
+                        LuckPermsGroupManager.applyGroup(player, team.getName());
                     }
-                    if (plugin.isEnabledMinecraftTeamHook()) {
-                        plugin.getMinecraftTeamManager().applyGroup(player, team.getName());
+                    if (XTeams.isEnabledMinecraftTeamHook()) {
+                        MinecraftTeamManager.applyGroup(player, team.getName());
                     }
                     count++;
                 }
             }
         }
 
-        sender.sendMessage(chatUtils.getMessage("commands.sync.success", (Player) sender).replace("%count%", String.valueOf(count)));
+        sender.sendMessage(ChatUtils.getMessage("commands.sync.success", (Player) sender).replace("%count%", String.valueOf(count)));
     }
 
 
     private boolean handleReload(CommandSender sender) {
         plugin.reloadConfig();
-        configManager.loadMessages();
-        configManager.loadTeamsFromConfig();
-        if (plugin.isEnabledAutoTeam()) {
-            plugin.getAutoTeamManager().load();
+        ConfigManager.reloadMessages();
+        ConfigManager.loadTeamsFromConfig();
+        if (XTeams.isEnabledAutoTeam()) {
+            AutoTeamManager.load();
         }
-        sender.sendMessage(chatUtils.getMessage("commands.reload.success", null));
+        sender.sendMessage(ChatUtils.getMessage("commands.reload.success", null));
         return false;
     }
     private boolean handleHelp(CommandSender sender) {
-        List<String> helpMessages = chatUtils.getMessageConfig().getStringList("commands.help");
+        List<String> helpMessages = ConfigManager.getMessageConfig().getStringList("commands.help");
 
         if (helpMessages.isEmpty()) {
             helpMessages = List.of(
@@ -651,10 +651,10 @@ public class XTeamsCommand implements CommandExecutor {
         return false;
     }
     private boolean handleInfo(CommandSender sender) {
-        String placeholderStatus = plugin.isWorkingPlaceholderAPI() ? "#a0ff72✔" : "#ff7272✖";
-        String luckPermsHookStatus = plugin.isEnabledLuckPermsHook() ? "#a0ff72✔" : "#ff7272✖";
-        String minecraftTeamHookStatus = plugin.isEnabledMinecraftTeamHook() ? "#a0ff72✔" : "#ff7272✖";
-        String autoTeamStatus = plugin.isEnabledAutoTeam() ? "#a0ff72✔" : "#ff7272✖";
+        String placeholderStatus = XTeams.isWorkingPlaceholderAPI() ? "#a0ff72✔" : "#ff7272✖";
+        String luckPermsHookStatus = XTeams.isEnabledLuckPermsHook() ? "#a0ff72✔" : "#ff7272✖";
+        String minecraftTeamHookStatus = XTeams.isEnabledMinecraftTeamHook() ? "#a0ff72✔" : "#ff7272✖";
+        String autoTeamStatus = XTeams.isEnabledAutoTeam() ? "#a0ff72✔" : "#ff7272✖";
         sender.sendMessage(ChatUtils.formatColor("&7"));
         sender.sendMessage(ChatUtils.formatColor("&7"));
         sender.sendMessage(ChatUtils.formatColor("&8                            #ffbaff&lx&r&lTeams &8» &r&fInfo"));
@@ -673,9 +673,14 @@ public class XTeamsCommand implements CommandExecutor {
         sender.sendMessage(ChatUtils.formatColor("&7"));
         sender.sendMessage(ChatUtils.formatColor("#fff18d&l                      ᴠᴇʀꜱɪᴏɴ ᴄʜᴀɴɢᴇꜱ"));
         sender.sendMessage(ChatUtils.formatColor("&f            #7070701. #FFFAABFixed plugin loading without LuckPerms installed."));
+        sender.sendMessage(ChatUtils.formatColor("&f            #7070702. #FFFAABFixed saving config on disabling plugin and"));
+        sender.sendMessage(ChatUtils.formatColor("&f                #FFFAABsaving config on TeamManager methods"));
+        sender.sendMessage(ChatUtils.formatColor("&f            #7070703. #FFFAABFixed attempt reload autoteam when is not enabled."));
+        sender.sendMessage(ChatUtils.formatColor("&f            #7070704. #FFFAABFixed teams saving and loading."));
         sender.sendMessage(ChatUtils.formatColor("&7"));
         sender.sendMessage(ChatUtils.formatColor("#fff18d&l               ᴅʀʏɢᴏ'ꜱ ɴᴏᴛᴇ ᴏꜰ ᴛʜᴇ ᴠᴇʀꜱɪᴏɴ"));
-        sender.sendMessage(ChatUtils.formatColor("&f  #FFFAAB        Little fix about plugin loading without LuckPerms."));
+        sender.sendMessage(ChatUtils.formatColor("&f  #FFFAAB        A mayor version adding other fixes I added"));
+        sender.sendMessage(ChatUtils.formatColor("&f  #FFFAAB     in the past, for other problems report the issue!"));
         sender.sendMessage(ChatUtils.formatColor("&7"));
         sender.sendMessage(ChatUtils.formatColor("&7"));
         return false;

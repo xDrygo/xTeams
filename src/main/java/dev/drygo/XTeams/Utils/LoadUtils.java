@@ -1,6 +1,5 @@
 package dev.drygo.XTeams.Utils;
 
-import dev.drygo.XTeams.API.XTeamsAPI;
 import dev.drygo.XTeams.Commands.XTeamsCommand;
 import dev.drygo.XTeams.Commands.XTeamsTabCompleter;
 import dev.drygo.XTeams.Hooks.AutoTeam.Managers.AutoTeamManager;
@@ -15,16 +14,13 @@ import org.bukkit.Bukkit;
 import java.util.Objects;
 
 public class LoadUtils {
-    private final XTeams plugin;
-    private final ConfigManager configManager;
+    private static XTeams plugin;
 
-    public LoadUtils(XTeams plugin, ConfigManager configManager) {
-        this.plugin = plugin;
-        this.configManager = configManager;
+    public static void init(XTeams plugin) {
+        LoadUtils.plugin = plugin;
     }
 
-    public void loadFeatures() {
-        XTeamsAPI.init(plugin.getTeamManager());
+    public static void loadFeatures() {
         loadFiles();
         loadCommand();
         loadListeners();
@@ -32,53 +28,55 @@ public class LoadUtils {
         loadHooks();
     }
 
-    public void loadFiles() {
-        configManager.loadConfig();
-        configManager.loadMessages();
-        configManager.loadTeamsFromConfig();
+    public static void loadFiles() {
+        ConfigManager.loadConfig();
+        ConfigManager.reloadMessages();
+        ConfigManager.setPrefix(ConfigManager.getMessageConfig().getString("prefix"));
+        ConfigManager.loadTeamsFromConfig();
+        XTeams.setTeamsLoaded(true);
     }
 
-    private void loadListeners() {
-        plugin.getServer().getPluginManager().registerEvents(new TeamListener(plugin), plugin);
+    private static void loadListeners() {
+        plugin.getServer().getPluginManager().registerEvents(new TeamListener(), plugin);
     }
 
-    private void loadCommand() {
+    private static void loadCommand() {
         if (plugin.getCommand("xteams") == null) {
             plugin.getLogger().severe("❌ Error: xTeams command is not registered in plugin.yml");
         } else {
             Objects.requireNonNull(plugin.getCommand("xteams")).setExecutor(new XTeamsCommand(plugin));
-            Objects.requireNonNull(plugin.getCommand("xteams")).setTabCompleter(new XTeamsTabCompleter(plugin));
+            Objects.requireNonNull(plugin.getCommand("xteams")).setTabCompleter(new XTeamsTabCompleter());
         }
     }
-    private void loadPlaceholderAPI() {
+    private static void loadPlaceholderAPI() {
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new XTeamsExpansion(plugin).register();
             plugin.getLogger().info("✅ PlaceholderAPI detected. Placeholders will work.");
-            plugin.setWorkingPlaceholderAPI(true);
+            XTeams.setWorkingPlaceholderAPI(true);
         } else {
             plugin.getLogger().warning("⚠ PlaceholderAPI not detected. Placeholders will not work.");
         }
     }
-    private void loadHooks() {
+    private static void loadHooks() {
         if (plugin.getConfig().getBoolean("hooks.luckperms.enabled", false)) {
             if (Bukkit.getPluginManager().getPlugin("LuckPerms") != null) {
                 plugin.getLogger().info("✅ LuckPerms detected. LuckPerms sync hook successfully enabled.");
-                plugin.luckPermsGroupManager = new LuckPermsGroupManager(plugin);
-                plugin.setEnabledLuckPermsHook(true);
+                LuckPermsGroupManager.init(plugin);
+                XTeams.setEnabledLuckPermsHook(true);
             } else {
                 plugin.getLogger().warning("⚠ LuckPerms not detected. Can't load LuckPerms sync hook.");
             }
         }
         if (plugin.getConfig().getBoolean("hooks.minecraft_team.enabled", false)) {
             plugin.getLogger().info("✅ Minecraft Team sync hook successfully enabled.");
-            plugin.minecraftTeamManager = new MinecraftTeamManager(plugin);
-            plugin.setEnabledMinecraftTeamHook(true);
+            MinecraftTeamManager.init(plugin);
+            XTeams.setEnabledMinecraftTeamHook(true);
         }
         if (plugin.getConfig().getBoolean("hooks.auto_team.enabled", false)) {
             plugin.getLogger().info("✅ Auto Team hook successfully enabled.");
-            plugin.autoTeamManager = new AutoTeamManager(plugin);
-            plugin.autoTeamManager.load();
-            plugin.setEnabledAutoTeam(true);
+            AutoTeamManager.init(plugin);
+            AutoTeamManager.load();
+            XTeams.setEnabledAutoTeam(true);
         }
     }
 }

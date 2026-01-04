@@ -3,24 +3,24 @@ package dev.drygo.XTeams.Hooks.AutoTeam.Managers;
 import dev.drygo.XTeams.XTeams;
 
 public class AutoTeamManager {
-    private final XTeams plugin;
+    private static XTeams plugin;
 
-    private String autoTeamTeam;
-    private boolean opByPass;
+    private static String autoTeamTeam;
+    private static boolean opByPass;
 
-    public AutoTeamManager(XTeams plugin) {
-        this.plugin = plugin;
+    public static void init(XTeams plugin) {
+        AutoTeamManager.plugin = plugin;
     }
 
-    public void load() {
+    public static void load() {
         autoTeamTeam = plugin.getConfig().getString("hooks.auto_team.team");
         opByPass = plugin.getConfig().getBoolean("hooks.auto_team.op_bypass", false);
     }
 
-    public String getAutoTeamTeam() {
+    public static String getAutoTeamTeam() {
         return autoTeamTeam;
     }
-    public boolean enabledOpByPass() {
+    public static boolean enabledOpByPass() {
         return opByPass;
     }
 }

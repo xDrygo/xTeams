@@ -13,17 +13,17 @@ import java.util.Map;
 
 public class MinecraftTeamManager {
 
-    private final XTeams plugin;
-    private final Map<String, String> teamGroupMap = new HashMap<>();
-    private final Scoreboard scoreboard;
+    private static XTeams plugin;
+    private static final Map<String, String> teamGroupMap = new HashMap<>();
+    private static Scoreboard scoreboard;
 
-    public MinecraftTeamManager(XTeams plugin) {
-        this.plugin = plugin;
-        this.scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+    public static void init(XTeams plugin) {
+        MinecraftTeamManager.plugin = plugin;
+        scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
         loadFromConfig();
     }
 
-    private void loadFromConfig() {
+    private static void loadFromConfig() {
         ConfigurationSection section = plugin.getConfig().getConfigurationSection("hooks.minecraft_team.team_groups");
         if (section != null) {
             for (String teamName : section.getKeys(false)) {
@@ -35,15 +35,15 @@ public class MinecraftTeamManager {
         }
     }
 
-    public void applyGroup(Player player, String teamName) {
+    public static void applyGroup(Player player, String teamName) {
         handleTeamChange(player, teamName, true);
     }
 
-    public void removeGroup(Player player, String teamName) {
+    public static void removeGroup(Player player, String teamName) {
         handleTeamChange(player, teamName, false);
     }
 
-    private void handleTeamChange(Player player, String teamName, boolean add) {
+    private static void handleTeamChange(Player player, String teamName, boolean add) {
         String teamKey = teamName.toLowerCase();
         String teamId = teamGroupMap.get(teamKey);
 

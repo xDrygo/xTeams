@@ -8,25 +8,17 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import dev.drygo.XTeams.Models.Team;
 import dev.drygo.XTeams.Utils.ChatUtils;
-import dev.drygo.XTeams.XTeams;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 public class XTeamsTabCompleter implements TabCompleter {
-    private final ChatUtils chatUtils;
-    private XTeams plugin;
-
-    public XTeamsTabCompleter(XTeams plugin) {
-        this.plugin = plugin;
-        this.chatUtils = plugin.getChatUtils();
-    }
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
-        String teamNameMessage = chatUtils.getMessage("tab_complete.create.team", (Player) sender);
-        String priorityMessage = chatUtils.getMessage("tab_complete.create.priority", (Player) sender);
-        String displayNameMessage = chatUtils.getMessage("tab_complete.setdisplay.display_name", (Player) sender);
+        String teamNameMessage = ChatUtils.getMessage("tab_complete.create.team", (Player) sender);
+        String priorityMessage = ChatUtils.getMessage("tab_complete.create.priority", (Player) sender);
+        String displayNameMessage = ChatUtils.getMessage("tab_complete.setdisplay.display_name", (Player) sender);
         // Primero comprobamos si el jugador tiene el permiso para el subcomando
         if (args.length == 0) {
             return Collections.emptyList();  // No hay nada que autocompletar si no hay argumentos
@@ -135,8 +127,8 @@ public class XTeamsTabCompleter implements TabCompleter {
 
     private List<String> getTeamsList() {
         List<String> teams = new ArrayList<>();
-        Set<Team> allTeams = plugin.getTeamManager().getAllTeams();
-        if (allTeams != null && !allTeams.isEmpty()) {
+        Set<Team> allTeams = TeamManager.getAllTeams();
+        if (!allTeams.isEmpty()) {
             for (Team team : allTeams) {
                 teams.add(team.getName());
             }
@@ -145,7 +137,7 @@ public class XTeamsTabCompleter implements TabCompleter {
     }
 
     private List<String> getPlayersList() {
-        Set<String> players = new HashSet<>(plugin.getTeamManager().getAllPlayersInTeams());
+        Set<String> players = new HashSet<>(TeamManager.getAllPlayersInTeams());
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             players.add(onlinePlayer.getName());
         }

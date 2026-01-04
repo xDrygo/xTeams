@@ -1,26 +1,23 @@
 package dev.drygo.XTeams.Utils;
 
+import dev.drygo.XTeams.Managers.ConfigManager;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
-import dev.drygo.XTeams.Managers.ConfigManager;
 import dev.drygo.XTeams.XTeams;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChatUtils {
-    private final XTeams plugin;
-    private final ConfigManager configManager;
+    private static XTeams plugin;
 
-    public ChatUtils(XTeams plugin, ConfigManager configManager) {
-        this.plugin = plugin;
-        this.configManager = configManager;
+    public static void init(XTeams plugin) {
+        ChatUtils.plugin = plugin;
     }
 
     public static String formatColor(String message) {
@@ -44,21 +41,16 @@ public class ChatUtils {
         matcher.appendTail(buffer);
         return buffer.toString();
     }
-    public String getMessage(String path, OfflinePlayer player) {
-        if (configManager == null) {
-            throw new IllegalStateException("ConfigManager no está inicializado.");
-        }
-
-        String message = getMessageConfig().isList(path)
-                ? String.join("\n", getMessageConfig().getStringList(path))
-                : getMessageConfig().getString(path);
+    public static String getMessage(String path, OfflinePlayer player) {
+        String message = ConfigManager.getMessageConfig().isList(path)
+                ? String.join("\n", ConfigManager.getMessageConfig().getStringList(path))
+                : ConfigManager.getMessageConfig().getString(path);
 
         if (message == null || message.isEmpty()) {
             plugin.getLogger().warning("[WARNING] Message not found: " + path);
-            return ChatUtils.formatColor("&r" + configManager.getPrefix() + " #FF0000&l[ERROR] #FF3535Message not found: " + path);
+            return ChatUtils.formatColor("&r" + ConfigManager.getPrefix() + " #FF0000&l[ERROR] #FF3535Message not found: " + path);
         }
 
-        // Reemplazar placeholders
         if (player != null) {
             message = message.replace("%player%", Objects.requireNonNull(player.getName()));
         } else {
@@ -69,15 +61,12 @@ public class ChatUtils {
             message = PlaceholderAPI.setPlaceholders(player, message);
         }
 
-        message = message.replace("%prefix%", configManager.getPrefix());
+        message = message.replace("%prefix%", ConfigManager.getPrefix());
 
         return ChatUtils.formatColor(message);
     }
-    public List<String> getMessageList(String path) {
-        return getMessageConfig().getStringList(path);
-    }
-    public FileConfiguration getMessageConfig() {
-        return plugin.messagesConfig;
+    public static List<String> getMessageList(String path) {
+        return ConfigManager.getMessageConfig().getStringList(path);
     }
 
 }
