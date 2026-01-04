@@ -608,7 +608,9 @@ public class XTeamsCommand implements CommandExecutor {
         plugin.reloadConfig();
         configManager.loadMessages();
         configManager.loadTeamsFromConfig();
-        plugin.getAutoTeamManager().load();
+        if (plugin.isEnabledAutoTeam()) {
+            plugin.getAutoTeamManager().load();
+        }
         sender.sendMessage(chatUtils.getMessage("commands.reload.success", null));
         return false;
     }
