@@ -10,39 +10,34 @@ import dev.drygo.XTeams.Models.Team;
 import java.util.*;
 
 public class TeamManager {
-    private final ConfigManager configManager;
-    private final Map<String, Team> teams = new HashMap<>();
+    private static final Map<String, Team> teams = new HashMap<>();
 
-    public TeamManager(ConfigManager configManager) {
-        this.configManager = configManager;
-    }
-
-    public void addTeam(Team team) {
+    public static void addTeam(Team team) {
         teams.put(team.getName(), team);
-        configManager.saveTeamsToConfig();
+        ConfigManager.saveTeamsToConfig();
     }
 
-    public Team getTeam(String teamName) {
+    public static Team getTeam(String teamName) {
         return teams.get(teamName);
     }
 
-    public void deleteTeam(Team team) {
+    public static void deleteTeam(Team team) {
         if (team != null) {
             teams.remove(team.getName());
             Bukkit.getPluginManager().callEvent(new TeamDeleteEvent(team.getName()));
-            configManager.saveTeamsToConfig();
+            ConfigManager.saveTeamsToConfig();
         }
     }
 
-    public Set<Team> getAllTeams() {
+    public static Set<Team> getAllTeams() {
         return new HashSet<>(teams.values());
     }
 
-    public boolean teamExists(String teamName) {
+    public static boolean teamExists(String teamName) {
         return teams.containsKey(teamName);
     }
 
-    public Team getPlayerTeam(String nickname) {
+    public static Team getPlayerTeam(String nickname) {
         List<Team> playerTeams = getPlayerTeams(nickname);
         Team highest = null;
         for (Team team : playerTeams) {
@@ -53,11 +48,11 @@ public class TeamManager {
         return highest;
     }
 
-    public Set<String> getTeamMembers(Team team) {
+    public static Set<String> getTeamMembers(Team team) {
         return team != null ? team.getMembers() : new HashSet<>();
     }
 
-    public Set<String> getAllPlayersInTeams() {
+    public static Set<String> getAllPlayersInTeams() {
         Set<String> allPlayers = new HashSet<>();
         for (Team team : getAllTeams()) {
             allPlayers.addAll(getTeamMembers(team));
@@ -65,7 +60,7 @@ public class TeamManager {
         return allPlayers;
     }
 
-    public void createTeam(String name, String displayName, int priority, Set<String> members) {
+    public static void createTeam(String name, String displayName, int priority, Set<String> members) {
         if (!teamExists(name)) {
             Team team = new Team(name, displayName, priority, members);
             addTeam(team);
@@ -73,11 +68,11 @@ public class TeamManager {
         }
     }
 
-    public void deleteAllTeams() {
+    public static void deleteAllTeams() {
         teams.clear();
     }
 
-    public List<String> listTeams() {
+    public static List<String> listTeams() {
         List<String> teamNames = new ArrayList<>();
         for (Team team : teams.values()) {
             teamNames.add(team.getName());
@@ -85,7 +80,7 @@ public class TeamManager {
         return teamNames;
     }
 
-    public Map<String, Object> getTeamInfo(Team team) {
+    public static Map<String, Object> getTeamInfo(Team team) {
         Map<String, Object> teamInfo = new HashMap<>();
         if (team != null) {
             teamInfo.put("name", team.getName());
@@ -96,47 +91,47 @@ public class TeamManager {
         return teamInfo;
     }
 
-    public void joinTeam(String nickname, Team team) {
+    public static void joinTeam(String nickname, Team team) {
         if (team != null && !team.getMembers().contains(nickname)) {
             team.addMember(nickname);
-            configManager.saveTeamsToConfig();
+            ConfigManager.saveTeamsToConfig();
             Bukkit.getPluginManager().callEvent(new TeamJoinEvent(Bukkit.getOfflinePlayer(nickname), team.getName()));
         }
     }
 
-    public void joinAllTeams(String nickname) {
+    public static void joinAllTeams(String nickname) {
         for (Team team : teams.values()) {
             if (!team.getMembers().contains(nickname)) {
                 team.addMember(nickname);
-                configManager.saveTeamsToConfig();
+                ConfigManager.saveTeamsToConfig();
                 Bukkit.getPluginManager().callEvent(new TeamJoinEvent(Bukkit.getOfflinePlayer(nickname), team.getName()));
             }
         }
     }
 
-    public void leaveTeam(String nickname, Team team) {
+    public static void leaveTeam(String nickname, Team team) {
         if (team != null && team.getMembers().contains(nickname)) {
             team.removeMember(nickname);
-            configManager.saveTeamsToConfig();
+            ConfigManager.saveTeamsToConfig();
             Bukkit.getPluginManager().callEvent(new TeamLeaveEvent(Bukkit.getOfflinePlayer(nickname), team.getName()));
         }
     }
 
-    public void leaveAllTeams(String nickname) {
+    public static void leaveAllTeams(String nickname) {
         for (Team team : teams.values()) {
             if (team.getMembers().contains(nickname)) {
                 team.removeMember(nickname);
-                configManager.saveTeamsToConfig();
+                ConfigManager.saveTeamsToConfig();
                 Bukkit.getPluginManager().callEvent(new TeamLeaveEvent(Bukkit.getOfflinePlayer(nickname), team.getName()));
             }
         }
     }
 
-    public boolean isInTeam(String nickname, Team team) {
+    public static boolean isInTeam(String nickname, Team team) {
         return team != null && team.getMembers().contains(nickname);
     }
 
-    public boolean isInAnyTeam(String nickname) {
+    public static boolean isInAnyTeam(String nickname) {
         for (Team team : teams.values()) {
             if (team.getMembers().contains(nickname)) {
                 return true;
@@ -145,7 +140,7 @@ public class TeamManager {
         return false;
     }
 
-    public List<Team> getPlayerTeams(String nickname) {
+    public static List<Team> getPlayerTeams(String nickname) {
         List<Team> result = new ArrayList<>();
         for (Team team : teams.values()) {
             if (team.getMembers().contains(nickname)) {
@@ -155,7 +150,11 @@ public class TeamManager {
         return result;
     }
 
-    public Team getTeamByName(String name) {
+    public static Team getTeamByName(String name) {
         return teams.get(name);
+    }
+
+    public static void loadTeam(Team team) {
+        teams.put(team.getName(), team);
     }
 }

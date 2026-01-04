@@ -1,5 +1,6 @@
 package dev.drygo.XTeams.Managers;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import dev.drygo.XTeams.Models.Team;
@@ -10,27 +11,24 @@ import java.io.File;
 import java.util.*;
 
 public class ConfigManager {
+    private static XTeams plugin;
+    private static FileConfiguration messagesConfig;
 
-    private final XTeams plugin;
-
-    public ConfigManager(XTeams plugin) {
-        this.plugin = plugin;
+    public static void init(XTeams plugin) {
+        ConfigManager.plugin = plugin;
     }
 
-    public String getPrefix() {
-        return plugin.prefix;
+    public static void loadConfig() {
+        try {
+            plugin.saveDefaultConfig();
+            plugin.reloadConfig();
+            plugin.getLogger().info("✅ The config.yml file successfully loaded.");
+        } catch (Exception e) {
+            plugin.getLogger().severe("❌ Failed on loading config.yml: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
-
-    public FileConfiguration getMessageConfig() {
-        return plugin.messagesConfig;
-    }
-
-    public void loadConfig() {
-        plugin.saveDefaultConfig();
-        plugin.reloadConfig();
-    }
-
-    public void loadMessages() {
+    public static void reloadMessages() {
         try {
             File messagesFile = new File(plugin.getDataFolder(), "messages.yml");
             if (!messagesFile.exists()) {
@@ -39,55 +37,65 @@ public class ConfigManager {
             } else {
                 plugin.getLogger().info("✅ The messages.yml file has been loaded successfully.");
             }
-            plugin.messagesConfig = YamlConfiguration.loadConfiguration(messagesFile);
-            plugin.prefix = ChatUtils.formatColor(getMessageConfig().getString("prefix", "#ffbaff&lx&r&lTeams &cDefault Prefix &8»&r"));
+
+            messagesConfig = YamlConfiguration.loadConfiguration(messagesFile);
+            plugin.prefix = ChatUtils.formatColor("#ffbaff&lx&r&lTeams &cDefault Prefix &8»&r");
         } catch (Exception e) {
-            plugin.getLogger().severe("❌ Failed to load messages configuration!");
+            plugin.getLogger().severe("❌ Failed to load messages configuration due to an unexpected error: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public void loadTeamsFromConfig() {
+    public static void loadTeamsFromConfig() {
         FileConfiguration config = plugin.getConfig();
 
         if (config.contains("teams")) {
             for (String teamName : Objects.requireNonNull(config.getConfigurationSection("teams")).getKeys(false)) {
                 List<String> players = config.getStringList("teams." + teamName + ".members");
                 String displayName = config.getString("teams." + teamName + ".displayName", teamName);
-                int priority = config.getInt("teams." + teamName + ".priority", 0);  // Si no hay displayName, usar el teamName
+                int priority = config.getInt("teams." + teamName + ".priority", 0);
 
-                // Crear el equipo con los jugadores y el displayName directamente desde la configuración
-                Set<String> playerSet = new HashSet<>(players); // Convertir la lista de jugadores en un Set
-                Team team = new Team(teamName, displayName, priority, playerSet);  // Usar el constructor adecuado
-                plugin.getTeamManager().addTeam(team);  // CORRECCIÓN: Añadir el equipo con el nombre
+                Set<String> playerSet = new HashSet<>(players);
+                Team team = new Team(teamName, displayName, priority, playerSet);
+                TeamManager.loadTeam(team);
 
                 plugin.getLogger().info("Team loaded: " + teamName);
             }
         }
     }
 
-    public void saveTeamsToConfig() {
+    public static void saveTeamsToConfig() {
         FileConfiguration config = plugin.getConfig();
-        // Limpiar la sección de equipos para evitar duplicados
-        config.set("teams", null);
-        // Guardar cada equipo directamente en la configuración
-        for (Team team : plugin.getTeamManager().getAllTeams()) { // Iteramos sobre los objetos Team
+        if (!XTeams.isTeamsLoaded()) {
+            plugin.getLogger().warning("Skipping saveTeamsToConfig(): teams not loaded yet");
+            return;
+        }
+        ConfigurationSection section = config.getConfigurationSection("teams");
+        if (section != null) {
+            for (String key : section.getKeys(false)) {
+                section.set(key, null);
+            }
+        }
+        for (Team team : TeamManager.getAllTeams()) {
             if (team == null) {
                 plugin.getLogger().warning("A null team was encountered, skipping save.");
-                continue; // Si el equipo es null, lo saltamos
+                continue;
             }
-            String teamName = team.getName(); // Obtener el nombre del equipo
-            Set<String> members = team.getMembers(); // Obtener los miembros del equipo
+            String teamName = team.getName();
+            Set<String> members = team.getMembers();
 
-            // Convertir el Set en una lista para que sea compatible con YAML
             List<String> memberList = new ArrayList<>(members);
 
-            // Guardar los jugadores de ese equipo en la configuración
-            config.set("teams." + teamName + ".members", memberList); // Usamos el teamName que es un String
-            config.set("teams." + teamName + ".displayName", team.getDisplayName()); // Usamos el displayName que es un String
-            config.set("teams." + teamName + ".priority", team.getPriority()); // Usamos el priority que es un integer
+            config.set("teams." + teamName + ".members", memberList);
+            config.set("teams." + teamName + ".displayName", team.getDisplayName());
+            config.set("teams." + teamName + ".priority", team.getPriority());
         }
-        // Guardar la configuración en el archivo
         plugin.saveConfig();
+    }
+
+    public static String getPrefix() { return plugin.prefix; }
+    public static void setPrefix(String prefix) { plugin.prefix = prefix; }
+    public static FileConfiguration getMessageConfig() {
+        return messagesConfig;
     }
 }
